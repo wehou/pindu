@@ -2093,7 +2093,7 @@ VIEWS.exc = () => {
   <div class="wlist" style="justify-content:flex-start;margin-top:12px">
     ${d.items.map(it => it.dead
       ? `<button class="wchip" data-act="speak" data-text="${esc(it.w)}">
-          <span class="dead">${esc(it.w)}</span><small class="ipa">${ipaHtml(it.ipa)}</small>
+          <span>${esc(it.w).replace(esc(it.dead), c => `<span class="dead">${c}</span>`)}</span><small class="ipa">${ipaHtml(it.ipa)}</small>
           <small class="zh">${esc(it.zh)} · 不读 ${esc(it.dead)}（${esc(it.at)}）</small></button>`
       : it.b
       ? `<button class="wchip" data-act="speak" data-text="${esc(it.a)}">
