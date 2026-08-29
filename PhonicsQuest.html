@@ -240,6 +240,8 @@ main{max-width:860px;margin:0 auto;padding:16px 14px 60px}
 }
 .wchip small{font-size:10px;font-weight:500;color:var(--ink2)}
 .wchip .cmb{color:var(--pink);font-weight:800}
+.wchip .zh{font-size:11px;font-weight:500;color:#9aa0a6;margin-top:1px;line-height:1.25;max-width:120px;text-align:center}
+@media(max-width:420px){.wchip{padding:7px 9px;font-size:13px}.wchip .zh{font-size:10px;max-width:96px}}
 
 /* ---------- 录音 ---------- */
 .rec{display:flex;flex-direction:column;align-items:center;gap:10px;margin-top:14px}
@@ -3457,8 +3459,8 @@ function howHTML(st) {
   <div class="tip" style="margin-top:12px"><b>为什么这样安排：</b>${esc(st.why)}</div>
 
   <div class="btn-row">
-    <button class="btn ghost" data-act="tab" data-id="${st.id}" data-t="learn">📖 先系统学一遍</button>
-    <button class="btn primary" data-act="tab" data-id="${st.id}" data-t="drill">✏️ 直接去练习</button>
+    <button class="btn primary" data-act="tab" data-id="${st.id}" data-t="learn">📖 先系统学一遍</button>
+    <button class="btn ghost" data-act="tab" data-id="${st.id}" data-t="drill">✏️ 直接去练习</button>
   </div>`;
 }
 
@@ -3572,6 +3574,8 @@ function letterCard(p) {
   </div>`;
 }
 
+const ZH = {"about": "关于；大约", "age": "年龄", "animal": "动物", "any": "任何", "apple": "苹果", "arm": "手臂", "baby": "婴儿", "bad": "坏的", "bag": "包", "banana": "香蕉", "bank": "银行；河岸", "bath": "洗澡", "bear": "熊", "because": "因为", "bed": "床", "beer": "啤酒", "bike": "自行车", "bird": "鸟", "black": "黑色的", "block": "积木；方块", "blood": "血", "blue": "蓝色的", "boat": "船", "boil": "煮沸", "bone": "骨头", "book": "书", "born": "出生", "bottle": "瓶子", "box": "盒子", "boy": "男孩", "bread": "面包", "brick": "砖", "bridge": "桥", "bright": "明亮的", "brother": "兄弟", "brown": "棕色的", "bug": "虫子", "build": "建造", "busy": "忙碌的", "cake": "蛋糕", "car": "汽车", "card": "卡片", "care": "关心", "cat": "猫", "chair": "椅子", "chef": "厨师", "class": "班级；课", "clean": "干净的", "clear": "清楚的；清澈的", "clock": "时钟", "cloud": "云", "coat": "外套", "coin": "硬币", "come": "来", "complete": "完成", "cook": "烹饪", "cookie": "饼干", "cool": "凉爽的", "corn": "玉米", "cough": "咳嗽", "could": "能（过去式）", "cow": "奶牛", "crab": "螃蟹", "crowd": "人群", "cry": "哭；喊", "cube": "立方体", "cup": "杯子", "cure": "治愈", "cute": "可爱的", "day": "白天", "deer": "鹿", "die": "死", "doctor": "医生", "dog": "狗", "down": "向下", "dress": "连衣裙", "drink": "喝", "drum": "鼓", "ear": "耳朵", "eat": "吃", "energy": "能量", "engine": "引擎", "england": "英格兰", "enjoy": "享受", "enough": "足够的", "eve": "前夕", "face": "脸", "fair": "公平的；集市", "family": "家庭", "famous": "著名的", "fan": "风扇；粉丝", "farm": "农场", "few": "很少的", "first": "第一的", "fish": "鱼", "five": "五", "flag": "旗帜", "flower": "花", "fly": "飞", "food": "食物", "foot": "脚", "for": "为了；给", "fork": "叉子", "fox": "狐狸", "free": "自由的；免费的", "friend": "朋友", "frog": "青蛙", "fruit": "水果", "full": "满的", "future": "未来", "game": "游戏", "garage": "车库", "garden": "花园", "gate": "大门", "giant": "巨人", "girl": "女孩", "glad": "高兴的", "glass": "玻璃；杯子", "glove": "手套", "glue": "胶水", "good": "好的", "grape": "葡萄", "grass": "草", "green": "绿色的", "grew": "长大（过去式）", "gym": "体育馆", "hair": "头发", "hand": "手", "happy": "高兴的", "hard": "硬的；难的", "hat": "帽子", "head": "头", "hear": "听见", "her": "她的", "here": "这里", "high": "高的", "hole": "洞", "holiday": "假日", "home": "家", "horse": "马", "hot": "热的", "house": "房子", "huge": "巨大的", "ink": "墨水", "jug": "水壶", "jump": "跳", "june": "六月", "kid": "孩子", "kitchen": "厨房", "kite": "风筝", "know": "知道", "late": "迟的", "light": "光；轻的", "like": "喜欢", "log": "原木", "long": "长的", "look": "看", "love": "爱", "machine": "机器", "make": "制作", "many": "许多", "map": "地图", "map2": "地图", "match": "比赛；火柴", "mission": "任务", "money": "钱", "month": "月", "moon": "月亮", "morning": "早晨", "mother": "母亲", "mouse": "老鼠", "name": "名字", "near": "靠近", "new": "新的", "nice": "好的", "night": "夜晚", "nine": "九", "noise": "噪音", "north": "北方", "nose": "鼻子", "note": "笔记", "nothing": "没有什么", "now": "现在", "nurse": "护士", "ocean": "海洋", "oil": "油", "out": "外面", "pair": "一对", "park": "公园", "pen": "钢笔", "pencil": "铅笔", "pete": "皮特（名）", "pie": "派", "pig": "猪", "pink": "粉色的", "plane": "飞机", "play": "玩", "pleasure": "愉快", "plus": "加", "point": "指；点", "poor": "贫穷的", "pot": "锅", "press": "按", "pretty": "漂亮的", "price": "价格", "print": "打印", "purple": "紫色的", "put": "放", "question": "问题", "rain": "雨", "rainy": "下雨的", "red": "红色的", "right": "正确的；右边", "road": "道路", "room": "房间", "rope": "绳子", "rude": "粗鲁的", "rule": "规则", "run": "跑", "said": "说（过去式）", "say": "说", "scan": "扫描", "school": "学校", "sea": "海", "see": "看见", "ship": "船", "shirt": "衬衫", "short": "短的", "sing": "唱", "sink": "水槽；下沉", "sister": "姐妹", "sit": "坐", "skate": "滑冰", "sky": "天空", "sleep": "睡觉", "slow": "慢的", "small": "小的", "smile": "微笑", "smoke": "烟", "snack": "零食", "snake": "蛇", "snow": "雪", "soap": "肥皂", "sofa": "沙发", "soldier": "士兵", "soon": "不久", "sound": "声音", "special": "特别的", "spider": "蜘蛛", "spoon": "勺子", "sport": "运动", "spot": "斑点", "star": "星星", "station": "车站", "steve": "史蒂夫（名）", "stone": "石头", "stop": "停止", "student": "学生", "sugar": "糖", "suit": "西装", "sun": "太阳", "sunny": "晴朗的", "supply": "供应", "sure": "确定的", "sweet": "甜的", "swim": "游泳", "swing": "秋千", "tail": "尾巴", "tea": "茶", "teacher": "老师", "television": "电视", "ten": "十", "thank": "感谢", "the": "这；那", "theme": "主题", "there": "那里", "these": "这些", "think": "思考", "this": "这个", "those": "那些", "three": "三", "tie": "领带；系", "time": "时间", "today": "今天", "together": "一起", "took": "拿（过去式）", "touch": "触摸", "tour": "旅行", "toy": "玩具", "train": "火车", "tree": "树", "truck": "卡车", "true": "真的", "tube": "管子", "turn": "转", "twelve": "十二", "twice": "两次", "twin": "双胞胎", "use": "使用", "usually": "通常", "village": "村庄", "vision": "视力", "wait": "等待", "want": "想要", "wash": "洗", "watch": "手表；看", "way": "路；方式", "weather": "天气", "web": "网", "where": "哪里", "white": "白色的", "win": "赢", "wood": "木头", "would": "会（过去式）", "year": "年", "yellow": "黄色的", "young": "年轻的", "zoo": "动物园"};
+
 function phCard(p) {
   const open = S.openPt === p.id;
   const m = mouthOf(p);
@@ -3594,7 +3598,8 @@ function phCard(p) {
       <div class="wlist" style="justify-content:flex-start">
         ${p.words.map(w => `<button class="wchip" data-act="speak" data-text="${esc(w.w)}">
           <span>${hlWord(w.w, w.c)}</span><small class="ipa">${esc(w.ipa)}</small>
-          <span class="cmb">${esc(w.c || '')}${w.note ? ' ' + esc(w.note) : ''}</span></button>`).join('')}
+          <span class="cmb">${esc(w.c || '')}${w.note ? ' ' + esc(w.note) : ''}</span>
+          <small class="zh">${ZH[w.w.toLowerCase()] || ''}</small></button>`).join('')}
       </div>
     </div>` : ''}
   </div>`;
