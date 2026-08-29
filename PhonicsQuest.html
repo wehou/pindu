@@ -1,0 +1,3720 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+<!-- 单文件离线版：所有 JS/CSS 已内联，双击即可打开 -->
+<title>Phonics Quest · 自然拼读 10 阶段闯关（5 天计划）</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans:wght@400;600;800&family=Baloo+2:wght@600;800&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#eef2ff; --bg2:#f7f8ff; --card:#ffffff; --ink:#1e2340; --ink2:#5b6488; --line:#e6e9f5;
+  --brand:#5b5bd6; --brand2:#7c74f0; --ok:#12b981; --bad:#ef4444; --warn:#f59e0b; --pink:#ec4899;
+  --r:18px; --sh:0 6px 20px rgba(60,70,140,.10); --sh2:0 14px 40px rgba(60,70,140,.18);
+  --ipa:"Noto Sans","Noto Sans IPA","DejaVu Sans","Segoe UI","Lucida Sans Unicode","Arial Unicode MS",system-ui,-apple-system,"PingFang SC","Microsoft YaHei",sans-serif;
+}
+*{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+html,body{margin:0;padding:0}
+body{
+  font-family:var(--ipa);
+  color:var(--ink);
+  background:
+    radial-gradient(1200px 600px at 15% -10%, #dfe6ff 0%, transparent 60%),
+    radial-gradient(900px 500px at 100% 0%, #ffe6f1 0%, transparent 55%),
+    var(--bg2);
+  min-height:100vh;
+  -webkit-font-smoothing:antialiased;
+}
+button{font-family:inherit;cursor:pointer;border:0;background:none;color:inherit}
+h1,h2,h3,h4{margin:0;line-height:1.25}
+.ipa{font-family:var(--ipa)}
+
+/* ---------- topbar ---------- */
+.topbar{
+  position:sticky;top:0;z-index:40;display:flex;align-items:center;justify-content:space-between;
+  gap:10px;padding:10px 14px;background:rgba(255,255,255,.78);backdrop-filter:blur(12px);
+  border-bottom:1px solid var(--line);
+}
+.brand{display:flex;align-items:center;gap:10px}
+.brand-txt b{display:block;font-size:16px;letter-spacing:.2px}
+.brand-txt small{display:block;font-size:11px;color:var(--ink2)}
+.logo{
+  width:36px;height:36px;border-radius:12px;display:grid;place-items:center;
+  background:linear-gradient(135deg,var(--brand),var(--brand2));color:#fff;font-weight:800;font-size:14px;
+  box-shadow:0 4px 12px rgba(91,91,214,.35)
+}
+.top-actions{display:flex;gap:6px;position:relative}
+.icon-btn{
+  width:40px;height:40px;border-radius:12px;background:#fff;border:1px solid var(--line);
+  display:grid;place-items:center;box-shadow:var(--sh);transition:.15s;
+  font-family:"Apple Color Emoji","Segoe UI Emoji","Noto Color Emoji","Segoe UI Symbol",sans-serif
+}
+.icon-btn:active{transform:scale(.92)}
+.icon-btn.off{opacity:.42}
+.badge{
+  position:absolute;top:-4px;right:-4px;min-width:17px;height:17px;padding:0 4px;border-radius:9px;
+  background:var(--bad);color:#fff;font-size:10px;font-weight:700;display:grid;place-items:center;border:2px solid #fff
+}
+
+/* ---------- layout ---------- */
+main{max-width:860px;margin:0 auto;padding:16px 14px 60px}
+.view{animation:fade .28s ease}
+@keyframes fade{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
+.hero{padding:14px 4px 18px}
+.hero h1{font-size:26px;letter-spacing:-.4px}
+.hero p{margin:8px 0 0;color:var(--ink2);font-size:14px;line-height:1.6}
+.sec-title{display:flex;align-items:center;justify-content:space-between;margin:22px 2px 10px}
+.sec-title h3{font-size:15px}
+.sec-title span{font-size:12px;color:var(--ink2)}
+
+.card{background:var(--card);border:1px solid var(--line);border-radius:var(--r);box-shadow:var(--sh);padding:16px}
+
+/* ---------- 每日计划 ---------- */
+.plan{display:grid;gap:8px}
+.plan-row{
+  display:flex;align-items:center;gap:12px;padding:12px;border-radius:14px;background:#fbfcff;border:1px solid var(--line)
+}
+.plan-row.done{background:#ecfdf5;border-color:#a7f3d0}
+.plan-time{
+  flex:0 0 auto;width:52px;text-align:center;font-size:12px;font-weight:800;color:var(--brand);
+  background:#eef0ff;border-radius:10px;padding:6px 0
+}
+.plan-row.done .plan-time{background:#d1fae5;color:var(--ok)}
+.plan-body{flex:1;min-width:0}
+.plan-body b{font-size:14px}
+.plan-body p{margin:3px 0 0;font-size:12px;color:var(--ink2);line-height:1.5}
+.plan-go{flex:0 0 auto}
+.mini-btn{
+  padding:7px 12px;border-radius:10px;background:var(--brand);color:#fff;font-size:12px;font-weight:700;box-shadow:0 4px 10px rgba(91,91,214,.28)
+}
+.mini-btn.ghost{background:#fff;color:var(--brand);border:1px solid #d8dcff;box-shadow:none}
+.timer-num{font-variant-numeric:tabular-nums;font-weight:800;color:var(--warn)}
+
+/* ---------- chips ---------- */
+.chips{display:flex;gap:8px;overflow-x:auto;padding:2px 2px 6px;-webkit-overflow-scrolling:touch}
+.chip{
+  flex:0 0 auto;padding:8px 13px;border-radius:999px;background:#fff;border:1px solid var(--line);
+  font-size:13px;font-weight:600;color:var(--ink2);box-shadow:var(--sh);transition:.15s
+}
+.chip.on{background:linear-gradient(135deg,var(--brand),var(--brand2));color:#fff;border-color:transparent;box-shadow:0 6px 16px rgba(91,91,214,.3)}
+.chip small{opacity:.75;font-weight:500;margin-left:5px}
+
+/* ---------- mode grid ---------- */
+.modes{display:grid;grid-template-columns:repeat(2,1fr);gap:12px}
+@media(max-width:520px){.modes{grid-template-columns:1fr}}
+.mode{
+  position:relative;text-align:left;padding:16px;border-radius:var(--r);border:1px solid var(--line);
+  background:var(--card);box-shadow:var(--sh);transition:.18s;overflow:hidden
+}
+.mode:hover{transform:translateY(-3px);box-shadow:var(--sh2)}
+.mode:active{transform:scale(.985)}
+.mode .emo{font-size:26px}
+.mode h4{margin:8px 0 4px;font-size:15px}
+.mode p{margin:0;font-size:12px;color:var(--ink2);line-height:1.55}
+.mode .step{
+  position:absolute;top:12px;right:12px;font-size:10px;font-weight:800;color:var(--brand);
+  background:#eef0ff;border-radius:6px;padding:3px 6px
+}
+.mode .best{margin-top:10px;font-size:11px;color:var(--warn);font-weight:700}
+
+/* ---------- game ---------- */
+.game-head{display:flex;align-items:center;gap:12px;margin-bottom:14px}
+.back{width:34px;height:34px;border-radius:11px;background:#fff;border:1px solid var(--line);display:grid;place-items:center;font-size:15px}
+.grow{flex:1;min-width:0}
+.bar{height:8px;border-radius:99px;background:#e8ebf8;overflow:hidden}
+.bar>i{display:block;height:100%;border-radius:99px;background:linear-gradient(90deg,var(--brand),var(--brand2));transition:width .35s}
+.hud{display:flex;align-items:center;gap:14px;font-size:12px;color:var(--ink2);font-weight:700}
+.hud b{color:var(--ink);font-size:14px}
+.combo{color:var(--warn)}
+
+.qbar{display:flex;align-items:center;gap:10px;margin-bottom:12px}
+.qtype{font-size:11px;font-weight:800;padding:4px 9px;border-radius:8px;background:#eef0ff;color:var(--brand)}
+.timer{height:6px;flex:1;border-radius:99px;background:#e8ebf8;overflow:hidden}
+.timer>i{display:block;height:100%;background:linear-gradient(90deg,#22d3ee,var(--brand));width:100%}
+.timer.low>i{background:linear-gradient(90deg,#fb7185,var(--bad))}
+
+.prompt{text-align:center;padding:18px 10px}
+.prompt .big{font-size:30px;font-weight:800;letter-spacing:.5px}
+.prompt .sub{margin-top:8px;font-size:13px;color:var(--ink2)}
+.prompt .hl-word{font-size:40px;font-weight:800;letter-spacing:1px}
+.hl{background:linear-gradient(transparent 62%, #ffe08a 62%);border-radius:3px;padding:0 1px}
+.listen-btn{
+  margin-top:12px;padding:11px 20px;border-radius:999px;background:linear-gradient(135deg,var(--brand),var(--brand2));
+  color:#fff;font-weight:800;font-size:14px;box-shadow:0 6px 18px rgba(91,91,214,.32);display:inline-flex;align-items:center;gap:8px
+}
+.listen-btn:active{transform:scale(.95)}
+
+.opts{display:grid;grid-template-columns:repeat(2,1fr);gap:10px;margin-top:6px}
+.opts.one{grid-template-columns:1fr}
+.opt{
+  padding:16px 12px;border-radius:14px;background:#fff;border:1.5px solid var(--line);font-size:17px;font-weight:700;
+  text-align:center;box-shadow:var(--sh);transition:.15s;min-height:62px;display:grid;place-items:center;gap:2px
+}
+.opt small{display:block;font-size:11px;font-weight:500;color:var(--ink2);margin-top:2px}
+.opt:active{transform:scale(.97)}
+.opt.ok{background:#ecfdf5;border-color:var(--ok);color:#047857;animation:pop .3s}
+.opt.bad{background:#fef2f2;border-color:var(--bad);color:#b91c1c;animation:shake .35s}
+.opt.dim{opacity:.35}
+@keyframes pop{0%{transform:scale(.9)}60%{transform:scale(1.05)}100%{transform:scale(1)}}
+@keyframes shake{0%,100%{transform:translateX(0)}25%{transform:translateX(-6px)}75%{transform:translateX(6px)}}
+
+.tip{margin-top:14px;padding:12px 14px;border-radius:14px;background:#fffbeb;border:1px solid #fde68a;font-size:13px;line-height:1.6}
+.tip.ok{background:#ecfdf5;border-color:#a7f3d0}
+.tip b{color:#b45309}
+.tip.ok b{color:#047857}
+
+/* ---------- 重音 ---------- */
+.syls{display:flex;flex-wrap:wrap;justify-content:center;gap:10px;margin:18px 0}
+.syl{
+  padding:14px 16px;border-radius:14px;background:#fff;border:1.5px solid var(--line);font-size:19px;font-weight:800;
+  box-shadow:var(--sh);transition:.15s
+}
+.syl:active{transform:scale(.94)}
+.syl.ok{background:#ecfdf5;border-color:var(--ok);color:#047857;animation:pop .3s}
+.syl.bad{background:#fef2f2;border-color:var(--bad);color:#b91c1c;animation:shake .35s}
+.syl.soft{border-style:dashed;opacity:.9}
+
+/* ---------- 拼词 ---------- */
+.slots{display:flex;flex-wrap:wrap;justify-content:center;gap:8px;margin:14px 0 6px}
+.slot{
+  min-width:52px;height:56px;border-radius:12px;border:2px dashed #cfd5f5;background:#fff;
+  display:grid;place-items:center;font-size:19px;font-weight:800;color:var(--ink)
+}
+.slot small{display:block;font-size:10px;font-weight:600;color:var(--ink2);margin-top:-2px}
+.slot.filled{border-style:solid;border-color:var(--brand);background:#f3f4ff}
+.blocks{display:flex;flex-wrap:wrap;justify-content:center;gap:8px;margin-top:14px}
+.blk{
+  min-width:46px;padding:12px 14px;border-radius:12px;background:#fff;border:1.5px solid var(--line);
+  font-size:18px;font-weight:800;box-shadow:var(--sh);transition:.15s
+}
+.blk:active{transform:scale(.93)}
+.blk.used{opacity:.25;pointer-events:none}
+.blk.wrong{background:#fef2f2;border-color:var(--bad);animation:shake .35s}
+
+/* ---------- 配对 ---------- */
+.mgrid{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin-top:8px}
+@media(max-width:520px){.mgrid{grid-template-columns:repeat(3,1fr)}}
+.mc{
+  aspect-ratio:1/1;border-radius:14px;background:#fff;border:1.5px solid var(--line);display:grid;place-items:center;
+  font-weight:800;font-size:15px;box-shadow:var(--sh);transition:.18s;text-align:center;padding:4px;overflow:hidden
+}
+.mc .ipa{font-size:17px}
+.mc.sel{background:#eef0ff;border-color:var(--brand);transform:translateY(-2px)}
+.mc.gone{opacity:0;transform:scale(.6);pointer-events:none;transition:.3s}
+.mc.hit{background:#ecfdf5;border-color:var(--ok)}
+.mc.miss{animation:shake .35s;border-color:var(--bad)}
+
+/* ---------- 结果 ---------- */
+.result{text-align:center;padding:20px 10px}
+.score{font-size:56px;font-weight:800;letter-spacing:-1px;background:linear-gradient(135deg,var(--brand),var(--pink));-webkit-background-clip:text;background-clip:text;color:transparent}
+.result .meta{margin:6px 0 18px;color:var(--ink2);font-size:13px}
+.acc{margin-top:18px;text-align:left}
+.acc h4{font-size:13px;margin-bottom:8px}
+.acc-item{display:flex;align-items:center;justify-content:space-between;gap:10px;padding:9px 12px;border-radius:11px;background:#fbfcff;border:1px solid var(--line);margin-bottom:6px;font-size:13px}
+.acc-item .no{color:var(--bad);font-weight:800}
+.acc-item .yes{color:var(--ok);font-weight:800}
+
+/* ---------- 音素卡 ---------- */
+.pgrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(96px,1fr));gap:10px}
+.pc{
+  padding:12px 8px;border-radius:14px;background:#fff;border:1.5px solid var(--line);text-align:center;
+  box-shadow:var(--sh);transition:.15s
+}
+.pc:active{transform:scale(.95)}
+.pc .s{font-size:22px;font-weight:800;color:var(--brand)}
+.pc .l{font-size:11px;color:var(--ink2);margin-top:2px}
+.pc.on{border-color:var(--brand);background:#f3f4ff}
+.mouth-wrap{display:flex;gap:14px;justify-content:center;flex-wrap:wrap;margin:6px 0 4px}
+.mouth-box{text-align:center}
+.mouth-box svg{display:block;margin:0 auto}
+.mouth-cap{font-size:12px;color:var(--ink2);margin-top:2px}
+.gauge{display:flex;align-items:center;gap:8px;font-size:11px;color:var(--ink2);margin-top:8px}
+.gauge .g{flex:1;height:6px;border-radius:99px;background:#e8ebf8;overflow:hidden}
+.gauge .g>i{display:block;height:100%;background:linear-gradient(90deg,var(--brand),var(--brand2));border-radius:99px}
+.wlist{display:flex;flex-wrap:wrap;gap:8px;margin-top:12px;justify-content:center}
+.wchip{
+  padding:8px 12px;border-radius:12px;background:#fff;border:1px solid var(--line);font-weight:700;font-size:14px;
+  box-shadow:var(--sh);display:flex;flex-direction:column;align-items:center;gap:2px
+}
+.wchip small{font-size:10px;font-weight:500;color:var(--ink2)}
+.wchip .cmb{color:var(--pink);font-weight:800}
+
+/* ---------- 录音 ---------- */
+.rec{display:flex;flex-direction:column;align-items:center;gap:10px;margin-top:14px}
+.rec-btn{
+  width:56px;height:56px;border-radius:50%;background:linear-gradient(135deg,#fb7185,var(--bad));color:#fff;font-size:22px;
+  box-shadow:0 8px 20px rgba(239,68,68,.35);display:grid;place-items:center
+}
+.rec-btn.recording{animation:pulse 1s infinite}
+@keyframes pulse{0%,100%{transform:scale(1);box-shadow:0 0 0 0 rgba(239,68,68,.5)}50%{transform:scale(1.06);box-shadow:0 0 0 12px rgba(239,68,68,0)}}
+.rec audio{max-width:100%}
+
+/* ---------- modal ---------- */
+.mask{position:fixed;inset:0;background:rgba(24,28,56,.5);backdrop-filter:blur(3px);z-index:60;display:grid;place-items:center;padding:16px;animation:fade .2s}
+.modal{
+  width:100%;max-width:560px;max-height:82vh;overflow:auto;background:#fff;border-radius:22px;padding:20px;
+  box-shadow:0 30px 70px rgba(20,25,60,.35);animation:rise .26s
+}
+@keyframes rise{from{transform:translateY(24px) scale(.97);opacity:0}to{transform:none;opacity:1}}
+.modal h3{font-size:17px;margin-bottom:4px}
+.modal .sub{font-size:12px;color:var(--ink2);margin-bottom:14px}
+.modal-close{position:sticky;top:0;float:right;margin:-6px -6px 0 0;width:30px;height:30px;border-radius:9px;background:#f1f3fb;font-size:14px}
+.steps{counter-reset:s}
+.step{position:relative;padding:0 0 16px 34px;border-left:2px dashed #e0e4f7;margin-left:11px}
+.step:last-child{border-left-color:transparent;padding-bottom:0}
+.step:before{
+  counter-increment:s;content:counter(s);position:absolute;left:-13px;top:0;width:26px;height:26px;border-radius:50%;
+  background:linear-gradient(135deg,var(--brand),var(--brand2));color:#fff;font-size:12px;font-weight:800;display:grid;place-items:center
+}
+.step h4{font-size:14px}
+.step p{margin:6px 0 0;font-size:13px;color:var(--ink2);line-height:1.65}
+.step code{background:#f1f3fb;padding:1px 6px;border-radius:6px;font-size:12px}
+.rowline{display:flex;align-items:center;justify-content:space-between;gap:10px;padding:11px 0;border-bottom:1px solid var(--line)}
+.rowline:last-child{border-bottom:0}
+.rowline .k{font-size:13px}
+.rowline .k small{display:block;color:var(--ink2);font-size:11px;margin-top:2px}
+.toggle{width:46px;height:26px;border-radius:99px;background:#dfe3f2;position:relative;transition:.2s;flex:0 0 auto}
+.toggle:after{content:"";position:absolute;top:3px;left:3px;width:20px;height:20px;border-radius:50%;background:#fff;transition:.2s;box-shadow:0 1px 3px rgba(0,0,0,.2)}
+.toggle.on{background:var(--brand)}
+.toggle.on:after{transform:translateX(20px)}
+.seg{display:flex;gap:6px}
+.seg button{padding:6px 12px;border-radius:9px;background:#f1f3fb;font-size:12px;font-weight:700;color:var(--ink2)}
+.seg button.on{background:var(--brand);color:#fff}
+
+.empty{text-align:center;padding:26px 10px;color:var(--ink2);font-size:13px}
+.btn-row{display:flex;gap:10px;margin-top:18px}
+.btn{
+  flex:1;padding:14px;border-radius:14px;font-weight:800;font-size:15px;text-align:center;transition:.15s
+}
+.btn:active{transform:scale(.97)}
+.btn.primary{background:linear-gradient(135deg,var(--brand),var(--brand2));color:#fff;box-shadow:0 8px 20px rgba(91,91,214,.3)}
+.btn.ghost{background:#fff;border:1px solid var(--line);color:var(--ink);box-shadow:var(--sh)}
+
+/* ---------- fx ---------- */
+#fx-root{position:fixed;inset:0;pointer-events:none;z-index:80;overflow:hidden}
+.cf{position:absolute;width:9px;height:14px;border-radius:2px;animation:fall 1.5s linear forwards}
+@keyframes fall{to{transform:translateY(110vh) rotate(720deg);opacity:0}}
+.toast{
+  position:fixed;left:50%;bottom:26px;transform:translateX(-50%);background:rgba(30,35,64,.94);color:#fff;
+  padding:11px 18px;border-radius:12px;font-size:13px;z-index:90;animation:rise .2s;box-shadow:0 10px 30px rgba(0,0,0,.3)
+}
+
+
+/* ================= 阶段化布局（新增） ================= */
+.totalrow{display:flex;align-items:center;gap:14px}
+.totalrow .grow{flex:1;min-width:0}
+
+/* ---------- 5 天计划 ---------- */
+.days{display:grid;gap:12px}
+.daycard{
+  text-align:left;padding:14px 16px;border-radius:var(--r);background:var(--card);
+  border:1.5px solid var(--line);box-shadow:var(--sh);transition:.18s
+}
+.daycard.on{border-color:var(--brand);box-shadow:0 10px 26px rgba(91,91,214,.16)}
+.daycard.done{background:#f5fdf9}
+.daycard:active{transform:scale(.99)}
+.day-top{display:flex;align-items:center;gap:8px;margin-bottom:4px}
+.day-no{font-size:11px;font-weight:800;color:var(--brand);background:#eef0ff;border-radius:8px;padding:3px 8px}
+.day-emo{font-size:20px}
+.day-flag{margin-left:auto;color:var(--ok);font-weight:800}
+.daycard b{font-size:15px}
+.daycard p{margin:4px 0 8px;font-size:12px;color:var(--ink2);line-height:1.55}
+.day-stages{display:flex;flex-wrap:wrap;gap:6px}
+.smini{
+  padding:6px 10px;border-radius:10px;background:#f6f7fd;border:1px solid var(--line);
+  font-size:12px;font-weight:700;display:flex;align-items:center;gap:6px
+}
+.smini small{color:var(--ink2);font-weight:600}
+.smini.done{background:#ecfdf5;border-color:#a7f3d0;color:#047857}
+.day-foot{display:flex;justify-content:space-between;align-items:center;font-size:11px;color:var(--ink2);margin-top:6px}
+.day-warm{font-size:11px;color:var(--ink2);margin-top:8px;padding-top:8px;border-top:1px dashed var(--line)}
+
+/* ---------- 阶段列表 ---------- */
+.stagelist{display:grid;gap:8px}
+.stagerow{
+  display:flex;align-items:center;gap:12px;padding:12px 14px;border-radius:14px;background:var(--card);
+  border:1px solid var(--line);box-shadow:var(--sh);text-align:left;transition:.15s
+}
+.stagerow:active{transform:scale(.99)}
+.stagerow .sr-no{font-size:20px;flex:0 0 auto}
+.stagerow .sr-body{flex:1;min-width:0}
+.stagerow .sr-body b{display:block;font-size:14px}
+.stagerow .sr-body small{display:block;font-size:11px;color:var(--ink2);margin-top:2px}
+.stagerow .sr-ring{flex:0 0 auto;font-size:12px;font-weight:800;color:var(--brand);
+  background:#eef0ff;border-radius:99px;padding:5px 10px;min-width:44px;text-align:center}
+.stagerow.done{background:#f5fdf9}
+.stagerow.done .sr-ring{background:#d1fae5;color:#047857}
+
+/* ---------- 阶段页 ---------- */
+.tabs{display:flex;gap:6px;background:#eef0f9;padding:5px;border-radius:14px;margin-bottom:14px}
+.tab{
+  flex:1;padding:10px 6px;border-radius:10px;font-size:13px;font-weight:800;color:var(--ink2);transition:.15s
+}
+.tab.on{background:#fff;color:var(--brand);box-shadow:0 2px 8px rgba(60,70,140,.12)}
+
+.card.goal p{margin:10px 0 0;font-size:14px;line-height:1.7}
+.card.chant p{margin:10px 0 0;font-size:19px;font-weight:800;line-height:1.5;color:var(--brand)}
+.two{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+@media(max-width:520px){.two{grid-template-columns:1fr}}
+ul.tips{margin:10px 0 0;padding-left:18px}
+ul.tips li{font-size:13px;color:var(--ink2);line-height:1.7;margin-bottom:4px}
+
+.stage-nav{display:flex;justify-content:space-between;margin:18px 0 6px}
+
+/* ---------- 知识点卡（学一学） ---------- */
+.kpbox{border:1px solid var(--line);border-radius:14px;background:#fff;box-shadow:var(--sh);overflow:hidden}
+.kpbox.on{border-color:var(--brand)}
+.kphead{
+  width:100%;display:flex;align-items:center;gap:10px;padding:12px 14px;text-align:left;flex-wrap:wrap
+}
+.kp-ipa{font-size:19px;font-weight:800;color:var(--brand);min-width:52px}
+.kp-name{flex:1;min-width:120px;font-size:13px;font-weight:700}
+.kp-cmb{display:flex;gap:4px;flex-wrap:wrap}
+.kp-cmb code{background:#f6f7fd;border:1px solid var(--line);border-radius:6px;padding:2px 7px;font-size:12px;color:var(--pink);font-weight:800}
+.kp-ar{flex:0 0 auto;width:22px;text-align:center;color:var(--ink2);font-weight:800}
+.kpbody{padding:0 14px 14px;border-top:1px dashed var(--line)}
+.lk{background:none;padding:0;font-size:inherit;color:inherit;text-decoration:underline;text-decoration-style:dotted}
+
+/* ---------- 规则表 ---------- */
+.rtable{display:grid;gap:8px}
+.rrow{
+  display:flex;gap:12px;padding:11px 13px;border-radius:12px;background:#fff;
+  border:1px solid var(--line);box-shadow:var(--sh)
+}
+.rrow .rname{flex:0 0 118px}
+.rrow .rname b{display:block;font-size:13px}
+.rrow .rname small{display:block;font-size:11px;color:var(--ink2);margin-top:2px}
+.rrow .rbody{flex:1;min-width:0;font-size:12px;color:var(--ink);line-height:1.6}
+.rrow .rbody small{color:var(--ink2);font-size:11px}
+@media(max-width:520px){.rrow{flex-direction:column;gap:4px}.rrow .rname{flex:none}}
+
+/* ---------- 关卡列表（练一练） ---------- */
+.lvlist{display:grid;gap:10px}
+.lvrow{
+  display:flex;align-items:center;gap:12px;padding:13px 14px;border-radius:14px;background:#fff;
+  border:1px solid var(--line);box-shadow:var(--sh)
+}
+.lvrow.done{background:#f5fdf9;border-color:#a7f3d0}
+.lv-main{flex:1;min-width:0}
+.lv-top{display:flex;align-items:center;gap:8px}
+.lv-top b{font-size:14px}
+.lv-n{font-size:11px;font-weight:800;color:var(--brand);background:#eef0ff;border-radius:8px;padding:2px 8px}
+.lv-sub{font-size:11px;color:var(--ink2);margin-top:5px;line-height:1.5}
+.lv-pts{display:flex;flex-wrap:wrap;gap:4px;margin-top:7px}
+.lv-pts .pt{
+  font-size:11px;padding:3px 8px;border-radius:7px;background:#f6f7fd;border:1px solid var(--line);color:var(--ink2)
+}
+.lv-pts .pt.mid{background:#fffbeb;border-color:#fde68a;color:#b45309}
+.lv-pts .pt.ok{background:#ecfdf5;border-color:#a7f3d0;color:#047857}
+
+/* ---------- 题目里的音素串 ---------- */
+.snds{display:flex;flex-wrap:wrap;justify-content:center;align-items:center;gap:6px;margin:14px 0 4px}
+.snd{font-size:20px;font-weight:800;color:var(--brand);background:#eef0ff;border-radius:10px;padding:8px 12px}
+.snds .plus{color:var(--ink2);font-weight:800}
+.rulebox{
+  margin:10px 0;padding:14px;border-radius:14px;background:#f6f7fd;border:1px dashed #cfd5f5;
+  font-size:14px;line-height:1.7;text-align:center
+}
+
+/* ---------- 说明弹窗 ---------- */
+.mdoc h4{font-size:14px;margin:16px 0 6px}
+.mdoc h4:first-child{margin-top:0}
+.mdoc p{margin:0;font-size:13px;color:var(--ink2);line-height:1.75}
+
+</style>
+</head>
+<body>
+
+<header class="topbar">
+  <div class="brand" data-act="home" style="cursor:pointer">
+    <span class="logo">PQ</span>
+    <div class="brand-txt">
+      <b>Phonics Quest</b>
+      <small>英式自然拼读闯关</small>
+    </div>
+  </div>
+  <div class="top-actions">
+    <button class="icon-btn" data-act="method" title="设计依据"><span style="font-size:10px;font-weight:800;line-height:1.2">📖<br>依据</span></button>
+    <button class="icon-btn" data-act="review" title="错题本"><span style="font-size:10px;font-weight:800;line-height:1.2">📕<br>错</span><span class="badge" id="wrong-badge">0</span></button>
+    <button class="icon-btn" id="btn-sound" data-act="sound" title="发音开关"><span style="font-size:10px;font-weight:800;line-height:1.2">🔊<br>音</span></button>
+  </div>
+</header>
+
+<main id="app"></main>
+
+<div id="modal-root"></div>
+<div id="fx-root"></div>
+
+<script>
+/* Phonics Quest — 数据层
+ * 英式 RP 音标体系：音素 -> 字母组合 -> 例词
+ * 每个例词: { w 单词, ipa 音标, c 该音对应的字母组合, idx? 手动指定组合起始下标 }
+ */
+
+const LETTERS_GROUP = {
+  id: 'letters', name: '字母本音', emoji: '🔤',
+  desc: '第一层级：26 个字母最常见的发音（此处收录尚未单独成组的辅音）',
+  phonemes: [
+    {
+      ipa: '/b/', sym: 'b', label: '字母 Bb',
+      combos: ['b', 'bb'],
+      mouth: { open: .10, round: .05, spread: .10, place: '双唇' },
+      say: '双唇紧闭，蓄气后突然放开，声带振动（浊音）',
+      vs: '易混 /p/：/p/ 是清音且送气强，放张纸在嘴前会吹动；/b/ 不吹动',
+      words: [
+        { w: 'bat', ipa: '/bæt/', c: 'b' },
+        { w: 'bed', ipa: '/bed/', c: 'b' },
+        { w: 'big', ipa: '/bɪɡ/', c: 'b' },
+        { w: 'rabbit', ipa: '/ˈræbɪt/', c: 'bb' },
+        { w: 'table', ipa: '/ˈteɪbəl/', c: 'b' }
+      ]
+    },
+    {
+      ipa: '/d/', sym: 'd', label: '字母 Dd',
+      combos: ['d', 'dd', 'ed'],
+      mouth: { open: .15, round: .05, spread: .15, place: '齿龈' },
+      say: '舌尖抵住上齿龈后放开，声带振动（浊音）',
+      vs: '易混 /t/（清音送气）；词尾 -ed 在浊音后读 /d/（played /pleɪd/）',
+      words: [
+        { w: 'dog', ipa: '/dɒɡ/', c: 'd' },
+        { w: 'dad', ipa: '/dæd/', c: 'd' },
+        { w: 'duck', ipa: '/dʌk/', c: 'd' },
+        { w: 'red', ipa: '/red/', c: 'd' },
+        { w: 'middle', ipa: '/ˈmɪdəl/', c: 'dd' },
+        { w: 'played', ipa: '/pleɪd/', c: 'ed', note: '词尾 -ed 在浊音后读 /d/' }
+      ]
+    },
+    {
+      ipa: '/ɡ/', sym: 'ɡ', label: '字母 Gg（硬音）',
+      combos: ['g', 'gg', 'gu', 'gh'],
+      mouth: { open: .25, round: .05, spread: .20, place: '软腭' },
+      say: '舌后部抵住软腭后放开，声带振动（浊音）',
+      vs: '⚠️ 软 g：g 在 e/i/y 前读 /dʒ/（gem, giant, gym）；此处为硬音 /ɡ/',
+      words: [
+        { w: 'girl', ipa: '/ɡɜːl/', c: 'g' },
+        { w: 'game', ipa: '/ɡeɪm/', c: 'g' },
+        { w: 'go', ipa: '/ɡəʊ/', c: 'g' },
+        { w: 'big', ipa: '/bɪɡ/', c: 'g' },
+        { w: 'guest', ipa: '/ɡest/', c: 'gu', note: 'gu 中 u 不发音' },
+        { w: 'ghost', ipa: '/ɡəʊst/', c: 'gh', note: 'gh 中 h 不发音' },
+        { w: 'bigger', ipa: '/ˈbɪɡə/', c: 'gg' }
+      ]
+    },
+    {
+      ipa: '/l/', sym: 'l', label: '字母 Ll',
+      combos: ['l', 'll'],
+      mouth: { open: .20, round: .05, spread: .20, place: '齿龈' },
+      say: '舌尖抵上齿龈，气流从舌头两侧流出，声带振动',
+      vs: '词尾的 l（如 milk, ball）英式发“暗 l”，舌后略抬；与 /r/ 对比练习',
+      words: [
+        { w: 'leg', ipa: '/leɡ/', c: 'l' },
+        { w: 'lip', ipa: '/lɪp/', c: 'l' },
+        { w: 'log', ipa: '/lɒɡ/', c: 'l' },
+        { w: 'ball', ipa: '/bɔːl/', c: 'll' },
+        { w: 'milk', ipa: '/mɪlk/', c: 'l' }
+      ]
+    },
+    {
+      ipa: '/m/', sym: 'm', label: '字母 Mm',
+      combos: ['m', 'mm', 'mb'],
+      mouth: { open: .08, round: .05, spread: .10, place: '双唇鼻音' },
+      say: '双唇闭合，气流从鼻腔出来，声带振动（鼻音）',
+      vs: '⚠️ -mb 词尾 b 不发音：lamb /læm/、comb /kəʊm/、climb /klaɪm/',
+      words: [
+        { w: 'man', ipa: '/mæn/', c: 'm' },
+        { w: 'map', ipa: '/mæp/', c: 'm' },
+        { w: 'milk', ipa: '/mɪlk/', c: 'm' },
+        { w: 'summer', ipa: '/ˈsʌmə/', c: 'mm' },
+        { w: 'lamb', ipa: '/læm/', c: 'mb', note: '⚠️ b 不发音' }
+      ]
+    },
+    {
+      ipa: '/n/', sym: 'n', label: '字母 Nn',
+      combos: ['n', 'nn', 'kn'],
+      mouth: { open: .15, round: .05, spread: .18, place: '齿龈鼻音' },
+      say: '舌尖抵上齿龈，气流从鼻腔出来，声带振动（鼻音）',
+      vs: '⚠️ kn- 词首 k 不发音：knife /naɪf/、knee /niː/、know /nəʊ/；k/g 前的 n 读 /ŋ/',
+      words: [
+        { w: 'nut', ipa: '/nʌt/', c: 'n' },
+        { w: 'net', ipa: '/net/', c: 'n' },
+        { w: 'nap', ipa: '/næp/', c: 'n' },
+        { w: 'sunny', ipa: '/ˈsʌni/', c: 'nn' },
+        { w: 'knife', ipa: '/naɪf/', c: 'kn', note: '⚠️ k 不发音' }
+      ]
+    },
+    {
+      ipa: '/p/', sym: 'p', label: '字母 Pp',
+      combos: ['p', 'pp'],
+      mouth: { open: .10, round: .05, spread: .10, place: '双唇' },
+      say: '双唇闭合后突然放开，送出一股强气流（清音）',
+      vs: '与 /b/ 对比：/p/ 送气强（纸片会动），/b/ 不送气且声带振动',
+      words: [
+        { w: 'pig', ipa: '/pɪɡ/', c: 'p' },
+        { w: 'pen', ipa: '/pen/', c: 'p' },
+        { w: 'pot', ipa: '/pɒt/', c: 'p' },
+        { w: 'apple', ipa: '/ˈæpəl/', c: 'pp' },
+        { w: 'happy', ipa: '/ˈhæpi/', c: 'pp' }
+      ]
+    },
+    {
+      ipa: '/t/', sym: 't', label: '字母 Tt',
+      combos: ['t', 'tt', 'ed'],
+      mouth: { open: .15, round: .05, spread: .18, place: '齿龈' },
+      say: '舌尖抵上齿龈后突然放开，送出强气流（清音）',
+      vs: '词尾 -ed 在清音后读 /t/（jumped /dʒʌmpt/、washed /wɒʃt/）',
+      words: [
+        { w: 'top', ipa: '/tɒp/', c: 't' },
+        { w: 'ten', ipa: '/ten/', c: 't' },
+        { w: 'tap', ipa: '/tæp/', c: 't' },
+        { w: 'butter', ipa: '/ˈbʌtə/', c: 'tt' },
+        { w: 'jumped', ipa: '/dʒʌmpt/', c: 'ed', note: '词尾 -ed 在清音后读 /t/' }
+      ]
+    },
+    {
+      ipa: '/v/', sym: 'v', label: '字母 Vv',
+      combos: ['v', 'f', 've'],
+      mouth: { open: .15, round: .05, spread: .25, place: '唇齿' },
+      say: '上齿轻咬下唇，气流摩擦而出，声带振动（浊音）',
+      vs: '易混 /f/（清音）；极少数词 f 也读 /v/：of /ɒv/',
+      words: [
+        { w: 'van', ipa: '/væn/', c: 'v' },
+        { w: 'vet', ipa: '/vet/', c: 'v' },
+        { w: 'vest', ipa: '/vest/', c: 'v' },
+        { w: 'love', ipa: '/lʌv/', c: 've' },
+        { w: 'of', ipa: '/ɒv/', c: 'f', note: '⚠️ 特殊词：of 的 f 读 /v/' }
+      ]
+    },
+    {
+      ipa: '/z/', sym: 'z', label: '字母 Zz',
+      combos: ['z', 'zz', 's', 'se'],
+      mouth: { open: .15, round: .05, spread: .40, place: '齿龈' },
+      say: '嘴型同 /s/，但声带振动（浊音）',
+      vs: '⚠️ 词尾 -s 在浊音后读 /z/（dogs /dɒɡz/、cows）；在清音后读 /s/（cats /kæts/）',
+      words: [
+        { w: 'zoo', ipa: '/zuː/', c: 'z' },
+        { w: 'zip', ipa: '/zɪp/', c: 'z' },
+        { w: 'zero', ipa: '/ˈzɪərəʊ/', c: 'z' },
+        { w: 'dogs', ipa: '/dɒɡz/', c: 's', note: '词尾 -s 在浊音后读 /z/' },
+        { w: 'nose', ipa: '/nəʊz/', c: 'se' },
+        { w: 'is', ipa: '/ɪz/', c: 's' },
+        { w: 'buzz', ipa: '/bʌz/', c: 'zz' }
+      ]
+    },
+    {
+      ipa: '/ks/', sym: 'ks', label: '字母 Xx',
+      combos: ['x', 'cks'],
+      mouth: { open: .22, round: .05, spread: .25, place: '软腭+齿龈' },
+      say: '/k/ 与 /s/ 快速连发，一个字母发两个音',
+      vs: 'x 在词首发 /z/（xylophone）；词中常读 /ks/（box, six, fox）或 /ɡz/（exam）',
+      words: [
+        { w: 'fox', ipa: '/fɒks/', c: 'x' },
+        { w: 'box', ipa: '/bɒks/', c: 'x' },
+        { w: 'six', ipa: '/sɪks/', c: 'x' },
+        { w: 'next', ipa: '/nekst/', c: 'x' },
+        { w: 'socks', ipa: '/sɒks/', c: 'cks' }
+      ]
+    },
+    {
+      ipa: '/kw/', sym: 'kw', label: 'qu 组合（字母 Qq）',
+      combos: ['qu'],
+      mouth: { open: .20, round: .60, spread: .05, place: '软腭+双唇' },
+      say: '/k/ 与 /w/ 连发：先舌后抵软腭，双唇立刻收圆滑出',
+      vs: '⚠️ q 后面永远跟 u，qu 一起读 /kw/；que 在词尾（unique /juˈniːk/）',
+      words: [
+        { w: 'queen', ipa: '/kwiːn/', c: 'qu' },
+        { w: 'quick', ipa: '/kwɪk/', c: 'qu' },
+        { w: 'quit', ipa: '/kwɪt/', c: 'qu' },
+        { w: 'question', ipa: '/ˈkwestʃən/', c: 'qu' },
+        { w: 'quiet', ipa: '/ˈkwaɪət/', c: 'qu' }
+      ]
+    }
+  ]
+};
+
+const GROUPS = [LETTERS_GROUP,
+  {
+    id: 'short', name: '短元音组', emoji: '🔴',
+    desc: '英式与美式差别最大的一组，入门必练',
+    phonemes: [
+      {
+        ipa: '/ɪ/', sym: 'ɪ', label: '短音 i',
+        combos: ['i', 'y', 'e', 'u', 'ui'],
+        mouth: { open: .30, round: .10, spread: .32, place: '前' },
+        say: '嘴角微微张开，舌位比 /iː/ 略低、略后，短促弹出，肌肉放松',
+        vs: '易混 /iː/：/iː/ 嘴角咧开、肌肉紧、音更长；/ɪ/ 松而短',
+        words: [
+          { w: 'sit', ipa: '/sɪt/', c: 'i' },
+          { w: 'fish', ipa: '/fɪʃ/', c: 'i' },
+          { w: 'gym', ipa: '/dʒɪm/', c: 'y' },
+          { w: 'pretty', ipa: '/ˈprɪti/', c: 'e' },
+          { w: 'busy', ipa: '/ˈbɪzi/', c: 'u' },
+          { w: 'build', ipa: '/bɪld/', c: 'ui' },
+          { w: 'village', ipa: '/ˈvɪlɪdʒ/', c: 'i' },
+          { w: 'sister', ipa: '/ˈsɪstə/', c: 'i' },
+          { w: 'pig', ipa: '/pɪɡ/', c: 'i' },
+          { w: 'kid', ipa: '/kɪd/', c: 'i' },
+          { w: 'win', ipa: '/wɪn/', c: 'i' },
+          { w: 'ink', ipa: '/ɪŋk/', c: 'i' }
+        ]
+      },
+      {
+        ipa: '/e/', sym: 'e', label: '短音 e',
+        combos: ['e', 'ea', 'a', 'ai', 'ie'],
+        mouth: { open: .45, round: .10, spread: .45, place: '前' },
+        say: '嘴张开约一指宽，舌前部抬起，嘴角略向两侧，短促',
+        vs: '易混 /æ/：/æ/ 嘴张得更开、更扁；/e/ 开口小一档',
+        words: [
+          { w: 'bed', ipa: '/bed/', c: 'e' },
+          { w: 'head', ipa: '/hed/', c: 'ea' },
+          { w: 'bread', ipa: '/bred/', c: 'ea' },
+          { w: 'any', ipa: '/ˈeni/', c: 'a' },
+          { w: 'said', ipa: '/sed/', c: 'ai', note: '⚠️ 特殊词：不读 /seɪd/' },
+          { w: 'friend', ipa: '/frend/', c: 'ie' },
+          { w: 'weather', ipa: '/ˈweðə/', c: 'ea' },
+          { w: 'many', ipa: '/ˈmeni/', c: 'a' },
+          { w: 'red', ipa: '/red/', c: 'e' },
+          { w: 'pen', ipa: '/pen/', c: 'e' },
+          { w: 'ten', ipa: '/ten/', c: 'e' },
+          { w: 'web', ipa: '/web/', c: 'e' }
+        ]
+      },
+      {
+        ipa: '/æ/', sym: 'æ', label: '短音 a',
+        combos: ['a'],
+        mouth: { open: .72, round: .08, spread: .55, place: '前' },
+        say: '嘴张到最大（约两指），下巴下沉，舌平放，嘴角向两侧拉开',
+        vs: '英式 /æ/ 比美式更靠前、更扁，不要拖长',
+        words: [
+          { w: 'cat', ipa: '/kæt/', c: 'a' },
+          { w: 'apple', ipa: '/ˈæpəl/', c: 'a' },
+          { w: 'bad', ipa: '/bæd/', c: 'a' },
+          { w: 'hand', ipa: '/hænd/', c: 'a' },
+          { w: 'map', ipa: '/mæp/', c: 'a' },
+          { w: 'black', ipa: '/blæk/', c: 'a' },
+          { w: 'family', ipa: '/ˈfæməli/', c: 'a' },
+          { w: 'animal', ipa: '/ˈænɪml/', c: 'a' },
+          { w: 'bag', ipa: '/bæɡ/', c: 'a' },
+          { w: 'hat', ipa: '/hæt/', c: 'a' },
+          { w: 'fan', ipa: '/fæn/', c: 'a' },
+          { w: 'map2', ipa: '/mæp/', c: 'a' }
+        ]
+      },
+      {
+        ipa: '/ʌ/', sym: 'ʌ', label: '短音 u',
+        combos: ['u', 'o', 'ou', 'oo'],
+        mouth: { open: .50, round: .15, spread: .25, place: '中后' },
+        say: '嘴自然半开，不圆唇，舌中部抬起，短促有力',
+        vs: '易混 /ɑː/：/ʌ/ 短；易混 /ɒ/：/ɒ/ 要圆唇',
+        words: [
+          { w: 'cup', ipa: '/kʌp/', c: 'u' },
+          { w: 'come', ipa: '/kʌm/', c: 'o' },
+          { w: 'young', ipa: '/jʌŋ/', c: 'ou' },
+          { w: 'blood', ipa: '/blʌd/', c: 'oo', note: '⚠️ 特殊词：blood 不发 /uː/' },
+          { w: 'love', ipa: '/lʌv/', c: 'o' },
+          { w: 'mother', ipa: '/ˈmʌðə/', c: 'o' },
+          { w: 'touch', ipa: '/tʌtʃ/', c: 'ou' },
+          { w: 'enough', ipa: '/ɪˈnʌf/', c: 'ou' },
+          { w: 'sun', ipa: '/sʌn/', c: 'u' },
+          { w: 'bug', ipa: '/bʌɡ/', c: 'u' },
+          { w: 'run', ipa: '/rʌn/', c: 'u' },
+          { w: 'jug', ipa: '/dʒʌɡ/', c: 'u' }
+        ]
+      },
+      {
+        ipa: '/ɒ/', sym: 'ɒ', label: '短音 o（英式特有）',
+        combos: ['o', 'a', 'au', 'ou'],
+        mouth: { open: .65, round: .55, spread: .05, place: '后' },
+        say: '嘴收圆并张开，舌后部略抬，短促。英式独有的圆唇短音',
+        vs: '易混 /ɔː/：/ɔː/ 嘴更圆更小、音更长；易混美式 /ɑː/（美式常把 hot 读成 /hɑːt/）',
+        words: [
+          { w: 'hot', ipa: '/hɒt/', c: 'o' },
+          { w: 'dog', ipa: '/dɒɡ/', c: 'o' },
+          { w: 'want', ipa: '/wɒnt/', c: 'a' },
+          { w: 'wash', ipa: '/wɒʃ/', c: 'a' },
+          { w: 'because', ipa: '/bɪˈkɒz/', c: 'au' },
+          { w: 'cough', ipa: '/kɒf/', c: 'ou' },
+          { w: 'holiday', ipa: '/ˈhɒlədeɪ/', c: 'o' },
+          { w: 'bottle', ipa: '/ˈbɒtəl/', c: 'o' },
+          { w: 'pot', ipa: '/pɒt/', c: 'o' },
+          { w: 'fox', ipa: '/fɒks/', c: 'o' },
+          { w: 'log', ipa: '/lɒɡ/', c: 'o' },
+          { w: 'box', ipa: '/bɒks/', c: 'o' }
+        ]
+      },
+      {
+        ipa: '/ʊ/', sym: 'ʊ', label: '短音 u（松）',
+        combos: ['u', 'oo', 'ou'],
+        mouth: { open: .30, round: .50, spread: .05, place: '后' },
+        say: '双唇收圆但放松，舌后部抬起，短促',
+        vs: '易混 /uː/：/uː/ 更圆更紧更长；/ʊ/ 是它的松音版',
+        words: [
+          { w: 'put', ipa: '/pʊt/', c: 'u' },
+          { w: 'book', ipa: '/bʊk/', c: 'oo' },
+          { w: 'good', ipa: '/ɡʊd/', c: 'oo' },
+          { w: 'foot', ipa: '/fʊt/', c: 'oo' },
+          { w: 'could', ipa: '/kʊd/', c: 'ou' },
+          { w: 'would', ipa: '/wʊd/', c: 'ou' },
+          { w: 'sugar', ipa: '/ˈʃʊɡə/', c: 'u' },
+          { w: 'full', ipa: '/fʊl/', c: 'u' }
+        ]
+      },
+      {
+        ipa: '/ə/', sym: 'ə', label: '弱读中央元音（英式最高频）',
+        combos: ['a', 'e', 'i', 'o', 'u', 'er', 'or', 'ou'],
+        mouth: { open: .30, round: .20, spread: .18, place: '中央' },
+        say: '最省力的音：嘴、舌完全放松，轻而短，一带而过',
+        vs: '口诀：非重读音节里的元音，八成读 /ə/。念重了就不像英式',
+        words: [
+          { w: 'about', ipa: '/əˈbaʊt/', c: 'a' },
+          { w: 'teacher', ipa: '/ˈtiːtʃə/', c: 'er' },
+          { w: 'sofa', ipa: '/ˈsəʊfə/', c: 'a' },
+          { w: 'famous', ipa: '/ˈfeɪməs/', c: 'ou' },
+          { w: 'today', ipa: '/təˈdeɪ/', c: 'o' },
+          { w: 'doctor', ipa: '/ˈdɒktə/', c: 'or' },
+          { w: 'banana', ipa: '/bəˈnɑːnə/', c: 'a' },
+          { w: 'supply', ipa: '/səˈplaɪ/', c: 'u' },
+          { w: 'the', ipa: '/ðə/', c: 'e' },
+          { w: 'pencil', ipa: '/ˈpensəl/', c: 'i' }
+        ]
+      },
+      {
+        ipa: '/i/', sym: 'i', label: '词尾 y 的松音（happY）',
+        combos: ['y', 'ey', 'ie'],
+        mouth: { open: .26, round: .06, spread: .55, place: '前' },
+        say: '嘴角略咧，比 /iː/ 短而松，比 /ɪ/ 更紧，常出现在词尾',
+        vs: '英式词典标作 /i/：happy /ˈhæpi/。第七层级 Y 作元音：单音节词尾读 /aɪ/（my），多音节词尾读 /i/（happy），词中闭音节读 /ɪ/（gym）',
+        words: [
+          { w: 'happy', ipa: '/ˈhæpi/', c: 'y' },
+          { w: 'baby', ipa: '/ˈbeɪbi/', c: 'y' },
+          { w: 'sunny', ipa: '/ˈsʌni/', c: 'y' },
+          { w: 'rainy', ipa: '/ˈreɪni/', c: 'y' },
+          { w: 'money', ipa: '/ˈmʌni/', c: 'ey' },
+          { w: 'cookie', ipa: '/ˈkʊki/', c: 'ie' }
+        ]
+      }
+    ]
+  },
+  {
+    id: 'long', name: '长元音组', emoji: '🔵',
+    desc: '记住“长音符号 ː”，嘴型固定、拉长',
+    phonemes: [
+      {
+        ipa: '/iː/', sym: 'iː', label: '长音 e',
+        combos: ['ee', 'ea', 'e_e', 'e', 'ie', 'ei', 'ey', 'eo'],
+        mouth: { open: .22, round: .05, spread: .70, place: '前' },
+        say: '嘴角向两侧咧开，肌肉绷紧，舌位最高最前，音拉长',
+        vs: '典型对应：ee（see）/ ea（tea）/ e_e（these）',
+        words: [
+          { w: 'see', ipa: '/siː/', c: 'ee' },
+          { w: 'tea', ipa: '/tiː/', c: 'ea' },
+          { w: 'these', ipa: '/ðiːz/', c: 'e_e' },
+          { w: 'be', ipa: '/biː/', c: 'e' },
+          { w: 'chief', ipa: '/tʃiːf/', c: 'ie' },
+          { w: 'receive', ipa: '/rɪˈsiːv/', c: 'ei' },
+          { w: 'key', ipa: '/kiː/', c: 'ey' },
+          { w: 'people', ipa: '/ˈpiːpəl/', c: 'eo' }
+        ]
+      },
+      {
+        ipa: '/ɑː/', sym: 'ɑː', label: '长音 a',
+        combos: ['ar', 'a', 'al', 'au', 'ear'],
+        mouth: { open: .80, round: .10, spread: .30, place: '后' },
+        say: '嘴张到最大，舌后缩，喉部打开，音拉长',
+        vs: '英式关键：car 读 /kɑː/，词尾 r 不卷舌；bath /bɑːθ/ 用 /ɑː/（美式用 /æ/）',
+        words: [
+          { w: 'car', ipa: '/kɑː/', c: 'ar' },
+          { w: 'bath', ipa: '/bɑːθ/', c: 'a' },
+          { w: 'father', ipa: '/ˈfɑːðə/', c: 'a' },
+          { w: 'half', ipa: '/hɑːf/', c: 'al' },
+          { w: 'heart', ipa: '/hɑːt/', c: 'ear' },
+          { w: 'laugh', ipa: '/lɑːf/', c: 'au' },
+          { w: 'calm', ipa: '/kɑːm/', c: 'al' },
+          { w: 'park', ipa: '/pɑːk/', c: 'ar' }
+        ]
+      },
+      {
+        ipa: '/ɔː/', sym: 'ɔː', label: '长音 o',
+        combos: ['or', 'aw', 'au', 'al', 'ore', 'oor', 'our', 'augh', 'ough', 'ar'],
+        mouth: { open: .50, round: .80, spread: .00, place: '后' },
+        say: '双唇收得又圆又小并向前突出，舌后抬高，音拉长',
+        vs: '易混 /ɒ/：嘴更圆更小、更长；美式常读成 /ɔ/ 并带 r 色彩',
+        words: [
+          { w: 'for', ipa: '/fɔː/', c: 'or' },
+          { w: 'saw', ipa: '/sɔː/', c: 'aw' },
+          { w: 'autumn', ipa: '/ˈɔːtəm/', c: 'au' },
+          { w: 'talk', ipa: '/tɔːk/', c: 'al' },
+          { w: 'more', ipa: '/mɔː/', c: 'ore' },
+          { w: 'door', ipa: '/dɔː/', c: 'oor' },
+          { w: 'four', ipa: '/fɔː/', c: 'our' },
+          { w: 'taught', ipa: '/tɔːt/', c: 'augh' },
+          { w: 'bought', ipa: '/bɔːt/', c: 'ough' },
+          { w: 'warm', ipa: '/wɔːm/', c: 'ar' }
+        ]
+      },
+      {
+        ipa: '/uː/', sym: 'uː', label: '长音 u',
+        combos: ['oo', 'u_e', 'ue', 'ew', 'ou', 'o', 'ui', 'oe', 'ough', 'u'],
+        mouth: { open: .25, round: .85, spread: .00, place: '后' },
+        say: '双唇高度收圆前突（像吹口哨），舌后抬到最高，音拉长',
+        vs: '易混 /ʊ/：短而松；/juː/ 前还有个 /j/（new 英式读 /njuː/，美式常 /nuː/）',
+        words: [
+          { w: 'food', ipa: '/fuːd/', c: 'oo' },
+          { w: 'rude', ipa: '/ruːd/', c: 'u_e' },
+          { w: 'blue', ipa: '/bluː/', c: 'ue' },
+          { w: 'new', ipa: '/njuː/', c: 'ew', note: '英式 /njuː/，不是 /nuː/' },
+          { w: 'you', ipa: '/juː/', c: 'ou' },
+          { w: 'do', ipa: '/duː/', c: 'o' },
+          { w: 'fruit', ipa: '/fruːt/', c: 'ui' },
+          { w: 'group', ipa: '/ɡruːp/', c: 'ou' },
+          { w: 'shoe', ipa: '/ʃuː/', c: 'oe' },
+          { w: 'through', ipa: '/θruː/', c: 'ough' },
+          { w: 'June', ipa: '/dʒuːn/', c: 'u' }
+        ]
+      },
+      {
+        ipa: '/ɜː/', sym: 'ɜː', label: '长音 er（英式难点）',
+        combos: ['er', 'ir', 'ur', 'ear', 'or', 'our'],
+        mouth: { open: .40, round: .25, spread: .18, place: '中央' },
+        say: '类似北京话“儿”但**绝不卷舌**：舌中部抬起，唇不圆不扁，音拉长',
+        vs: '对比美式 /ɝː/：美式要卷舌，英式不卷。词尾 r（her）不发音成 /r/',
+        words: [
+          { w: 'her', ipa: '/hɜː/', c: 'er' },
+          { w: 'bird', ipa: '/bɜːd/', c: 'ir' },
+          { w: 'turn', ipa: '/tɜːn/', c: 'ur' },
+          { w: 'learn', ipa: '/lɜːn/', c: 'ear' },
+          { w: 'work', ipa: '/wɜːk/', c: 'or' },
+          { w: 'world', ipa: '/wɜːld/', c: 'or' },
+          { w: 'journey', ipa: '/ˈdʒɜːni/', c: 'our' },
+          { w: 'nurse', ipa: '/nɜːs/', c: 'ur' },
+          { w: 'girl', ipa: '/ɡɜːl/', c: 'ir' }
+        ]
+      }
+    ]
+  },
+  {
+    id: 'diph', name: '双元音组', emoji: '🟣',
+    desc: '两个元音滑在一起，前重后轻、一气呵成',
+    phonemes: [
+      {
+        ipa: '/eɪ/', sym: 'eɪ', label: '字母 A 的名字',
+        combos: ['a_e', 'ai', 'ay', 'ei', 'ea', 'ey'],
+        mouth: { open: .42, round: .10, spread: .50, place: '前' },
+        say: '从 /e/ 滑向 /ɪ/，起点开口较大，终点嘴角咧开',
+        vs: '拼写规律：a_e（make）/ ai（rain）/ ay（day）',
+        words: [
+          { w: 'make', ipa: '/meɪk/', c: 'a_e' },
+          { w: 'rain', ipa: '/reɪn/', c: 'ai' },
+          { w: 'day', ipa: '/deɪ/', c: 'ay' },
+          { w: 'eight', ipa: '/eɪt/', c: 'ei' },
+          { w: 'great', ipa: '/ɡreɪt/', c: 'ea' },
+          { w: 'they', ipa: '/ðeɪ/', c: 'ey' },
+          { w: 'weight', ipa: '/weɪt/', c: 'ei' },
+          { w: 'name', ipa: '/neɪm/', c: 'a_e' }
+        ]
+      },
+      {
+        ipa: '/aɪ/', sym: 'aɪ', label: '字母 I 的名字',
+        combos: ['i_e', 'igh', 'y', 'ie', 'i'],
+        mouth: { open: .70, round: .10, spread: .40, place: '前' },
+        say: '从大开口 /a/ 滑向 /ɪ/，动程大，不要拖成两个音',
+        vs: '拼写规律：i_e（like）/ igh（light）/ y（my）',
+        words: [
+          { w: 'like', ipa: '/laɪk/', c: 'i_e' },
+          { w: 'light', ipa: '/laɪt/', c: 'igh' },
+          { w: 'my', ipa: '/maɪ/', c: 'y' },
+          { w: 'pie', ipa: '/paɪ/', c: 'ie' },
+          { w: 'find', ipa: '/faɪnd/', c: 'i' },
+          { w: 'high', ipa: '/haɪ/', c: 'igh' },
+          { w: 'kind', ipa: '/kaɪnd/', c: 'i' },
+          { w: 'time', ipa: '/taɪm/', c: 'i_e' }
+        ]
+      },
+      {
+        ipa: '/ɔɪ/', sym: 'ɔɪ', label: 'boy 的元音',
+        combos: ['oi', 'oy'],
+        mouth: { open: .55, round: .55, spread: .10, place: '后→前' },
+        say: '从圆唇 /ɔ/ 滑向 /ɪ/，先圆后扁',
+        vs: '拼写规律：oi 多在词中（oil），oy 多在词尾（boy）',
+        words: [
+          { w: 'oil', ipa: '/ɔɪl/', c: 'oi' },
+          { w: 'boy', ipa: '/bɔɪ/', c: 'oy' },
+          { w: 'toy', ipa: '/tɔɪ/', c: 'oy' },
+          { w: 'noise', ipa: '/nɔɪz/', c: 'oi' },
+          { w: 'voice', ipa: '/vɔɪs/', c: 'oi' },
+          { w: 'coin', ipa: '/kɔɪn/', c: 'oi' }
+        ]
+      },
+      {
+        ipa: '/əʊ/', sym: 'əʊ', label: '字母 O 的名字（英式）',
+        combos: ['o_e', 'oa', 'ow', 'o', 'oe', 'ou', 'ough'],
+        mouth: { open: .40, round: .60, spread: .05, place: '中→后' },
+        say: '从中央 /ə/ 滑向圆唇 /ʊ/，全程双唇逐渐收圆，不要读成“欧”',
+        vs: '英式是双元音 /əʊ/，美式多为单元音 /oʊ/；拼写：o_e（home）/ oa（boat）/ ow（snow）',
+        words: [
+          { w: 'home', ipa: '/həʊm/', c: 'o_e' },
+          { w: 'boat', ipa: '/bəʊt/', c: 'oa' },
+          { w: 'snow', ipa: '/snəʊ/', c: 'ow' },
+          { w: 'go', ipa: '/ɡəʊ/', c: 'o' },
+          { w: 'toe', ipa: '/təʊ/', c: 'oe' },
+          { w: 'soul', ipa: '/səʊl/', c: 'ou' },
+          { w: 'know', ipa: '/nəʊ/', c: 'ow' },
+          { w: 'coat', ipa: '/kəʊt/', c: 'oa' },
+          { w: 'though', ipa: '/ðəʊ/', c: 'ough' }
+        ]
+      },
+      {
+        ipa: '/aʊ/', sym: 'aʊ', label: 'cow 的元音',
+        combos: ['ow', 'ou'],
+        mouth: { open: .72, round: .45, spread: .20, place: '前→后' },
+        say: '从大开口 /a/ 滑向圆唇 /ʊ/，收尾时双唇收圆',
+        vs: '拼写规律：ou（house）/ ow（cow）；词尾多用 ow，词中多用 ou',
+        words: [
+          { w: 'cow', ipa: '/kaʊ/', c: 'ow' },
+          { w: 'house', ipa: '/haʊs/', c: 'ou' },
+          { w: 'now', ipa: '/naʊ/', c: 'ow' },
+          { w: 'out', ipa: '/aʊt/', c: 'ou' },
+          { w: 'town', ipa: '/taʊn/', c: 'ow' },
+          { w: 'mouse', ipa: '/maʊs/', c: 'ou' }
+        ]
+      },
+      {
+        ipa: '/ɪə/', sym: 'ɪə', label: 'near 的元音',
+        combos: ['ear', 'eer', 'ere', 'ea', 'ier'],
+        mouth: { open: .32, round: .15, spread: .30, place: '前→中' },
+        say: '从 /ɪ/ 滑向 /ə/，收尾舌与唇完全放松',
+        vs: '英式词尾不卷舌，别读成 /ɪr/',
+        words: [
+          { w: 'near', ipa: '/nɪə/', c: 'ear' },
+          { w: 'beer', ipa: '/bɪə/', c: 'eer' },
+          { w: 'here', ipa: '/hɪə/', c: 'ere' },
+          { w: 'idea', ipa: '/aɪˈdɪə/', c: 'ea' },
+          { w: 'year', ipa: '/jɪə/', c: 'ear' },
+          { w: 'clear', ipa: '/klɪə/', c: 'ear' },
+          { w: 'cashier', ipa: '/kæˈʃɪə/', c: 'ier' }
+        ]
+      },
+      {
+        ipa: '/eə/', sym: 'eə', label: 'hair 的元音',
+        combos: ['air', 'are', 'ear', 'ere', 'eir'],
+        mouth: { open: .50, round: .12, spread: .35, place: '前→中' },
+        say: '从 /e/ 滑向 /ə/，起点嘴角略开，终点放松',
+        vs: '英式不卷舌：hair /heə/，不是 /her/',
+        words: [
+          { w: 'hair', ipa: '/heə/', c: 'air' },
+          { w: 'care', ipa: '/keə/', c: 'are' },
+          { w: 'bear', ipa: '/beə/', c: 'ear' },
+          { w: 'there', ipa: '/ðeə/', c: 'ere' },
+          { w: 'their', ipa: '/ðeə/', c: 'eir' },
+          { w: 'chair', ipa: '/tʃeə/', c: 'air' }
+        ]
+      },
+      {
+        ipa: '/ʊə/', sym: 'ʊə', label: 'tour 的元音',
+        combos: ['ure', 'oor', 'our', 'u'],
+        mouth: { open: .30, round: .50, spread: .05, place: '后→中' },
+        say: '从圆唇 /ʊ/ 滑向 /ə/，收尾唇放平',
+        vs: '现代英式里常简化为 /ɔː/（sure 也可读 /ʃɔː/），两种都算对',
+        words: [
+          { w: 'sure', ipa: '/ʃʊə/', c: 'ure' },
+          { w: 'poor', ipa: '/pʊə/', c: 'oor' },
+          { w: 'tour', ipa: '/tʊə/', c: 'our' },
+          { w: 'cure', ipa: '/kjʊə/', c: 'ure' },
+          { w: 'during', ipa: '/ˈdjʊərɪŋ/', c: 'u' }
+        ]
+      }
+    ]
+  },
+  {
+    id: 'cons', name: '辅音与字母组合', emoji: '🟢',
+    desc: '一个音多种拼写，这里是拼写混乱的重灾区',
+    phonemes: [
+      {
+        ipa: '/ʃ/', sym: 'ʃ', label: '清擦音 sh',
+        combos: ['sh', 'ti', 'ci', 'ssi', 's', 'ch', 'c'],
+        mouth: { open: .25, round: .45, spread: .10, place: '舌面' },
+        say: '双唇略圆前突，舌面靠近上颚，气流摩擦而出，声带不振动',
+        vs: '拼写：sh（ship）/ ti（station）/ ci（special）/ ch（chef）/ s（sugar）',
+        words: [
+          { w: 'ship', ipa: '/ʃɪp/', c: 'sh' },
+          { w: 'station', ipa: '/ˈsteɪʃən/', c: 'ti' },
+          { w: 'special', ipa: '/ˈspeʃəl/', c: 'ci' },
+          { w: 'sugar', ipa: '/ˈʃʊɡə/', c: 's' },
+          { w: 'chef', ipa: '/ʃef/', c: 'ch' },
+          { w: 'mission', ipa: '/ˈmɪʃən/', c: 'ssi' },
+          { w: 'machine', ipa: '/məˈʃiːn/', c: 'ch' },
+          { w: 'ocean', ipa: '/ˈəʊʃən/', c: 'c' }
+        ]
+      },
+      {
+        ipa: '/tʃ/', sym: 'tʃ', label: '清塞擦音 ch',
+        combos: ['ch', 'tch', 't', 'ti'],
+        mouth: { open: .25, round: .40, spread: .10, place: '舌面' },
+        say: '/t/ 与 /ʃ/ 快速连发，双唇略圆前突',
+        vs: '拼写：ch（chair）/ tch（watch，短元音后）/ t（future 英式）',
+        words: [
+          { w: 'chair', ipa: '/tʃeə/', c: 'ch' },
+          { w: 'watch', ipa: '/wɒtʃ/', c: 'tch' },
+          { w: 'future', ipa: '/ˈfjuːtʃə/', c: 't' },
+          { w: 'kitchen', ipa: '/ˈkɪtʃɪn/', c: 'ch' },
+          { w: 'match', ipa: '/mætʃ/', c: 'tch' },
+          { w: 'question', ipa: '/ˈkwestʃən/', c: 'ti' }
+        ]
+      },
+      {
+        ipa: '/dʒ/', sym: 'dʒ', label: '浊塞擦音 j',
+        combos: ['j', 'g', 'dge', 'ge', 'di', 'gy'],
+        mouth: { open: .25, round: .40, spread: .10, place: '舌面' },
+        say: '/d/ 与 /ʒ/ 连发，声带振动，手摸喉咙有震动感',
+        vs: '拼写：j（jump）/ g（gym，e/i/y 前）/ dge（bridge，短元音后）',
+        words: [
+          { w: 'jump', ipa: '/dʒʌmp/', c: 'j' },
+          { w: 'gym', ipa: '/dʒɪm/', c: 'g' },
+          { w: 'bridge', ipa: '/brɪdʒ/', c: 'dge' },
+          { w: 'age', ipa: '/eɪdʒ/', c: 'ge' },
+          { w: 'giant', ipa: '/ˈdʒaɪənt/', c: 'g' },
+          { w: 'soldier', ipa: '/ˈsəʊldʒə/', c: 'di' },
+          { w: 'engine', ipa: '/ˈendʒɪn/', c: 'g', note: '软 g：g 在 e/i/y 前读 /dʒ/' },
+          { w: 'energy', ipa: '/ˈenədʒi/', c: 'gy' }
+        ]
+      },
+      {
+        ipa: '/θ/', sym: 'θ', label: '清齿擦音 th',
+        combos: ['th'],
+        mouth: { open: .20, round: .05, spread: .35, place: '舌尖齿间' },
+        say: '舌尖轻放在上下齿之间（可微微伸出），气流从缝隙吹出，声带不振动',
+        vs: '易混 /s/（think→sink）与 /ð/（th 的浊音版）',
+        words: [
+          { w: 'think', ipa: '/θɪŋk/', c: 'th' },
+          { w: 'bath', ipa: '/bɑːθ/', c: 'th' },
+          { w: 'three', ipa: '/θriː/', c: 'th' },
+          { w: 'month', ipa: '/mʌnθ/', c: 'th' },
+          { w: 'north', ipa: '/nɔːθ/', c: 'th' },
+          { w: 'nothing', ipa: '/ˈnʌθɪŋ/', c: 'th' }
+        ]
+      },
+      {
+        ipa: '/ð/', sym: 'ð', label: '浊齿擦音 th',
+        combos: ['th'],
+        mouth: { open: .20, round: .05, spread: .35, place: '舌尖齿间' },
+        say: '嘴型同 /θ/，但声带振动，手摸喉咙有震动感',
+        vs: '规律：实词多读 /θ/（think, bath）；虚词多读 /ð/（the, this, mother）',
+        words: [
+          { w: 'this', ipa: '/ðɪs/', c: 'th' },
+          { w: 'mother', ipa: '/ˈmʌðə/', c: 'th' },
+          { w: 'the', ipa: '/ðə/', c: 'th' },
+          { w: 'weather', ipa: '/ˈweðə/', c: 'th' },
+          { w: 'brother', ipa: '/ˈbrʌðə/', c: 'th' },
+          { w: 'together', ipa: '/təˈɡeðə/', c: 'th' }
+        ]
+      },
+      {
+        ipa: '/ŋ/', sym: 'ŋ', label: '后鼻音 ng',
+        combos: ['ng', 'n'],
+        mouth: { open: .30, round: .10, spread: .25, place: '软腭' },
+        say: '舌后部抬起抵住软腭，气流从鼻腔出，嘴不闭',
+        vs: '规律：k/g 前的 n 读 /ŋ/（think, bank）',
+        words: [
+          { w: 'sing', ipa: '/sɪŋ/', c: 'ng' },
+          { w: 'think', ipa: '/θɪŋk/', c: 'n' },
+          { w: 'bank', ipa: '/bæŋk/', c: 'n' },
+          { w: 'long', ipa: '/lɒŋ/', c: 'ng' },
+          { w: 'England', ipa: '/ˈɪŋɡlənd/', c: 'ng' },
+          { w: 'thank', ipa: '/θæŋk/', c: 'n' }
+        ]
+      },
+      {
+        ipa: '/ŋk/', sym: 'ŋk', label: 'nk 组合',
+        combos: ['nk'],
+        mouth: { open: .28, round: .10, spread: .25, place: '软腭' },
+        say: '/ŋ/ 与 /k/ 连发：先鼻音，舌后不离开软腭直接发 /k/',
+        vs: '拼写：nk（sink, pink, thank, bank）；k/g 前的 n 读 /ŋ/，再加 k 就是 /ŋk/',
+        words: [
+          { w: 'sink', ipa: '/sɪŋk/', c: 'nk' },
+          { w: 'pink', ipa: '/pɪŋk/', c: 'nk' },
+          { w: 'bank', ipa: '/bæŋk/', c: 'nk' },
+          { w: 'thank', ipa: '/θæŋk/', c: 'nk' },
+          { w: 'think', ipa: '/θɪŋk/', c: 'nk' },
+          { w: 'drink', ipa: '/drɪŋk/', c: 'nk' }
+        ]
+      },
+      {
+        ipa: '/ʒ/', sym: 'ʒ', label: '浊擦音 zh',
+        combos: ['s', 'si', 'ge'],
+        mouth: { open: .25, round: .45, spread: .10, place: '舌面' },
+        say: '/ʃ/ 的浊音版：嘴型完全相同，声带振动',
+        vs: '常见词：usually /ˈjuːʒuəli/、television、garage（英 /ˈɡærɑːʒ/）',
+        words: [
+          { w: 'usually', ipa: '/ˈjuːʒuəli/', c: 's' },
+          { w: 'television', ipa: '/ˈtelɪvɪʒən/', c: 's' },
+          { w: 'garage', ipa: '/ˈɡærɑːʒ/', c: 'ge' },
+          { w: 'vision', ipa: '/ˈvɪʒən/', c: 'si' },
+          { w: 'pleasure', ipa: '/ˈpleʒə/', c: 's' }
+        ]
+      },
+      {
+        ipa: '/f/', sym: 'f', label: '唇齿清擦音',
+        combos: ['f', 'ff', 'ph', 'gh'],
+        mouth: { open: .15, round: .05, spread: .25, place: '唇齿' },
+        say: '上齿轻咬下唇内侧，气流从缝隙吹出，声带不振动',
+        vs: '易混 /v/（浊音，喉部震动）；拼写：f / ff / ph（phone）/ gh（laugh）',
+        words: [
+          { w: 'fish', ipa: '/fɪʃ/', c: 'f' },
+          { w: 'phone', ipa: '/fəʊn/', c: 'ph' },
+          { w: 'laugh', ipa: '/lɑːf/', c: 'gh' },
+          { w: 'coffee', ipa: '/ˈkɒfi/', c: 'ff' },
+          { w: 'enough', ipa: '/ɪˈnʌf/', c: 'gh' },
+          { w: 'photo', ipa: '/ˈfəʊtəʊ/', c: 'ph' }
+        ]
+      },
+      {
+        ipa: '/k/', sym: 'k', label: '清塞音 k',
+        combos: ['c', 'k', 'ck', 'ch', 'que'],
+        mouth: { open: .25, round: .05, spread: .20, place: '软腭' },
+        say: '舌后抵软腭，蓄气后突然放开，送出一口气（清音）',
+        vs: '拼写：c（cat）/ k（kite）/ ck（back，短元音后）/ ch（school）/ qu（queen = /kw/）',
+        words: [
+          { w: 'cat', ipa: '/kæt/', c: 'c' },
+          { w: 'kite', ipa: '/kaɪt/', c: 'k' },
+          { w: 'back', ipa: '/bæk/', c: 'ck' },
+          { w: 'school', ipa: '/skuːl/', c: 'ch' },
+          { w: 'unique', ipa: '/juˈniːk/', c: 'que' },
+          { w: 'chemistry', ipa: '/ˈkemɪstri/', c: 'ch' },
+          { w: 'ache', ipa: '/eɪk/', c: 'ch' }
+        ]
+      },
+      {
+        ipa: '/s/', sym: 's', label: '清擦音 s',
+        combos: ['s', 'ss', 'c', 'ce', 'cy', 'se', 'sc'],
+        mouth: { open: .15, round: .05, spread: .40, place: '舌尖齿龈' },
+        say: '舌尖靠近上齿龈，气流从窄缝挤出，声带不振动',
+        vs: '拼写：s（sit）/ c（city，e/i/y 前）/ ce（face）/ ss（class）',
+        words: [
+          { w: 'sit', ipa: '/sɪt/', c: 's' },
+          { w: 'city', ipa: '/ˈsɪti/', c: 'c' },
+          { w: 'face', ipa: '/feɪs/', c: 'ce' },
+          { w: 'class', ipa: '/klɑːs/', c: 'ss' },
+          { w: 'house', ipa: '/haʊs/', c: 'se' },
+          { w: 'science', ipa: '/ˈsaɪəns/', c: 'sc' },
+          { w: 'cycle', ipa: '/ˈsaɪkəl/', c: 'cy' },
+          { w: 'receive', ipa: '/rɪˈsiːv/', c: 'c', note: '软 c：c 在 e/i/y 前读 /s/' }
+        ]
+      },
+      {
+        ipa: '/r/', sym: 'r', label: '英式 r（只在元音前发音）',
+        combos: ['r', 'rr', 'wr', 'rh'],
+        mouth: { open: .30, round: .20, spread: .15, place: '齿龈后' },
+        say: '舌尖上卷靠近（但不碰）齿龈后方，双唇略圆',
+        vs: '⚠️ 英式核心规则：只在元音前发音（red /red/）；词尾、辅音前不发音（car /kɑː/）',
+        words: [
+          { w: 'red', ipa: '/red/', c: 'r' },
+          { w: 'write', ipa: '/raɪt/', c: 'wr' },
+          { w: 'rhyme', ipa: '/raɪm/', c: 'rh' },
+          { w: 'sorry', ipa: '/ˈsɒri/', c: 'rr' },
+          { w: 'rain', ipa: '/reɪn/', c: 'r' },
+          { w: 'around', ipa: '/əˈraʊnd/', c: 'r' }
+        ]
+      },
+      {
+        ipa: '/h/', sym: 'h', label: '声门清擦音',
+        combos: ['h', 'wh'],
+        mouth: { open: .35, round: .10, spread: .25, place: '声门' },
+        say: '口腔保持后面元音的嘴型，从喉咙呼出一口气',
+        vs: 'wh 多数读 /w/（what），但在 o 前读 /h/（who /huː/）',
+        words: [
+          { w: 'hat', ipa: '/hæt/', c: 'h' },
+          { w: 'who', ipa: '/huː/', c: 'wh' },
+          { w: 'behind', ipa: '/bɪˈhaɪnd/', c: 'h' },
+          { w: 'house', ipa: '/haʊs/', c: 'h' },
+          { w: 'whole', ipa: '/həʊl/', c: 'wh' }
+        ]
+      },
+      {
+        ipa: '/w/', sym: 'w', label: '半元音 w',
+        combos: ['w', 'wh', 'u'],
+        mouth: { open: .20, round: .70, spread: .00, place: '双唇' },
+        say: '双唇收圆前突后迅速滑向后面的元音',
+        vs: '拼写：w（we）/ wh（what）/ u（queen /kwiːn/，qu 一起发 /kw/）',
+        words: [
+          { w: 'we', ipa: '/wiː/', c: 'w' },
+          { w: 'what', ipa: '/wɒt/', c: 'wh' },
+          { w: 'queen', ipa: '/kwiːn/', c: 'u' },
+          { w: 'window', ipa: '/ˈwɪndəʊ/', c: 'w' },
+          { w: 'when', ipa: '/wen/', c: 'wh' }
+        ]
+      },
+      {
+        ipa: '/j/', sym: 'j', label: '半元音 y',
+        combos: ['y', 'u', 'eu', 'i'],
+        mouth: { open: .22, round: .05, spread: .40, place: '硬腭' },
+        say: '舌前部抬向硬腭，迅速滑向后面的元音',
+        vs: '⚠️ 英式 vs 美式：new /njuː/（英）vs /nuː/（美）；英式在 /n,t,d,s,l/ 后保留 /j/',
+        words: [
+          { w: 'yes', ipa: '/jes/', c: 'y' },
+          { w: 'use', ipa: '/juːz/', c: 'u' },
+          { w: 'beautiful', ipa: '/ˈbjuːtɪfəl/', c: 'u' },
+          { w: 'euro', ipa: '/ˈjʊərəʊ/', c: 'eu' },
+          { w: 'onion', ipa: '/ˈʌnjən/', c: 'i' },
+          { w: 'yellow', ipa: '/ˈjeləʊ/', c: 'y' },
+          { w: 'music', ipa: '/ˈmjuːzɪk/', c: 'u' }
+        ]
+      }
+    ]
+  },
+  {
+    id: 'blend', name: '辅音连缀', emoji: '🔠',
+    desc: '第四层级 4.2：两个辅音各自发音，快速连读',
+    phonemes: [
+      {
+        ipa: '/bl/', sym: 'bl', label: 'bl 连缀',
+        combos: ['bl'],
+        mouth: { open: .25, round: .10, spread: .20, place: '连缀' },
+        say: '两个辅音各自发音、快速连读，中间不停顿、不加元音',
+        vs: '⚠️ 与二合字母区别：sh/ch/th/ph 是「两个字母一个新音」，bl/br/st 是「两个音连着读」',
+        words: [
+          { w: 'black', ipa: '/blæk/', c: 'bl' },
+          { w: 'blue', ipa: '/bluː/', c: 'bl' },
+          { w: 'block', ipa: '/blɒk/', c: 'bl' }
+        ]
+      },
+      {
+        ipa: '/kl/', sym: 'kl', label: 'cl 连缀',
+        combos: ['cl'],
+        mouth: { open: .25, round: .10, spread: .20, place: '连缀' },
+        say: '两个辅音各自发音、快速连读，中间不停顿、不加元音',
+        vs: '⚠️ 与二合字母区别：sh/ch/th/ph 是「两个字母一个新音」，bl/br/st 是「两个音连着读」',
+        words: [
+          { w: 'class', ipa: '/klɑːs/', c: 'cl' },
+          { w: 'clock', ipa: '/klɒk/', c: 'cl' },
+          { w: 'clean', ipa: '/kliːn/', c: 'cl' }
+        ]
+      },
+      {
+        ipa: '/fl/', sym: 'fl', label: 'fl 连缀',
+        combos: ['fl'],
+        mouth: { open: .25, round: .10, spread: .20, place: '连缀' },
+        say: '两个辅音各自发音、快速连读，中间不停顿、不加元音',
+        vs: '⚠️ 与二合字母区别：sh/ch/th/ph 是「两个字母一个新音」，bl/br/st 是「两个音连着读」',
+        words: [
+          { w: 'fly', ipa: '/flaɪ/', c: 'fl' },
+          { w: 'flag', ipa: '/flæɡ/', c: 'fl' },
+          { w: 'flower', ipa: '/ˈflaʊə/', c: 'fl' }
+        ]
+      },
+      {
+        ipa: '/ɡl/', sym: 'ɡl', label: 'gl 连缀',
+        combos: ['gl'],
+        mouth: { open: .25, round: .10, spread: .20, place: '连缀' },
+        say: '两个辅音各自发音、快速连读，中间不停顿、不加元音',
+        vs: '⚠️ 与二合字母区别：sh/ch/th/ph 是「两个字母一个新音」，bl/br/st 是「两个音连着读」',
+        words: [
+          { w: 'glass', ipa: '/ɡlɑːs/', c: 'gl' },
+          { w: 'glad', ipa: '/ɡlæd/', c: 'gl' },
+          { w: 'glove', ipa: '/ɡlʌv/', c: 'gl' }
+        ]
+      },
+      {
+        ipa: '/pl/', sym: 'pl', label: 'pl 连缀',
+        combos: ['pl'],
+        mouth: { open: .25, round: .10, spread: .20, place: '连缀' },
+        say: '两个辅音各自发音、快速连读，中间不停顿、不加元音',
+        vs: '⚠️ 与二合字母区别：sh/ch/th/ph 是「两个字母一个新音」，bl/br/st 是「两个音连着读」',
+        words: [
+          { w: 'play', ipa: '/pleɪ/', c: 'pl' },
+          { w: 'plane', ipa: '/pleɪn/', c: 'pl' },
+          { w: 'plus', ipa: '/plʌs/', c: 'pl' }
+        ]
+      },
+      {
+        ipa: '/br/', sym: 'br', label: 'br 连缀',
+        combos: ['br'],
+        mouth: { open: .25, round: .10, spread: .20, place: '连缀' },
+        say: '两个辅音各自发音、快速连读，中间不停顿、不加元音',
+        vs: '⚠️ 与二合字母区别：sh/ch/th/ph 是「两个字母一个新音」，bl/br/st 是「两个音连着读」',
+        words: [
+          { w: 'brown', ipa: '/braʊn/', c: 'br' },
+          { w: 'bread', ipa: '/bred/', c: 'br' },
+          { w: 'brick', ipa: '/brɪk/', c: 'br' }
+        ]
+      },
+      {
+        ipa: '/kr/', sym: 'kr', label: 'cr 连缀',
+        combos: ['cr'],
+        mouth: { open: .25, round: .10, spread: .20, place: '连缀' },
+        say: '两个辅音各自发音、快速连读，中间不停顿、不加元音',
+        vs: '⚠️ 与二合字母区别：sh/ch/th/ph 是「两个字母一个新音」，bl/br/st 是「两个音连着读」',
+        words: [
+          { w: 'crab', ipa: '/kræb/', c: 'cr' },
+          { w: 'cry', ipa: '/kraɪ/', c: 'cr' },
+          { w: 'crowd', ipa: '/kraʊd/', c: 'cr' }
+        ]
+      },
+      {
+        ipa: '/dr/', sym: 'dr', label: 'dr 连缀',
+        combos: ['dr'],
+        mouth: { open: .25, round: .10, spread: .20, place: '连缀' },
+        say: '两个辅音各自发音、快速连读，中间不停顿、不加元音',
+        vs: '⚠️ 与二合字母区别：sh/ch/th/ph 是「两个字母一个新音」，bl/br/st 是「两个音连着读」',
+        words: [
+          { w: 'drum', ipa: '/drʌm/', c: 'dr' },
+          { w: 'dress', ipa: '/dres/', c: 'dr' },
+          { w: 'drink', ipa: '/drɪŋk/', c: 'dr' }
+        ]
+      },
+      {
+        ipa: '/fr/', sym: 'fr', label: 'fr 连缀',
+        combos: ['fr'],
+        mouth: { open: .25, round: .10, spread: .20, place: '连缀' },
+        say: '两个辅音各自发音、快速连读，中间不停顿、不加元音',
+        vs: '⚠️ 与二合字母区别：sh/ch/th/ph 是「两个字母一个新音」，bl/br/st 是「两个音连着读」',
+        words: [
+          { w: 'frog', ipa: '/frɒɡ/', c: 'fr' },
+          { w: 'free', ipa: '/friː/', c: 'fr' },
+          { w: 'friend', ipa: '/frend/', c: 'fr' }
+        ]
+      },
+      {
+        ipa: '/ɡr/', sym: 'ɡr', label: 'gr 连缀',
+        combos: ['gr'],
+        mouth: { open: .25, round: .10, spread: .20, place: '连缀' },
+        say: '两个辅音各自发音、快速连读，中间不停顿、不加元音',
+        vs: '⚠️ 与二合字母区别：sh/ch/th/ph 是「两个字母一个新音」，bl/br/st 是「两个音连着读」',
+        words: [
+          { w: 'green', ipa: '/ɡriːn/', c: 'gr' },
+          { w: 'grape', ipa: '/ɡreɪp/', c: 'gr' },
+          { w: 'grass', ipa: '/ɡrɑːs/', c: 'gr' }
+        ]
+      },
+      {
+        ipa: '/pr/', sym: 'pr', label: 'pr 连缀',
+        combos: ['pr'],
+        mouth: { open: .25, round: .10, spread: .20, place: '连缀' },
+        say: '两个辅音各自发音、快速连读，中间不停顿、不加元音',
+        vs: '⚠️ 与二合字母区别：sh/ch/th/ph 是「两个字母一个新音」，bl/br/st 是「两个音连着读」',
+        words: [
+          { w: 'price', ipa: '/praɪs/', c: 'pr' },
+          { w: 'print', ipa: '/prɪnt/', c: 'pr' },
+          { w: 'press', ipa: '/pres/', c: 'pr' }
+        ]
+      },
+      {
+        ipa: '/tr/', sym: 'tr', label: 'tr 连缀',
+        combos: ['tr'],
+        mouth: { open: .25, round: .10, spread: .20, place: '连缀' },
+        say: '两个辅音各自发音、快速连读，中间不停顿、不加元音',
+        vs: '⚠️ 与二合字母区别：sh/ch/th/ph 是「两个字母一个新音」，bl/br/st 是「两个音连着读」',
+        words: [
+          { w: 'tree', ipa: '/triː/', c: 'tr' },
+          { w: 'truck', ipa: '/trʌk/', c: 'tr' },
+          { w: 'train', ipa: '/treɪn/', c: 'tr' }
+        ]
+      },
+      {
+        ipa: '/sk/', sym: 'sk', label: 'sk / sc 连缀',
+        combos: ['sk', 'sc', 'sch'],
+        mouth: { open: .25, round: .10, spread: .20, place: '连缀' },
+        say: '两个辅音各自发音、快速连读，中间不停顿、不加元音',
+        vs: '⚠️ 与二合字母区别：sh/ch/th/ph 是「两个字母一个新音」，bl/br/st 是「两个音连着读」',
+        words: [
+          { w: 'sky', ipa: '/skaɪ/', c: 'sk' },
+          { w: 'skate', ipa: '/skeɪt/', c: 'sk' },
+          { w: 'scan', ipa: '/skæn/', c: 'sc' },
+          { w: 'school', ipa: '/skuːl/', c: 'sch' }
+        ]
+      },
+      {
+        ipa: '/sm/', sym: 'sm', label: 'sm 连缀',
+        combos: ['sm'],
+        mouth: { open: .25, round: .10, spread: .20, place: '连缀' },
+        say: '两个辅音各自发音、快速连读，中间不停顿、不加元音',
+        vs: '⚠️ 与二合字母区别：sh/ch/th/ph 是「两个字母一个新音」，bl/br/st 是「两个音连着读」',
+        words: [
+          { w: 'small', ipa: '/smɔːl/', c: 'sm' },
+          { w: 'smile', ipa: '/smaɪl/', c: 'sm' },
+          { w: 'smoke', ipa: '/sməʊk/', c: 'sm' }
+        ]
+      },
+      {
+        ipa: '/sn/', sym: 'sn', label: 'sn 连缀',
+        combos: ['sn'],
+        mouth: { open: .25, round: .10, spread: .20, place: '连缀' },
+        say: '两个辅音各自发音、快速连读，中间不停顿、不加元音',
+        vs: '⚠️ 与二合字母区别：sh/ch/th/ph 是「两个字母一个新音」，bl/br/st 是「两个音连着读」',
+        words: [
+          { w: 'snake', ipa: '/sneɪk/', c: 'sn' },
+          { w: 'snow', ipa: '/snəʊ/', c: 'sn' },
+          { w: 'snack', ipa: '/snæk/', c: 'sn' }
+        ]
+      },
+      {
+        ipa: '/sp/', sym: 'sp', label: 'sp 连缀',
+        combos: ['sp'],
+        mouth: { open: .25, round: .10, spread: .20, place: '连缀' },
+        say: '两个辅音各自发音、快速连读，中间不停顿、不加元音',
+        vs: '⚠️ 与二合字母区别：sh/ch/th/ph 是「两个字母一个新音」，bl/br/st 是「两个音连着读」',
+        words: [
+          { w: 'spoon', ipa: '/spuːn/', c: 'sp' },
+          { w: 'spider', ipa: '/ˈspaɪdə/', c: 'sp' },
+          { w: 'spot', ipa: '/spɒt/', c: 'sp' }
+        ]
+      },
+      {
+        ipa: '/st/', sym: 'st', label: 'st 连缀',
+        combos: ['st'],
+        mouth: { open: .25, round: .10, spread: .20, place: '连缀' },
+        say: '两个辅音各自发音、快速连读，中间不停顿、不加元音',
+        vs: '⚠️ 与二合字母区别：sh/ch/th/ph 是「两个字母一个新音」，bl/br/st 是「两个音连着读」',
+        words: [
+          { w: 'star', ipa: '/stɑː/', c: 'st' },
+          { w: 'stop', ipa: '/stɒp/', c: 'st' },
+          { w: 'student', ipa: '/ˈstjuːdənt/', c: 'st' }
+        ]
+      },
+      {
+        ipa: '/sw/', sym: 'sw', label: 'sw 连缀',
+        combos: ['sw'],
+        mouth: { open: .25, round: .10, spread: .20, place: '连缀' },
+        say: '两个辅音各自发音、快速连读，中间不停顿、不加元音',
+        vs: '⚠️ 与二合字母区别：sh/ch/th/ph 是「两个字母一个新音」，bl/br/st 是「两个音连着读」',
+        words: [
+          { w: 'swim', ipa: '/swɪm/', c: 'sw' },
+          { w: 'sweet', ipa: '/swiːt/', c: 'sw' },
+          { w: 'swing', ipa: '/swɪŋ/', c: 'sw' }
+        ]
+      },
+      {
+        ipa: '/tw/', sym: 'tw', label: 'tw 连缀',
+        combos: ['tw'],
+        mouth: { open: .25, round: .10, spread: .20, place: '连缀' },
+        say: '两个辅音各自发音、快速连读，中间不停顿、不加元音',
+        vs: '⚠️ 与二合字母区别：sh/ch/th/ph 是「两个字母一个新音」，bl/br/st 是「两个音连着读」',
+        words: [
+          { w: 'twin', ipa: '/twɪn/', c: 'tw' },
+          { w: 'twelve', ipa: '/twelv/', c: 'tw' },
+          { w: 'twice', ipa: '/twaɪs/', c: 'tw' }
+        ]
+      }
+    ]
+  }
+];
+
+
+/* 第九层级：词尾变化与后缀发音 */
+const SUFFIX_Q = [
+  { w: 'cats', ipa: '/kæts/', q: '词尾 -s 读什么音？', opts: ['/s/', '/z/', '/ɪz/'], ans: 0, why: '清辅音 /t/ 之后读 /s/' },
+  { w: 'books', ipa: '/bʊks/', q: '词尾 -s 读什么音？', opts: ['/s/', '/z/', '/ɪz/'], ans: 0, why: '清辅音 /k/ 之后读 /s/' },
+  { w: 'dogs', ipa: '/dɒɡz/', q: '词尾 -s 读什么音？', opts: ['/s/', '/z/', '/ɪz/'], ans: 1, why: '浊辅音 /ɡ/ 之后读 /z/' },
+  { w: 'pens', ipa: '/penz/', q: '词尾 -s 读什么音？', opts: ['/s/', '/z/', '/ɪz/'], ans: 1, why: '浊辅音 /n/ 之后读 /z/' },
+  { w: 'boxes', ipa: '/ˈbɒksɪz/', q: '词尾 -es 读什么音？', opts: ['/s/', '/z/', '/ɪz/'], ans: 2, why: '咝音 /s/ 之后读 /ɪz/' },
+  { w: 'watches', ipa: '/ˈwɒtʃɪz/', q: '词尾 -es 读什么音？', opts: ['/s/', '/z/', '/ɪz/'], ans: 2, why: '咝音 /tʃ/ 之后读 /ɪz/' },
+  { w: 'horses', ipa: '/ˈhɔːsɪz/', q: '词尾 -es 读什么音？', opts: ['/s/', '/z/', '/ɪz/'], ans: 2, why: '咝音 /s/ 之后读 /ɪz/' },
+  { w: 'jumped', ipa: '/dʒʌmpt/', q: '词尾 -ed 读什么音？', opts: ['/t/', '/d/', '/ɪd/'], ans: 0, why: '清辅音 /p/ 之后读 /t/' },
+  { w: 'washed', ipa: '/wɒʃt/', q: '词尾 -ed 读什么音？', opts: ['/t/', '/d/', '/ɪd/'], ans: 0, why: '清辅音 /ʃ/ 之后读 /t/' },
+  { w: 'played', ipa: '/pleɪd/', q: '词尾 -ed 读什么音？', opts: ['/t/', '/d/', '/ɪd/'], ans: 1, why: '浊音（元音）之后读 /d/' },
+  { w: 'loved', ipa: '/lʌvd/', q: '词尾 -ed 读什么音？', opts: ['/t/', '/d/', '/ɪd/'], ans: 1, why: '浊辅音 /v/ 之后读 /d/' },
+  { w: 'wanted', ipa: '/ˈwɒntɪd/', q: '词尾 -ed 读什么音？', opts: ['/t/', '/d/', '/ɪd/'], ans: 2, why: '/t/ 之后读 /ɪd/' },
+  { w: 'needed', ipa: '/ˈniːdɪd/', q: '词尾 -ed 读什么音？', opts: ['/t/', '/d/', '/ɪd/'], ans: 2, why: '/d/ 之后读 /ɪd/' },
+  { w: 'swimming', ipa: '/ˈswɪmɪŋ/', q: 'swim + -ing 的正确拼写？', opts: ['swiming', 'swimming', 'swimeing'], ans: 1, why: '重读闭音节（辅-元-辅），双写末尾辅音再加 -ing' },
+  { w: 'running', ipa: '/ˈrʌnɪŋ/', q: 'run + -ing 的正确拼写？', opts: ['runing', 'running', 'runeing'], ans: 1, why: '重读闭音节，双写末尾辅音 n' },
+  { w: 'hoping', ipa: '/ˈhəʊpɪŋ/', q: 'hope + -ing 的正确拼写？', opts: ['hopeing', 'hoping', 'hopping'], ans: 1, why: '去掉不发音的 e 再加 -ing' },
+  { w: 'nation', ipa: '/ˈneɪʃən/', q: '-tion 读什么音？', opts: ['/ʃən/', '/ʒən/', '/tʃən/'], ans: 0, why: '-tion 通常读 /ʃən/' },
+  { w: 'action', ipa: '/ˈækʃən/', q: '-tion 读什么音？', opts: ['/ʃən/', '/ʒən/', '/ʃn/'], ans: 0, why: '-tion 通常读 /ʃən/' },
+  { w: 'television', ipa: '/ˈtelɪvɪʒən/', q: '-sion 读什么音？', opts: ['/ʃən/', '/ʒən/', '/zjən/'], ans: 1, why: '元音后的 -sion 常读 /ʒən/' },
+  { w: 'decision', ipa: '/dɪˈsɪʒən/', q: '-sion 读什么音？', opts: ['/ʃən/', '/ʒən/', '/sɪən/'], ans: 1, why: '元音后的 -sion 常读 /ʒən/' },
+  { w: 'faster', ipa: '/ˈfɑːstə/', q: '比较级 -er 读什么音？', opts: ['/ə/', '/ɜː/', '/er/'], ans: 0, why: '非重读 -er 英式读 /ə/，不卷舌' },
+  { w: 'actor', ipa: '/ˈæktə/', q: '名词后缀 -or 读什么音？', opts: ['/ə/', '/ɔː/', '/or/'], ans: 0, why: '非重读 -or 英式读 /ə/' },
+  { w: 'biggest', ipa: '/ˈbɪɡɪst/', q: '最高级 -est 读什么音？', opts: ['/ɪst/', '/est/', '/əst/'], ans: 0, why: '-est 读 /ɪst/' },
+  { w: 'quickly', ipa: '/ˈkwɪkli/', q: '副词 -ly 读什么音？', opts: ['/li/', '/laɪ/', '/leɪ/'], ans: 0, why: '-ly 读 /li/' }
+];
+
+/* 第十层级：不发音字母（s = 不发音的字母，si = 该字母在单词中的下标） */
+const SILENT_WORDS = [
+  { w: 'knight', ipa: '/naɪt/', s: 'k', si: 0, note: 'kn- 词首：k 不发音' },
+  { w: 'knife', ipa: '/naɪf/', s: 'k', si: 0, note: 'kn- 词首：k 不发音' },
+  { w: 'knee', ipa: '/niː/', s: 'k', si: 0, note: 'kn- 词首：k 不发音' },
+  { w: 'know', ipa: '/nəʊ/', s: 'k', si: 0, note: 'kn- 词首：k 不发音' },
+  { w: 'write', ipa: '/raɪt/', s: 'w', si: 0, note: 'wr- 词首：w 不发音' },
+  { w: 'wrist', ipa: '/rɪst/', s: 'w', si: 0, note: 'wr- 词首：w 不发音' },
+  { w: 'wrong', ipa: '/rɒŋ/', s: 'w', si: 0, note: 'wr- 词首：w 不发音' },
+  { w: 'lamb', ipa: '/læm/', s: 'b', si: 3, note: '-mb 词尾：b 不发音' },
+  { w: 'comb', ipa: '/kəʊm/', s: 'b', si: 3, note: '-mb 词尾：b 不发音' },
+  { w: 'climb', ipa: '/klaɪm/', s: 'b', si: 4, note: '-mb 词尾：b 不发音' },
+  { w: 'doubt', ipa: '/daʊt/', s: 'b', si: 3, note: '-bt：b 不发音' },
+  { w: 'subtle', ipa: '/ˈsʌtəl/', s: 'b', si: 2, note: '-bt：b 不发音' },
+  { w: 'sign', ipa: '/saɪn/', s: 'g', si: 2, note: '-gn：g 不发音' },
+  { w: 'design', ipa: '/dɪˈzaɪn/', s: 'g', si: 4, note: '-gn：g 不发音' },
+  { w: 'gnat', ipa: '/næt/', s: 'g', si: 0, note: 'gn- 词首：g 不发音' },
+  { w: 'ghost', ipa: '/ɡəʊst/', s: 'h', si: 1, note: 'gh- 词首：h 不发音' },
+  { w: 'who', ipa: '/huː/', s: 'w', si: 0, note: 'wh- 在 o 前：w 不发音，读 /h/' },
+  { w: 'whom', ipa: '/huːm/', s: 'w', si: 0, note: 'wh- 在 o 前：w 不发音' },
+  { w: 'rhythm', ipa: '/ˈrɪðəm/', s: 'h', si: 1, note: 'rh-：h 不发音' },
+  { w: 'rhyme', ipa: '/raɪm/', s: 'h', si: 1, note: 'rh-：h 不发音' },
+  { w: 'listen', ipa: '/ˈlɪsən/', s: 't', si: 3, note: '-sten：t 不发音' },
+  { w: 'fasten', ipa: '/ˈfɑːsən/', s: 't', si: 3, note: '-sten：t 不发音' },
+  { w: 'castle', ipa: '/ˈkɑːsəl/', s: 't', si: 3, note: '-stle：t 不发音' },
+  { w: 'whistle', ipa: '/ˈwɪsəl/', s: 't', si: 4, note: '-stle：t 不发音' },
+  { w: 'often', ipa: '/ˈɒfən/', s: 't', si: 2, note: '-ften：t 常不发音' },
+  { w: 'half', ipa: '/hɑːf/', s: 'l', si: 2, note: '-alf / -alk / -alm：l 不发音' },
+  { w: 'calf', ipa: '/kɑːf/', s: 'l', si: 2, note: '-alf：l 不发音' },
+  { w: 'walk', ipa: '/wɔːk/', s: 'l', si: 2, note: '-alk：l 不发音' },
+  { w: 'talk', ipa: '/tɔːk/', s: 'l', si: 2, note: '-alk：l 不发音' },
+  { w: 'calm', ipa: '/kɑːm/', s: 'l', si: 2, note: '-alm：l 不发音' },
+  { w: 'league', ipa: '/liːɡ/', s: 'u', si: 4, note: '-gue：u 不发音' },
+  { w: 'guitar', ipa: '/ɡɪˈtɑː/', s: 'u', si: 1, note: '-gui：u 不发音' },
+  { w: 'guest', ipa: '/ɡest/', s: 'u', si: 1, note: 'gu-：u 不发音' },
+  { w: 'build', ipa: '/bɪld/', s: 'u', si: 1, note: 'ui 组合里 u 不发音，整体读 /ɪ/' },
+  { w: 'make', ipa: '/meɪk/', s: 'e', si: 3, note: '魔法 e：不发音，作用是让前面元音变长' },
+  { w: 'like', ipa: '/laɪk/', s: 'e', si: 3, note: '魔法 e：不发音，作用是让前面元音变长' },
+  { w: 'hope', ipa: '/həʊp/', s: 'e', si: 3, note: '魔法 e：不发音' },
+  { w: 'name', ipa: '/neɪm/', s: 'e', si: 3, note: '魔法 e：不发音' }
+];
+
+/* 第八层级：音节划分七条规则 */
+const SYLLABLE_RULES = [
+  { n: 1, name: '复合词直接分', ex: 'snow·man, foot·ball, sun·set' },
+  { n: 2, name: '前缀 / 后缀单独成界', ex: 're·play, un·do, teach·er, quick·ly' },
+  { n: 3, name: 'VCCV：两个辅音相邻 → 中间分', ex: 'let·ter, but·ter, hap·py, pic·nic' },
+  { n: 4, name: 'V/CV：前面元音发长音 → 辅音归后', ex: 'ti·ger, stu·dent, pa·per' },
+  { n: 5, name: 'VC/V：前面元音发短音 → 辅音归前', ex: 'clev·er, cab·in, sev·en' },
+  { n: 6, name: '含 -r 音节：r 归前一个音节', ex: 'car·toon, for·get, bird·cage' },
+  { n: 7, name: '-le 结尾与其前辅音构成一个音节', ex: 'ta·ble, ap·ple, un·cle, lit·tle' }
+];
+
+/* 最小对立对：听力反向验证（第四步） */
+const MIN_PAIRS = [
+  { a: { w: 'ship', ipa: '/ʃɪp/' }, b: { w: 'sheep', ipa: '/ʃiːp/' }, focus: '/ɪ/ vs /iː/' },
+  { a: { w: 'cot', ipa: '/kɒt/' }, b: { w: 'caught', ipa: '/kɔːt/' }, focus: '/ɒ/ vs /ɔː/' },
+  { a: { w: 'cut', ipa: '/kʌt/' }, b: { w: 'cat', ipa: '/kæt/' }, focus: '/ʌ/ vs /æ/' },
+  { a: { w: 'bed', ipa: '/bed/' }, b: { w: 'bad', ipa: '/bæd/' }, focus: '/e/ vs /æ/' },
+  { a: { w: 'full', ipa: '/fʊl/' }, b: { w: 'fool', ipa: '/fuːl/' }, focus: '/ʊ/ vs /uː/' },
+  { a: { w: 'pull', ipa: '/pʊl/' }, b: { w: 'pool', ipa: '/puːl/' }, focus: '/ʊ/ vs /uː/' },
+  { a: { w: 'work', ipa: '/wɜːk/' }, b: { w: 'walk', ipa: '/wɔːk/' }, focus: '/ɜː/ vs /ɔː/' },
+  { a: { w: 'hat', ipa: '/hæt/' }, b: { w: 'heart', ipa: '/hɑːt/' }, focus: '/æ/ vs /ɑː/' },
+  { a: { w: 'cup', ipa: '/kʌp/' }, b: { w: 'cop', ipa: '/kɒp/' }, focus: '/ʌ/ vs /ɒ/' },
+  { a: { w: 'think', ipa: '/θɪŋk/' }, b: { w: 'sink', ipa: '/sɪŋk/' }, focus: '/θ/ vs /s/' },
+  { a: { w: 'tree', ipa: '/triː/' }, b: { w: 'three', ipa: '/θriː/' }, focus: '/t/ vs /θ/' },
+  { a: { w: 'live', ipa: '/lɪv/' }, b: { w: 'leave', ipa: '/liːv/' }, focus: '/ɪ/ vs /iː/' },
+  { a: { w: 'sit', ipa: '/sɪt/' }, b: { w: 'seat', ipa: '/siːt/' }, focus: '/ɪ/ vs /iː/' },
+  { a: { w: 'not', ipa: '/nɒt/' }, b: { w: 'note', ipa: '/nəʊt/' }, focus: '/ɒ/ vs /əʊ/' },
+  { a: { w: 'bird', ipa: '/bɜːd/' }, b: { w: 'bed', ipa: '/bed/' }, focus: '/ɜː/ vs /e/' },
+  { a: { w: 'cart', ipa: '/kɑːt/' }, b: { w: 'cut', ipa: '/kʌt/' }, focus: '/ɑː/ vs /ʌ/' },
+  { a: { w: 'bad', ipa: '/bæd/' }, b: { w: 'bird', ipa: '/bɜːd/' }, focus: '/æ/ vs /ɜː/' },
+  { a: { w: 'rice', ipa: '/raɪs/' }, b: { w: 'lice', ipa: '/laɪs/' }, focus: '/r/ vs /l/' },
+  { a: { w: 'vet', ipa: '/vet/' }, b: { w: 'wet', ipa: '/wet/' }, focus: '/v/ vs /w/' },
+  { a: { w: 'bag', ipa: '/bæɡ/' }, b: { w: 'back', ipa: '/bæk/' }, focus: '/ɡ/ vs /k/' },
+  { a: { w: 'short', ipa: '/ʃɔːt/' }, b: { w: 'shot', ipa: '/ʃɒt/' }, focus: '/ɔː/ vs /ɒ/' },
+  { a: { w: 'luck', ipa: '/lʌk/' }, b: { w: 'look', ipa: '/lʊk/' }, focus: '/ʌ/ vs /ʊ/' }
+];
+
+/* 重音词库：syl 音节切分，stress 主重音下标（从 0 起），soft 次重音下标（可选） */
+const STRESS_WORDS = [
+  { rule: 4, w: 'university', ipa: '/ˌjuːnɪˈvɜːsəti/', syl: ['u', 'ni', 'ver', 'si', 'ty'], stress: 2, soft: 0 },
+  { rule: 2, w: 'photograph', ipa: '/ˈfəʊtəɡrɑːf/', syl: ['pho', 'to', 'graph'], stress: 0 },
+  { rule: 2, w: 'photography', ipa: '/fəˈtɒɡrəfi/', syl: ['pho', 'tog', 'ra', 'phy'], stress: 1 },
+  { rule: 4, w: 'banana', ipa: '/bəˈnɑːnə/', syl: ['ba', 'na', 'na'], stress: 1 },
+  { rule: 4, w: 'computer', ipa: '/kəmˈpjuːtə/', syl: ['com', 'pu', 'ter'], stress: 1 },
+  { rule: 2, w: 'interesting', ipa: '/ˈɪntrəstɪŋ/', syl: ['in', 'ter', 'est', 'ing'], stress: 0 },
+  { rule: 4, w: 'develop', ipa: '/dɪˈveləp/', syl: ['de', 'vel', 'op'], stress: 1 },
+  { rule: 4, w: 'family', ipa: '/ˈfæməli/', syl: ['fa', 'mi', 'ly'], stress: 0 },
+  { rule: 3, w: 'tomorrow', ipa: '/təˈmɒrəʊ/', syl: ['to', 'mor', 'row'], stress: 1 },
+  { rule: 6, w: 'important', ipa: '/ɪmˈpɔːtənt/', syl: ['im', 'por', 'tant'], stress: 1 },
+  { rule: 7, w: 'vegetable', ipa: '/ˈvedʒtəbəl/', syl: ['veg', 'e', 'ta', 'ble'], stress: 0 },
+  { rule: 2, w: 'engineer', ipa: '/ˌendʒɪˈnɪə/', syl: ['en', 'gi', 'neer'], stress: 2, soft: 0 },
+  { rule: 2, w: 'wonderful', ipa: '/ˈwʌndəfəl/', syl: ['won', 'der', 'ful'], stress: 0 },
+  { rule: 3, w: 'remember', ipa: '/rɪˈmembə/', syl: ['re', 'mem', 'ber'], stress: 1 },
+  { rule: 1, w: 'holiday', ipa: '/ˈhɒlədeɪ/', syl: ['ho', 'li', 'day'], stress: 0 },
+  { rule: 4, w: 'magazine', ipa: '/ˌmæɡəˈziːn/', syl: ['mag', 'a', 'zine'], stress: 2, soft: 0 },
+  { rule: 2, w: 'dictionary', ipa: '/ˈdɪkʃənri/', syl: ['dic', 'tio', 'na', 'ry'], stress: 0 },
+  { rule: 2, w: 'education', ipa: '/ˌedʒʊˈkeɪʃən/', syl: ['e', 'du', 'ca', 'tion'], stress: 2, soft: 0 },
+  { rule: 3, w: 'hospital', ipa: '/ˈhɒspɪtəl/', syl: ['hos', 'pi', 'tal'], stress: 0 },
+  { rule: 4, w: 'potato', ipa: '/pəˈteɪtəʊ/', syl: ['po', 'ta', 'to'], stress: 1 },
+  { rule: 2, w: 'favourite', ipa: '/ˈfeɪvərɪt/', syl: ['fa', 'vou', 'rite'], stress: 0 },
+  { rule: 4, w: 'museum', ipa: '/mjuˈziːəm/', syl: ['mu', 'se', 'um'], stress: 1 },
+  { rule: 4, w: 'animal', ipa: '/ˈænɪməl/', syl: ['a', 'ni', 'mal'], stress: 0 },
+  { rule: 2, w: 'another', ipa: '/əˈnʌðə/', syl: ['a', 'no', 'ther'], stress: 1 },
+  { rule: 2, w: 'beautiful', ipa: '/ˈbjuːtɪfəl/', syl: ['beau', 'ti', 'ful'], stress: 0 },
+  { rule: 3, w: 'together', ipa: '/təˈɡeðə/', syl: ['to', 'ge', 'ther'], stress: 1 },
+  { rule: 2, w: 'understand', ipa: '/ˌʌndəˈstænd/', syl: ['un', 'der', 'stand'], stress: 2, soft: 0 },
+  { rule: 2, w: 'information', ipa: '/ˌɪnfəˈmeɪʃən/', syl: ['in', 'for', 'ma', 'tion'], stress: 2, soft: 0 },
+  { rule: 2, w: 'adventure', ipa: '/ədˈventʃə/', syl: ['ad', 'ven', 'ture'], stress: 1 },
+  { rule: 2, w: 'interview', ipa: '/ˈɪntəvjuː/', syl: ['in', 'ter', 'view'], stress: 0 },
+  { rule: 1, w: 'newspaper', ipa: '/ˈnjuːzpeɪpə/', syl: ['news', 'pa', 'per'], stress: 0 },
+  { rule: 4, w: 'electricity', ipa: '/ˌɪlekˈtrɪsəti/', syl: ['e', 'lec', 'tri', 'ci', 'ty'], stress: 2, soft: 0 },
+  { rule: 2, w: 'geography', ipa: '/dʒiˈɒɡrəfi/', syl: ['ge', 'og', 'ra', 'phy'], stress: 1 },
+  { rule: 4, w: 'cinema', ipa: '/ˈsɪnəmə/', syl: ['ci', 'ne', 'ma'], stress: 0 },
+  { rule: 3, w: 'different', ipa: '/ˈdɪfrənt/', syl: ['dif', 'fe', 'rent'], stress: 0 }
+];
+
+/* 拆音拼词：sounds 与 blocks 一一对应 */
+const BUILD_WORDS = [
+  { w: 'cat', ipa: '/kæt/', sounds: ['/k/', '/æ/', '/t/'], blocks: ['c', 'a', 't'] },
+  { w: 'ship', ipa: '/ʃɪp/', sounds: ['/ʃ/', '/ɪ/', '/p/'], blocks: ['sh', 'i', 'p'] },
+  { w: 'fish', ipa: '/fɪʃ/', sounds: ['/f/', '/ɪ/', '/ʃ/'], blocks: ['f', 'i', 'sh'] },
+  { w: 'black', ipa: '/blæk/', sounds: ['/bl/', '/æ/', '/k/'], blocks: ['bl', 'a', 'ck'] },
+  { w: 'rain', ipa: '/reɪn/', sounds: ['/r/', '/eɪ/', '/n/'], blocks: ['r', 'ai', 'n'] },
+  { w: 'light', ipa: '/laɪt/', sounds: ['/l/', '/aɪ/', '/t/'], blocks: ['l', 'igh', 't'] },
+  { w: 'boat', ipa: '/bəʊt/', sounds: ['/b/', '/əʊ/', '/t/'], blocks: ['b', 'oa', 't'] },
+  { w: 'book', ipa: '/bʊk/', sounds: ['/b/', '/ʊ/', '/k/'], blocks: ['b', 'oo', 'k'] },
+  { w: 'train', ipa: '/treɪn/', sounds: ['/tr/', '/eɪ/', '/n/'], blocks: ['tr', 'ai', 'n'] },
+  { w: 'star', ipa: '/stɑː/', sounds: ['/st/', '/ɑː/'], blocks: ['st', 'ar'] },
+  { w: 'green', ipa: '/ɡriːn/', sounds: ['/gr/', '/iː/', '/n/'], blocks: ['gr', 'ee', 'n'] },
+  { w: 'bread', ipa: '/bred/', sounds: ['/br/', '/e/', '/d/'], blocks: ['br', 'ea', 'd'] },
+  { w: 'chair', ipa: '/tʃeə/', sounds: ['/tʃ/', '/eə/'], blocks: ['ch', 'air'] },
+  { w: 'mouse', ipa: '/maʊs/', sounds: ['/m/', '/aʊ/', '/s/'], blocks: ['m', 'ou', 'se'], note: '词尾 e 不发音' },
+  { w: 'clock', ipa: '/klɒk/', sounds: ['/kl/', '/ɒ/', '/k/'], blocks: ['cl', 'o', 'ck'] },
+  { w: 'sheep', ipa: '/ʃiːp/', sounds: ['/ʃ/', '/iː/', '/p/'], blocks: ['sh', 'ee', 'p'] },
+  { w: 'three', ipa: '/θriː/', sounds: ['/θ/', '/r/', '/iː/'], blocks: ['th', 'r', 'ee'] },
+  { w: 'queen', ipa: '/kwiːn/', sounds: ['/kw/', '/iː/', '/n/'], blocks: ['qu', 'ee', 'n'] },
+  { w: 'snow', ipa: '/snəʊ/', sounds: ['/sn/', '/əʊ/'], blocks: ['sn', 'ow'] },
+  { w: 'jump', ipa: '/dʒʌmp/', sounds: ['/dʒ/', '/ʌ/', '/mp/'], blocks: ['j', 'u', 'mp'] },
+  { w: 'school', ipa: '/skuːl/', sounds: ['/s/', '/k/', '/uː/', '/l/'], blocks: ['s', 'ch', 'oo', 'l'] },
+  { w: 'girl', ipa: '/ɡɜːl/', sounds: ['/ɡ/', '/ɜː/', '/l/'], blocks: ['g', 'ir', 'l'] },
+  { w: 'house', ipa: '/haʊs/', sounds: ['/h/', '/aʊ/', '/s/'], blocks: ['h', 'ou', 'se'], note: '词尾 e 不发音' },
+  { w: 'horse', ipa: '/hɔːs/', sounds: ['/h/', '/ɔː/', '/s/'], blocks: ['h', 'or', 'se'], note: '词尾 e 不发音' },
+  { w: 'bird', ipa: '/bɜːd/', sounds: ['/b/', '/ɜː/', '/d/'], blocks: ['b', 'ir', 'd'] },
+  { w: 'spoon', ipa: '/spuːn/', sounds: ['/sp/', '/uː/', '/n/'], blocks: ['sp', 'oo', 'n'] },
+  { w: 'frog', ipa: '/frɒɡ/', sounds: ['/fr/', '/ɒ/', '/ɡ/'], blocks: ['fr', 'o', 'g'] },
+  { w: 'dress', ipa: '/dres/', sounds: ['/dr/', '/e/', '/s/'], blocks: ['dr', 'e', 'ss'] },
+  { w: 'think', ipa: '/θɪŋk/', sounds: ['/θ/', '/ɪ/', '/ŋk/'], blocks: ['th', 'i', 'nk'] },
+  { w: 'night', ipa: '/naɪt/', sounds: ['/n/', '/aɪ/', '/t/'], blocks: ['n', 'igh', 't'] },
+  { w: 'cow', ipa: '/kaʊ/', sounds: ['/k/', '/aʊ/'], blocks: ['c', 'ow'] },
+  { w: 'bear', ipa: '/beə/', sounds: ['/b/', '/eə/'], blocks: ['b', 'ear'] },
+  { w: 'coin', ipa: '/kɔɪn/', sounds: ['/k/', '/ɔɪ/', '/n/'], blocks: ['c', 'oi', 'n'] },
+  { w: 'moon', ipa: '/muːn/', sounds: ['/m/', '/uː/', '/n/'], blocks: ['m', 'oo', 'n'] },
+  { w: 'duck', ipa: '/dʌk/', sounds: ['/d/', '/ʌ/', '/k/'], blocks: ['d', 'u', 'ck'] }
+];
+
+/* 跟读例句（第四步录音用） */
+const SENTENCES = [
+  { en: 'The weather in London is better than I expected.', ipa: '/ðə ˈweðər ɪn ˈlʌndən ɪz ˈbetə ðæn aɪ ɪkˈspektɪd/', focus: '/e/ /ʌ/ /ə/' },
+  { en: 'I bought a book about birds at the shop.', ipa: '/aɪ bɔːt ə bʊk əˈbaʊt bɜːdz æt ðə ʃɒp/', focus: '/ɔː/ /ʊ/ /ɜː/ /ɒ/' },
+  { en: 'Could you pass me the water bottle, please?', ipa: '/kʊd juː pɑːs miː ðə ˈwɔːtə ˈbɒtəl pliːz/', focus: '/ʊ/ /ɔː/ /ɒ/ /ə/' },
+  { en: 'Three thin brothers are bathing in the bath.', ipa: '/θriː θɪn ˈbrʌðəz ə ˈbeɪðɪŋ ɪn ðə bɑːθ/', focus: '/θ/ vs /ð/' },
+  { en: 'She was working as a nurse in a large hospital.', ipa: '/ʃiː wəz ˈwɜːkɪŋ əz ə nɜːs ɪn ə lɑːdʒ ˈhɒspɪtəl/', focus: '/ɜː/ /ɑː/ /ɒ/' },
+  { en: 'I thought the boss was going to call off the meeting.', ipa: '/aɪ θɔːt ðə bɒs wəz ˈɡəʊɪŋ tə kɔːl ɒf ðə ˈmiːtɪŋ/', focus: '/ɔː/ /ɒ/ /əʊ/' }
+];
+
+/* 每日 10 分钟微习惯 */
+const PLAN_STEPS = [
+  { t: '3 分钟', title: '练 3 个易混音素', desc: '打开音素卡，对着镜子/前置摄像头确认口型，先只练单音', act: 'cards' },
+  { t: '5 分钟', title: '解码 10 个新单词', desc: '查音标 → 划字母组合 → 标重音，大声说出“/iː/ 对应 ea”', act: 'blitz' },
+  { t: '2 分钟', title: '录一句原声例句', desc: '听原声 → 跟读录音 → 回听对比', act: 'shadow' }
+];
+
+
+/* ====== 补充 A：Orton-Gillingham 六大音节类型 ======
+   教学顺序：closed → open → VCe → vowel team → r-controlled → consonant-le
+   （schwa /ə/ 应在六大类型都掌握之后再引入） */
+const SYLLABLE_TYPES = [
+  { key: 'closed', name: '闭音节 Closed', pat: '元音 + 辅音收尾（CVC）', say: '元音被后面的辅音「关」住，只能发短音', vowel: '短音', ratio: '约 50%，最常见', ex: 'cat, rab·bit, win·ter, bas·ket' },
+  { key: 'open', name: '开音节 Open', pat: '以元音字母结尾', say: '音节末尾没人挡，元音就喊出自己的名字（字母名）', vowel: '长音', ratio: '约 20%', ex: 'go, me, ti·ger, ro·bot, ba·by' },
+  { key: 'vce', name: '魔法 e 音节 VCe', pat: '元音 + 辅音 + 词尾不发音 e', say: '词尾 e 不发音，专职把前面的元音「撑长」', vowel: '长音', ratio: '约 10%', ex: 'cake, these, bike, note, cute' },
+  { key: 'team', name: '元音组音节 Vowel Team', pat: '两个（或多个）元音字母同发一个音', say: '口诀：两个元音一起走，第一个说自己的名字', vowel: '长音 / 双元音', ratio: '约 10%', ex: 'rain, boat, light, book, teach·er' },
+  { key: 'rc', name: 'r 控制音节 R-Controlled', pat: '元音 + r（ar / er / ir / or / ur）', say: 'r 骑在元音头上，元音就变了音；英式 RP 不卷舌', vowel: '被 r 改变（/ɑː/ /ɜː/ /ɔː/ 等）', ratio: '约 5%', ex: 'car, bird, corn, nurse, win·ter' },
+  { key: 'cle', name: '辅音 + le 音节 Consonant-le', pat: '词尾：一个辅音 + le', say: '口诀：Consonant + le，往前数三个字母定起点；le 读 /əl/', vowel: 'le 读 /əl/', ratio: '约 5%', ex: 'ta·ble, ap·ple, lit·tle, jun·gle' }
+];
+
+/* 音节类型词库：syl 与 types 一一对应 */
+const SYL_TYPE_WORDS = [
+  { w: 'cat', ipa: '/kæt/', syl: ['cat'], types: ['closed'] },
+  { w: 'rabbit', ipa: '/ˈræbɪt/', syl: ['rab', 'bit'], types: ['closed', 'closed'] },
+  { w: 'basket', ipa: '/ˈbɑːskɪt/', syl: ['bas', 'ket'], types: ['closed', 'closed'] },
+  { w: 'pencil', ipa: '/ˈpensəl/', syl: ['pen', 'cil'], types: ['closed', 'closed'] },
+  { w: 'window', ipa: '/ˈwɪndəʊ/', syl: ['win', 'dow'], types: ['closed', 'team'] },
+  { w: 'yellow', ipa: '/ˈjeləʊ/', syl: ['yel', 'low'], types: ['closed', 'team'] },
+  { w: 'monkey', ipa: '/ˈmʌŋki/', syl: ['mon', 'key'], types: ['closed', 'team'] },
+  { w: 'insect', ipa: '/ˈɪnsekt/', syl: ['in', 'sect'], types: ['closed', 'closed'] },
+  { w: 'napkin', ipa: '/ˈnæpkɪn/', syl: ['nap', 'kin'], types: ['closed', 'closed'] },
+  { w: 'go', ipa: '/ɡəʊ/', syl: ['go'], types: ['open'] },
+  { w: 'tiger', ipa: '/ˈtaɪɡə/', syl: ['ti', 'ger'], types: ['open', 'rc'] },
+  { w: 'robot', ipa: '/ˈrəʊbɒt/', syl: ['ro', 'bot'], types: ['open', 'closed'] },
+  { w: 'music', ipa: '/ˈmjuːzɪk/', syl: ['mu', 'sic'], types: ['open', 'closed'] },
+  { w: 'basic', ipa: '/ˈbeɪsɪk/', syl: ['ba', 'sic'], types: ['open', 'closed'] },
+  { w: 'student', ipa: '/ˈstjuːdənt/', syl: ['stu', 'dent'], types: ['open', 'closed'] },
+  { w: 'moment', ipa: '/ˈməʊmənt/', syl: ['mo', 'ment'], types: ['open', 'closed'] },
+  { w: 'photo', ipa: '/ˈfəʊtəʊ/', syl: ['pho', 'to'], types: ['open', 'open'] },
+  { w: 'zero', ipa: '/ˈzɪərəʊ/', syl: ['ze', 'ro'], types: ['open', 'open'] },
+  { w: 'email', ipa: '/ˈiːmeɪl/', syl: ['e', 'mail'], types: ['open', 'team'] },
+  { w: 'agree', ipa: '/əˈɡriː/', syl: ['a', 'gree'], types: ['open', 'team'] },
+  { w: 'cake', ipa: '/keɪk/', syl: ['cake'], types: ['vce'] },
+  { w: 'these', ipa: '/ðiːz/', syl: ['these'], types: ['vce'] },
+  { w: 'bike', ipa: '/baɪk/', syl: ['bike'], types: ['vce'] },
+  { w: 'note', ipa: '/nəʊt/', syl: ['note'], types: ['vce'] },
+  { w: 'cute', ipa: '/kjuːt/', syl: ['cute'], types: ['vce'] },
+  { w: 'inside', ipa: '/ɪnˈsaɪd/', syl: ['in', 'side'], types: ['closed', 'vce'] },
+  { w: 'invite', ipa: '/ɪnˈvaɪt/', syl: ['in', 'vite'], types: ['closed', 'vce'] },
+  { w: 'cupcake', ipa: '/ˈkʌpkeɪk/', syl: ['cup', 'cake'], types: ['closed', 'vce'] },
+  { w: 'sunshine', ipa: '/ˈsʌnʃaɪn/', syl: ['sun', 'shine'], types: ['closed', 'vce'] },
+  { w: 'homework', ipa: '/ˈhəʊmwɜːk/', syl: ['home', 'work'], types: ['vce', 'rc'] },
+  { w: 'rain', ipa: '/reɪn/', syl: ['rain'], types: ['team'] },
+  { w: 'boat', ipa: '/bəʊt/', syl: ['boat'], types: ['team'] },
+  { w: 'light', ipa: '/laɪt/', syl: ['light'], types: ['team'] },
+  { w: 'teacher', ipa: '/ˈtiːtʃə/', syl: ['teach', 'er'], types: ['team', 'rc'] },
+  { w: 'car', ipa: '/kɑː/', syl: ['car'], types: ['rc'] },
+  { w: 'bird', ipa: '/bɜːd/', syl: ['bird'], types: ['rc'] },
+  { w: 'corner', ipa: '/ˈkɔːnə/', syl: ['cor', 'ner'], types: ['rc', 'rc'] },
+  { w: 'thursday', ipa: '/ˈθɜːzdeɪ/', syl: ['thurs', 'day'], types: ['rc', 'team'] },
+  { w: 'birthday', ipa: '/ˈbɜːθdeɪ/', syl: ['birth', 'day'], types: ['rc', 'team'] },
+  { w: 'table', ipa: '/ˈteɪbəl/', syl: ['ta', 'ble'], types: ['open', 'cle'] },
+  { w: 'cable', ipa: '/ˈkeɪbəl/', syl: ['ca', 'ble'], types: ['open', 'cle'] },
+  { w: 'bugle', ipa: '/ˈbjuːɡəl/', syl: ['bu', 'gle'], types: ['open', 'cle'] },
+  { w: 'apple', ipa: '/ˈæpəl/', syl: ['ap', 'ple'], types: ['closed', 'cle'] },
+  { w: 'little', ipa: '/ˈlɪtəl/', syl: ['lit', 'tle'], types: ['closed', 'cle'] },
+  { w: 'bottle', ipa: '/ˈbɒtəl/', syl: ['bot', 'tle'], types: ['closed', 'cle'] },
+  { w: 'candle', ipa: '/ˈkændəl/', syl: ['can', 'dle'], types: ['closed', 'cle'] },
+  { w: 'jungle', ipa: '/ˈdʒʌŋɡəl/', syl: ['jun', 'gle'], types: ['closed', 'cle'] },
+  { w: 'simple', ipa: '/ˈsɪmpəl/', syl: ['sim', 'ple'], types: ['closed', 'cle'] },
+  { w: 'tremble', ipa: '/ˈtrembəl/', syl: ['trem', 'ble'], types: ['closed', 'cle'] },
+  { w: 'purple', ipa: '/ˈpɜːpəl/', syl: ['pur', 'ple'], types: ['rc', 'cle'] },
+  { w: 'noodle', ipa: '/ˈnuːdəl/', syl: ['noo', 'dle'], types: ['team', 'cle'] },
+  { w: 'beetle', ipa: '/ˈbiːtəl/', syl: ['bee', 'tle'], types: ['team', 'cle'] }
+];
+
+/* 六大类型的干扰项说明（供题目反馈使用） */
+const SYL_TYPE_HINT = {
+  closed: 'VC / CVC 结构，元音后面被辅音堵住 → 短音。判断口诀：看到「元音 + 一个或几个辅音」收尾，多半是闭音节。',
+  open: '音节以元音字母结尾 → 元音读字母名（长音）。判断口诀：音节末尾是「光秃秃的元音」。',
+  vce: '元音 + 单个辅音 + 词尾不发音 e → 元音读长音。判断口诀：词尾那个 e 不发音，只负责「撑长」。',
+  team: '两个元音字母挤在一起只发一个音（ai, ea, oa, ie, ee, oo, ow, ou, oi, igh…）。判断口诀：两个元音一起走，第一个说自己的名字。',
+  rc: '元音后面紧跟 r（ar / er / ir / or / ur），元音被 r 改写。判断口诀：r 是 boss，元音听它的。',
+  cle: '词尾「辅音 + le」，le 读 /əl/。判断口诀：Consonant + le，往前数三个字母定起点。'
+};
+
+/* ====== 补充 B：拼写 / 解码通则 ======
+   说明：本表刻意不收录「i before e except after c」。
+   实证统计显示该口诀在 c 之后失败率约 75%（ancient, efficient, science, society…），
+   权威读写教学（Orton-Gillingham / 英国 DfE）已不推荐使用，改为按元音组音节整体记忆。 */
+const SPELLING_RULES = [
+  { n: 1, name: 'Cat / Kite 规则', rule: 'c 在 a、o、u 前读 /k/（硬音）；在 e、i、y 前读 /s/（软音）', ex: 'cat /kæt/, cot /kɒt/, cup /kʌp/ ｜ city /ˈsɪti/, ice /aɪs/, cycle /ˈsaɪkəl/' },
+  { n: 2, name: 'Gentle Cindy（软 c / 软 g）', rule: 'c、g 后面跟 e、i、y 时常变「软音」：c → /s/，g → /dʒ/', ex: 'cent /sent/, city /ˈsɪti/, cycle /ˈsaɪkəl/ ｜ gem /dʒem/, giant /ˈdʒaɪənt/, gym /dʒɪm/' },
+  { n: 3, name: 'FLOSS 规则', rule: '单音节词里，紧跟在短元音后的 /f/ /l/ /s/ /z/ 在词尾要双写：ff、ll、ss、zz', ex: 'staff, hill, kiss, buzz, dress, cliff ｜ 对比：craft, milk, bus, quiz（短元音后还有其他辅音时不双写）' },
+  { n: 4, name: 'C 还是 K 还是 -CK', rule: '词首 /k/：a、o、u 前用 c，e、i、y 前用 k；词尾 /k/：短元音后用 -ck，长元音 / 双元音 / 辅音后用 -k', ex: 'cat, cot, cup ｜ kite, keep, key ｜ back, pick, duck（短元音）｜ book, look, milk, ask（非短元音）' },
+  { n: 5, name: '-dge 规则', rule: '短元音后的词尾 /dʒ/ 拼写为 -dge；长元音或辅音后写作 -ge', ex: 'badge, bridge, fudge, edge ｜ large, cage, change, huge' },
+  { n: 6, name: '-tch 规则', rule: '短元音后的词尾 /tʃ/ 拼写为 -tch；长元音或辅音后多为 -ch', ex: 'catch, match, witch, fetch ｜ beach, lunch, rich, church' },
+  { n: 7, name: 'Q 后面永远有 U', rule: '英语本族词里 q 后面总跟着 u，两者合起来读 /kw/', ex: 'queen /kwiːn/, quick /kwɪk/, question /ˈkwestʃən/, quit /kwɪt/' },
+  { n: 8, name: '每个音节都有一个元音', rule: '数音节 = 数「元音音」，不是数字母；词尾不发音的 e 不算一个音节', ex: 'cat(1), ta·ble(2), e·le·phant(3), com·pu·ter(3), make(1)' },
+  { n: 9, name: '英语单词不以 i / u / v / j 结尾', rule: '词尾听起来是这些音时，改写为 -y / -ue（或加 e）/ -ve / -ge 或 -dge', ex: 'happy, my（i → y）｜ blue, clue, have（u → ue/-ve）｜ have, love, give（v → -ve）｜ large, badge（j → -ge/-dge）' },
+  { n: 10, name: 'Y 作元音的四种位置', rule: '① 单音节词尾 y → /aɪ/；② 多音节词尾 y → /i/；③ 词中 y → /ɪ/；④ 词首 y 是辅音 → /j/', ex: '① my /maɪ/, cry /kraɪ/, fly /flaɪ/ ｜ ② hap·py /ˈhæpi/, ba·by /ˈbeɪbi/ ｜ ③ gym /dʒɪm/, myth /mɪθ/ ｜ ④ yes /jes/, you /juː/' },
+  { n: 11, name: '加后缀双写（1-1-1 规则）', rule: '单音节词、1 个元音 + 1 个辅音结尾（1-1-1），接元音开头的后缀时，双写末尾辅音', ex: 'run → running, swim → swimming, big → bigger, stop → stopped' },
+  { n: 12, name: '加后缀去 e（Drop-e 规则）', rule: '词尾有不发音 e 的词，接元音开头的后缀（-ing / -ed / -er / -y）时去掉这个 e', ex: 'hope → hoping, make → making, like → liked, bake → baker（careful、hopeful 保留 e）' },
+  { n: 13, name: '加后缀改 y 为 i（Change-y 规则）', rule: '「辅音 + y」结尾的词，接后缀时（除 -ing）把 y 改成 i', ex: 'carry → carried, happy → happier, try → tried, city → cities（但 carrying 保留 y）' },
+  { n: 14, name: '弱读元音 Schwa /ə/', rule: '非重读音节里的元音绝大多数弱化成 /ə/，这是英语中出现频率最高的音', ex: 'a·bout /əˈbaʊt/, so·fa /ˈsəʊfə/, fa·mous /ˈfeɪməs/, pen·cil /ˈpensəl/' }
+];
+
+/* ====== 补充 C：高频不规则词（Tricky / Heart Words） ======
+   来源：英国 DfE《Letters and Sounds》Phase 2–5 tricky words
+   + 英国小学 National Curriculum Years 1–2 Common Exception Words。
+   原则：规则只能覆盖约 85% 的词，这批高频词必须单独记忆。
+   g = 难点分组（见 TRICKY_GROUPS） */
+const TRICKY_GROUPS = [
+  { id: 'A', name: '元音读得「不按套路」', color: 'A', desc: 'ai / a / ea 等组合读成短音或意外音' },
+  { id: 'B', name: '字母 o 的四种读法', desc: 'o 不读 /ɒ/ 而读 /ʌ/ /uː/ /əʊ/ /wʌ/' },
+  { id: 'C', name: 'w / wh 改写后面的元音', desc: 'wh- 后元音被改写，who 里 w 脱落' },
+  { id: 'D', name: '-ough / -augh / -igh 家族', desc: '同一拼写 6 种读法，只能逐个记' },
+  { id: 'E', name: '魔法 e 失效', desc: '有词尾 e，元音却仍读短音' },
+  { id: 'F', name: '不发音字母', desc: '整体读法被静默字母「压缩」' },
+  { id: 'G', name: '同音词 / 易混对', desc: '读音相同、拼写或意义不同' },
+  { id: 'H', name: 'ar / or 在 w 后变音', desc: 'w 后 ar 读 /ɔː/、or 读 /ɜː/' },
+  { id: 'I', name: 'a 在 f / s / th / nce 前读 /ɑː/', desc: '英式 RP 的「长 a」现象' }
+];
+
+const TRICKY_WORDS = [
+  /* A 组：元音读得「不按套路」 */
+  { w: 'said', ipa: '/sed/', g: 'A', why: 'ai 这里读 /e/，不是 /eɪ/', tip: 'say 的过去式，读音跟着「缩水」了 —— 权威词典音标才是准绳' },
+  { w: 'again', ipa: '/əˈɡen/', g: 'A', why: 'ai 读 /e/，且首音节弱读为 /ə/', tip: '英式两种读法 /əˈɡen/ 与 /əˈɡeɪn/ 都常见，剑桥词典以 /əˈɡen/ 为主' },
+  { w: 'many', ipa: '/ˈmeni/', g: 'A', why: 'a 读 /e/', tip: '记住 any / many 这对：a 都读 /e/' },
+  { w: 'any', ipa: '/ˈeni/', g: 'A', why: 'a 读 /e/', tip: 'many / any 是唯一一组 a 读 /e/ 的高频词' },
+  { w: 'friend', ipa: '/frend/', g: 'A', why: 'ie 读 /e/，不是 /aɪ/ 也不是 /iː/', tip: '「i before e」口诀在这里失效 —— 这正是该口诀不值得教的原因' },
+  { w: 'great', ipa: '/ɡreɪt/', g: 'A', why: 'ea 读 /eɪ/，不是 /iː/', tip: 'great / break / steak 三兄弟，ea 都读 /eɪ/' },
+  { w: 'break', ipa: '/breɪk/', g: 'A', why: 'ea 读 /eɪ/', tip: 'break 与 brake 同音' },
+  { w: 'steak', ipa: '/steɪk/', g: 'A', why: 'ea 读 /eɪ/', tip: 'steak 与 stake 同音' },
+  { w: 'pretty', ipa: '/ˈprɪti/', g: 'A', why: 'e 读 /ɪ/', tip: '两个 t：pret·ty，重音在第一音节' },
+  { w: 'busy', ipa: '/ˈbɪzi/', g: 'A', why: 'u 读 /ɪ/，s 读 /z/', tip: 'busy 里的 s 浊化为 /z/' },
+  { w: 'children', ipa: '/ˈtʃɪldrən/', g: 'A', why: 'child 变复数后 i 从 /aɪ/ 变回 /ɪ/', tip: 'child /tʃaɪld/ → children /ˈtʃɪldrən/，同根词换了读音' },
+  { w: 'please', ipa: '/pliːz/', g: 'A', why: 'ea 读 /iː/（规则内，但 s 读 /z/ 常被读错）', tip: 'ea 在这里是规则的 /iː/，难点在 -se 读 /z/' },
+
+  /* B 组：字母 o 的四种读法 */
+  { w: 'some', ipa: '/sʌm/', g: 'B', gs: ['B', 'E'], why: 'o 读 /ʌ/，且词尾 e 没起作用（双重不规则）', tip: 'come / some / love / done 都是 o 读 /ʌ/ 的「抄写员 o」家族' },
+  { w: 'come', ipa: '/kʌm/', g: 'B', gs: ['B', 'E'], why: 'o 读 /ʌ/，且词尾 e 没起作用（双重不规则）', tip: '古英语抄写员为避免 u 与 n/m 混淆，把 u 改写成 o' },
+  { w: 'love', ipa: '/lʌv/', g: 'B', why: 'o 读 /ʌ/，且词尾 -ve 表 /v/', tip: '英语单词不以 v 结尾，所以写作 -ve' },
+  { w: 'one', ipa: '/wʌn/', g: 'B', why: 'o 读 /ʌ/，前面还多出一个 /w/', tip: 'one / once 都带这个「凭空冒出来的」/w/' },
+  { w: 'once', ipa: '/wʌns/', g: 'B', why: 'o 读 /ʌ/，前有 /w/', tip: 'one → once，读音只多了词尾 /s/' },
+  { w: 'do', ipa: '/duː/', g: 'B', why: 'o 读 /uː/', tip: 'do / to / who / move / lose 的 o 都读 /uː/' },
+  { w: 'move', ipa: '/muːv/', g: 'B', why: 'o 读 /uː/，词尾 e 不发音', tip: 'move / prove / improve 一族' },
+  { w: 'woman', ipa: '/ˈwʊmən/', g: 'B', why: 'o 读 /ʊ/（第一音节）', tip: '单数 /ˈwʊmən/ → 复数 women /ˈwɪmɪn/，元音又变了' },
+  { w: 'most', ipa: '/məʊst/', g: 'B', why: 'o 读 /əʊ/', tip: 'most / post / host / only / both / old 都读 /əʊ/' },
+  { w: 'only', ipa: '/ˈəʊnli/', g: 'B', why: 'o 读 /əʊ/', tip: 'on·ly 两个音节' },
+  { w: 'both', ipa: '/bəʊθ/', g: 'B', why: 'o 读 /əʊ/，th 读 /θ/', tip: 'both 的 th 是清音 /θ/，不是 /ð/' },
+  { w: 'gold', ipa: '/ɡəʊld/', g: 'B', why: 'o 读 /əʊ/', tip: 'old / cold / gold / hold / told 一族都读 /əʊ/' },
+  { w: 'money', ipa: '/ˈmʌni/', g: 'B', why: 'o 读 /ʌ/', tip: 'mon·ey 两音节，词尾 y 读 /i/' },
+
+  /* C 组：w / wh 改写后面的元音 */
+  { w: 'was', ipa: '/wɒz/', g: 'C', why: 'a 在 w 后读 /ɒ/ 而非 /æ/；s 读 /z/', tip: 'w + a 常把 a 拉成 /ɒ/：was, want, what, wash' },
+  { w: 'want', ipa: '/wɒnt/', g: 'C', why: 'a 在 w 后读 /ɒ/', tip: '与 was / what 同族' },
+  { w: 'what', ipa: '/wɒt/', g: 'C', why: 'wh 读 /w/，a 读 /ɒ/', tip: '英式里 wh 基本都读 /w/，只有 o 前读 /h/' },
+  { w: 'who', ipa: '/huː/', g: 'C', why: 'wh 在 o 前读 /h/，w 不发音', tip: 'who / whom / whose 都是 w 脱落、读 /h/' },
+  { w: 'whose', ipa: '/huːz/', g: 'C', why: 'wh 读 /h/，s 读 /z/', tip: 'whose 与 who is 的缩写同音，但意思不同' },
+  { w: 'water', ipa: '/ˈwɔːtə/', g: 'C', why: 'a 在 w 后读 /ɔː/，词尾 er 弱读 /ə/', tip: '英式 /ˈwɔːtə/，词尾不卷舌' },
+
+  /* D 组：-ough / -augh / -igh 家族 */
+  { w: 'thought', ipa: '/θɔːt/', g: 'D', why: 'ough 读 /ɔː/', tip: 'ough 家族六兄弟之一' },
+  { w: 'through', ipa: '/θruː/', g: 'D', why: 'ough 读 /uː/', tip: 'through 与 threw 同音' },
+  { w: 'bought', ipa: '/bɔːt/', g: 'D', why: 'ough 读 /ɔː/', tip: 'bought / brought / caught / taught 一族' },
+  { w: 'enough', ipa: '/ɪˈnʌf/', g: 'D', why: 'ough 读 /ʌf/，gh 读 /f/', tip: 'e·nough 重音在第二音节' },
+  { w: 'cough', ipa: '/kɒf/', g: 'D', why: 'ough 读 /ɒf/', tip: 'cough 与 off 韵脚相同' },
+  { w: 'rough', ipa: '/rʌf/', g: 'D', why: 'ough 读 /ʌf/', tip: 'rough 与 enough 同韵' },
+  { w: 'laugh', ipa: '/lɑːf/', g: 'D', why: 'augh 读 /ɑːf/', tip: 'laugh 与 half 同韵' },
+  { w: 'daughter', ipa: '/ˈdɔːtə/', g: 'D', why: 'augh 读 /ɔː/', tip: 'aughter 读 /ɔːtə/' },
+  { w: 'night', ipa: '/naɪt/', g: 'D', why: 'igh 读 /aɪ/，gh 不发音', tip: 'igh 三字母只读一个 /aɪ/' },
+
+  /* E 组：魔法 e 失效 */
+  { w: 'have', ipa: '/hæv/', g: 'E', why: '有词尾 e，a 却仍读短音 /æ/', tip: '高频词「三剑客」have / give / live 都不遵守魔法 e' },
+  { w: 'give', ipa: '/ɡɪv/', g: 'E', why: '有词尾 e，i 却读短音 /ɪ/', tip: 'give / live 一族' },
+  { w: 'live', ipa: '/lɪv/', g: 'E', why: '有词尾 e，i 却读短音 /ɪ/', tip: '动词读 /lɪv/；形容词 live 读 /laɪv/' },
+  { w: 'gone', ipa: '/ɡɒn/', g: 'E', why: '有词尾 e，o 仍读短音 /ɒ/', tip: 'gone /ɡɒn/ 与 done /dʌn/ 不同' },
+  { w: 'were', ipa: '/wɜː/', g: 'E', why: 'ere 读 /ɜː/', tip: 'were /wɜː/、here /hɪə/、there /ðeə/ 三个 ere 三种读法' },
+
+  /* F 组：不发音字母 */
+  { w: 'could', ipa: '/kʊd/', g: 'F', why: 'ou 读 /ʊ/，l 不发音', tip: 'could / would / should 三兄弟，l 都不发音' },
+  { w: 'would', ipa: '/wʊd/', g: 'F', why: 'ou 读 /ʊ/，l 不发音', tip: 'would 与 wood 同音' },
+  { w: 'should', ipa: '/ʃʊd/', g: 'F', why: 'ou 读 /ʊ/，l 不发音', tip: 'should 与 showed 不押韵' },
+  { w: 'half', ipa: '/hɑːf/', g: 'F', why: 'l 不发音，a 读 /ɑː/', tip: 'half / calf 里 l 静默' },
+  { w: 'hour', ipa: '/ˈaʊə/', g: 'F', why: 'h 不发音', tip: 'hour / honest / honour 的 h 都静默' },
+  { w: 'know', ipa: '/nəʊ/', g: 'F', why: 'k 不发音', tip: 'kn- 词首：k 永远不发音' },
+  { w: 'write', ipa: '/raɪt/', g: 'F', why: 'w 不发音', tip: 'wr- 词首：w 永远不发音' },
+  { w: 'listen', ipa: '/ˈlɪsən/', g: 'F', why: 't 不发音', tip: 'lis·ten 只有两个音节！' },
+  { w: 'christmas', ipa: '/ˈkrɪsməs/', g: 'F', why: 't 不发音', tip: 'Chris·tmas 三音节变两音节' },
+  { w: 'climb', ipa: '/klaɪm/', g: 'F', why: 'b 不发音', tip: '-mb 词尾：b 静默' },
+
+  /* G 组：同音词 / 易混对 */
+  { w: 'there', ipa: '/ðeə/', g: 'G', why: 'ere 读 /eə/', tip: 'there / their / they\'re 三词同音，只能靠语义区分' },
+  { w: 'their', ipa: '/ðeə/', g: 'G', why: 'eir 读 /eə/', tip: 'their 是物主代词，there 是地点' },
+  { w: 'where', ipa: '/weə/', g: 'G', why: 'ere 读 /eə/', tip: 'where / wear 同音；were 读 /wɜː/ 不同' },
+  { w: 'eye', ipa: '/aɪ/', g: 'G', why: 'eye 读 /aɪ/，与 I 同音', tip: 'eye / I 同音，eyes /aɪz/' },
+  { w: 'eyes', ipa: '/aɪz/', g: 'G', why: '复数 -s 在元音后读 /z/', tip: 'eye 的复数是 eyes，不是 eys（不以 i 结尾）' },
+  { w: 'to', ipa: '/tuː/', g: 'G', why: '强读 /tuː/，弱读 /tə/', tip: 'to / too / two 三词同音' },
+  { w: 'you', ipa: '/juː/', g: 'G', why: 'ou 读 /uː/，不是 /aʊ/', tip: 'you / your / yours 的 ou 都读 /uː/ 或 /ɔː/' },
+  { w: 'four', ipa: '/fɔː/', g: 'G', why: 'our 读 /ɔː/', tip: 'four / for 同音；fourteen 里 our 又读 /ɔː/' },
+  { w: 'door', ipa: '/dɔː/', g: 'G', why: 'oor 读 /ɔː/', tip: 'door / floor 同韵' },
+
+  /* H 组：ar / or 在 w 后变音 */
+  { w: 'work', ipa: '/wɜːk/', g: 'H', why: 'or 在 w 后读 /ɜː/，不是 /ɔː/', tip: 'w + or 读 /ɜː/：work, word, world, worth' },
+  { w: 'word', ipa: '/wɜːd/', g: 'H', why: 'or 在 w 后读 /ɜː/', tip: 'word 与 ward /wɔːd/ 相对' },
+  { w: 'world', ipa: '/wɜːld/', g: 'H', why: 'or 在 w 后读 /ɜː/', tip: 'world 与 word 同韵' },
+  { w: 'warm', ipa: '/wɔːm/', g: 'H', why: 'ar 在 w 后读 /ɔː/，不是 /ɑː/', tip: 'w + ar 读 /ɔː/：warm, war, warn, ward' },
+  { w: 'war', ipa: '/wɔː/', g: 'H', why: 'ar 在 w 后读 /ɔː/', tip: 'war /wɔː/ 与 were /wɜː/ 别混' },
+
+  /* I 组：a 在 f / s / th / nce 前读 /ɑː/ */
+  { w: 'class', ipa: '/klɑːs/', g: 'I', why: 'a 在 s 前读 /ɑː/', tip: '英式 RP：class / glass / pass / grass' },
+  { w: 'fast', ipa: '/fɑːst/', g: 'I', why: 'a 在 s 前读 /ɑː/', tip: 'fast / last / past / cast' },
+  { w: 'last', ipa: '/lɑːst/', g: 'I', why: 'a 在 s 前读 /ɑː/', tip: 'last 与 lost /lɒst/ 相对' },
+  { w: 'path', ipa: '/pɑːθ/', g: 'I', why: 'a 在 th 前读 /ɑː/，th 读 /θ/', tip: 'path / bath / rather（后者美式不同）' },
+  { w: 'bath', ipa: '/bɑːθ/', g: 'I', why: 'a 在 th 前读 /ɑː/', tip: 'bath /bɑːθ/（名）vs bathe /beɪð/（动）' },
+  { w: 'after', ipa: '/ˈɑːftə/', g: 'I', why: 'a 在 f 前读 /ɑː/', tip: 'after / craft / draft / staff' },
+  { w: 'plant', ipa: '/plɑːnt/', g: 'I', why: 'a 在 nt 前读 /ɑː/', tip: 'plant / can\'t / shan\'t / advantage' },
+  { w: 'father', ipa: '/ˈfɑːðə/', g: 'I', why: 'a 读 /ɑː/，th 读浊音 /ð/', tip: 'father 的 th 是浊音 /ð/' },
+  { w: 'can\'t', ipa: '/kɑːnt/', g: 'I', why: 'a 在 nt 前读 /ɑː/，t 常被吞掉', tip: 'can\'t /kɑːnt/（英式）与 can /kæn/ 只靠元音区分' }
+];
+
+/* =========================================================================
+   阶段化课程数据（Stage-based Curriculum）
+   -------------------------------------------------------------------------
+   设计依据（三套经典体系的交叉）：
+   1) Jolly Phonics（Sue Lloyd / Sara Wernham，英国）：42 音素分 7 组教，
+      第一组 s a t i p n —— 六个音就能拼出真词（sat / pin / tip / nap），
+      让孩子第一天就体验"我能读"。每个音配一个动作，多感官编码。
+   2) Letters and Sounds（英国 DfE，2007）：Phase 2 单字母 → Phase 3 二合字母
+      → Phase 4 相邻辅音 → Phase 5 复杂代码（一音多拼）→ Phase 6 词缀拼写。
+      同时强调 Tricky Words（不规则词）必须单独整体记忆。
+   3) Orton-Gillingham 六大音节类型：closed → open → VCe → vowel team
+      → r-controlled → consonant-le，用于长词解码与拼写。
+   记忆规律：
+   - 检索式练习（retrieval practice）：Roediger & Karpicke 2006，
+     测验比重复阅读多保留约 50%。所以本页以"做题"为主，不以"看"为主。
+   - 间隔（spacing）+ 交错（interleaving）：每阶段末设"混合复习关"，
+     每天开始先复习昨天错题（今日复习队列）。
+   - 详解反馈：答错必须给"为什么"，否则检索失败不会强化记忆。
+   ========================================================================= */
+
+/* ---------- 26 个字母本音（教学顺序按 Jolly Phonics 分批，不是 A-Z） ----------
+   batch 1: s a t i p n  —— 六个音能拼出最多简单词
+   batch 2: c k e h r m d —— b/d 刻意分在不同批次，避免混淆
+   batch 3: g o u l f b
+   batch 4: j v w x y z qu
+   act = Jolly 式动作（身体记忆线索） */
+const LETTER_SOUNDS = [
+  { l: 's', ipa: '/s/',  sym: 's',  kw: 'sun',      kwIpa: '/sʌn/',       batch: 1, act: '手臂像小蛇一样扭动 sss',      say: '舌尖靠近上齿龈，气流从窄缝挤出，声带不振动' },
+  { l: 'a', ipa: '/æ/',  sym: 'æ',  kw: 'apple',    kwIpa: '/ˈæpəl/',     batch: 1, act: '假装咬一大口苹果 æ-æ-æ',      say: '嘴张到最大（约两指），下巴下沉，舌平放' },
+  { l: 't', ipa: '/t/',  sym: 't',  kw: 'top',      kwIpa: '/tɒp/',       batch: 1, act: '头左右摇看网球赛 t-t-t',      say: '舌尖抵上齿龈后突然放开，送出一股强气流' },
+  { l: 'i', ipa: '/ɪ/',  sym: 'ɪ',  kw: 'ink',      kwIpa: '/ɪŋk/',       batch: 1, act: '手指点桌面像小老鼠 i-i-i',     say: '嘴角微开、肌肉放松，短促弹出' },
+  { l: 'p', ipa: '/p/',  sym: 'p',  kw: 'pen',      kwIpa: '/pen/',       batch: 1, act: '对着掌心吹蒲公英 p-p-p',       say: '双唇闭合后突然放开，送气强（纸片会动）' },
+  { l: 'n', ipa: '/n/',  sym: 'n',  kw: 'net',      kwIpa: '/net/',       batch: 1, act: '手比"不"，n-n-n',             say: '舌尖抵上齿龈，气流从鼻腔出来' },
+
+  { l: 'c', ipa: '/k/',  sym: 'k',  kw: 'cat',      kwIpa: '/kæt/',       batch: 2, act: '手捂嘴咳嗽 k-k-k',             say: '舌后抵软腭，蓄气后放开，送气（清音）' },
+  { l: 'k', ipa: '/k/',  sym: 'k',  kw: 'kite',     kwIpa: '/kaɪt/',      batch: 2, act: '手捂嘴咳嗽 k-k-k',             say: '同 c 的硬音；e/i/y 前用 k，a/o/u 前用 c' },
+  { l: 'e', ipa: '/e/',  sym: 'e',  kw: 'egg',      kwIpa: '/eɡ/',        batch: 2, act: '像打鸡蛋一样敲 e-e-e',         say: '嘴张开约一指宽，舌前抬起，短促' },
+  { l: 'h', ipa: '/h/',  sym: 'h',  kw: 'hat',      kwIpa: '/hæt/',       batch: 2, act: '双手捧着脸哈气 h-h-h',         say: '嘴型跟着后面的元音，从喉咙呼出一口气' },
+  { l: 'r', ipa: '/r/',  sym: 'r',  kw: 'red',      kwIpa: '/red/',       batch: 2, act: '像小狗龇牙 r-r-r',             say: '舌尖上卷靠近（不碰）齿龈后；英式只在元音前发音' },
+  { l: 'm', ipa: '/m/',  sym: 'm',  kw: 'map',      kwIpa: '/mæp/',       batch: 2, act: '揉肚子"好吃" m-m-m',           say: '双唇闭合，气流从鼻腔出来' },
+  { l: 'd', ipa: '/d/',  sym: 'd',  kw: 'dog',      kwIpa: '/dɒɡ/',       batch: 2, act: '手指敲鼓 d-d-d',               say: '舌尖抵上齿龈后放开，声带振动（浊音）' },
+
+  { l: 'g', ipa: '/ɡ/',  sym: 'ɡ',  kw: 'goat',     kwIpa: '/ɡəʊt/',      batch: 3, act: '手像挤奶 g-g-g',               say: '舌后抵软腭后放开，声带振动（浊音）' },
+  { l: 'o', ipa: '/ɒ/',  sym: 'ɒ',  kw: 'orange',   kwIpa: '/ˈɒrɪndʒ/',   batch: 3, act: '双手比一个圆 o-o-o',           say: '嘴收圆并张开，舌后略抬，短促（英式特有）' },
+  { l: 'u', ipa: '/ʌ/',  sym: 'ʌ',  kw: 'umbrella', kwIpa: '/ʌmˈbrelə/',  batch: 3, act: '假装撑伞往上一顶 u-u-u',        say: '嘴自然半开、不圆唇，舌中部抬起，短促有力' },
+  { l: 'l', ipa: '/l/',  sym: 'l',  kw: 'leg',      kwIpa: '/leɡ/',       batch: 3, act: '假装舔棒棒糖 l-l-l',           say: '舌尖抵上齿龈，气流从舌头两侧流出' },
+  { l: 'f', ipa: '/f/',  sym: 'f',  kw: 'fish',     kwIpa: '/fɪʃ/',       batch: 3, act: '像小鱼吹泡泡 f-f-f',           say: '上齿轻咬下唇，气流从缝隙吹出（清音）' },
+  { l: 'b', ipa: '/b/',  sym: 'b',  kw: 'ball',     kwIpa: '/bɔːl/',      batch: 3, act: '双手拍球 b-b-b',               say: '双唇紧闭后放开，声带振动（浊音）' },
+
+  { l: 'j',  ipa: '/dʒ/', sym: 'dʒ', kw: 'jam',     kwIpa: '/dʒæm/',      batch: 4, act: '假装嘴里有果酱 j-j-j',         say: '/d/ 与 /ʒ/ 连发，声带振动，喉咙有震动感' },
+  { l: 'v',  ipa: '/v/',  sym: 'v',  kw: 'van',     kwIpa: '/væn/',       batch: 4, act: '手指比 V，像发动机 v-v-v',      say: '上齿轻咬下唇，气流摩擦而出，声带振动' },
+  { l: 'w',  ipa: '/w/',  sym: 'w',  kw: 'web',     kwIpa: '/web/',       batch: 4, act: '手像波浪一样 w-w-w',           say: '双唇收圆前突后迅速滑向后面的元音' },
+  { l: 'x',  ipa: '/ks/', sym: 'ks', kw: 'fox',     kwIpa: '/fɒks/',      batch: 4, act: '双手交叉像剪刀 ks-ks',          say: '/k/ 与 /s/ 快速连发，一个字母发两个音' },
+  { l: 'y',  ipa: '/j/',  sym: 'j',  kw: 'yes',     kwIpa: '/jes/',       batch: 4, act: '假装喝酸奶 y-y-y',             say: '舌前抬向硬腭，迅速滑向后面的元音' },
+  { l: 'z',  ipa: '/z/',  sym: 'z',  kw: 'zoo',     kwIpa: '/zuː/',       batch: 4, act: '手指在空中画 Z，像蜜蜂 z-z-z',  say: '嘴型同 /s/，但声带振动（浊音）' },
+  { l: 'qu', ipa: '/kw/', sym: 'kw', kw: 'queen',   kwIpa: '/kwiːn/',     batch: 4, act: '像小鸭叫 quack qu-qu',         say: '/k/ 与 /w/ 连发；q 后面永远跟着 u' }
+];
+
+/* ---------- 音素索引（复用上方已有的 GROUPS 数据） ---------- */
+const ALL_PHONEMES = GROUPS.flatMap(g => g.phonemes);
+const BY_IPA = {};
+GROUPS.forEach(g => g.phonemes.forEach(p => { if (!BY_IPA[p.ipa]) BY_IPA[p.ipa] = p; }));
+
+/* ---------- 拼写模式知识点（Phase 5「复杂代码」：一音多拼 / 一拼多音） ----------
+   kind = 'pat'，结构与音素一致：ipa / sym / label / combos / say / vs / words */
+const PH_PAT = [
+  /* ===== 阶段 5：魔法 e（VCe） ===== */
+  { id: 'a_e', ipa: '/eɪ/', sym: 'eɪ', label: 'a_e 魔法 e', combos: ['a_e'],
+    say: '词尾的 e 不发音，专职把前面的 a 撑成长音 /eɪ/（喊自己的名字）',
+    vs: '对比：hat /hæt/（短）→ hate /heɪt/（长）。词尾 e 是"哑巴"，只干活不发声',
+    words: [ {w:'make',ipa:'/meɪk/',c:'a_e'}, {w:'cake',ipa:'/keɪk/',c:'a_e'}, {w:'name',ipa:'/neɪm/',c:'a_e'},
+             {w:'game',ipa:'/ɡeɪm/',c:'a_e'}, {w:'late',ipa:'/leɪt/',c:'a_e'}, {w:'face',ipa:'/feɪs/',c:'a_e'},
+             {w:'plane',ipa:'/pleɪn/',c:'a_e'}, {w:'gate',ipa:'/ɡeɪt/',c:'a_e'} ] },
+  { id: 'e_e', ipa: '/iː/', sym: 'iː', label: 'e_e 魔法 e', combos: ['e_e'],
+    say: '词尾 e 不发音，把前面的 e 撑成长音 /iː/',
+    vs: 'e_e 在英语里词很少，认识 these / complete 就够了',
+    words: [ {w:'these',ipa:'/ðiːz/',c:'e_e'}, {w:'Pete',ipa:'/piːt/',c:'e_e'}, {w:'complete',ipa:'/kəmˈpliːt/',c:'e_e'},
+             {w:'eve',ipa:'/iːv/',c:'e_e'}, {w:'theme',ipa:'/θiːm/',c:'e_e'}, {w:'Steve',ipa:'/stiːv/',c:'e_e'} ] },
+  { id: 'i_e', ipa: '/aɪ/', sym: 'aɪ', label: 'i_e 魔法 e', combos: ['i_e'],
+    say: '词尾 e 不发音，把前面的 i 撑成 /aɪ/（字母 I 的名字）',
+    vs: '对比：kit /kɪt/（短）→ kite /kaɪt/（长）；bit → bite',
+    words: [ {w:'like',ipa:'/laɪk/',c:'i_e'}, {w:'bike',ipa:'/baɪk/',c:'i_e'}, {w:'time',ipa:'/taɪm/',c:'i_e'},
+             {w:'nine',ipa:'/naɪn/',c:'i_e'}, {w:'kite',ipa:'/kaɪt/',c:'i_e'}, {w:'nice',ipa:'/naɪs/',c:'i_e'},
+             {w:'white',ipa:'/waɪt/',c:'i_e'}, {w:'five',ipa:'/faɪv/',c:'i_e'} ] },
+  { id: 'o_e', ipa: '/əʊ/', sym: 'əʊ', label: 'o_e 魔法 e', combos: ['o_e'],
+    say: '词尾 e 不发音，把前面的 o 撑成 /əʊ/（字母 O 的名字）',
+    vs: '对比：not /nɒt/（短）→ note /nəʊt/（长）；hop → hope',
+    words: [ {w:'home',ipa:'/həʊm/',c:'o_e'}, {w:'note',ipa:'/nəʊt/',c:'o_e'}, {w:'nose',ipa:'/nəʊz/',c:'o_e'},
+             {w:'bone',ipa:'/bəʊn/',c:'o_e'}, {w:'rope',ipa:'/rəʊp/',c:'o_e'}, {w:'hole',ipa:'/həʊl/',c:'o_e'},
+             {w:'stone',ipa:'/stəʊn/',c:'o_e'}, {w:'those',ipa:'/ðəʊz/',c:'o_e'} ] },
+  { id: 'u_e', ipa: '/juː/', sym: 'juː', label: 'u_e 魔法 e', combos: ['u_e'],
+    say: '词尾 e 不发音，u 读 /juː/（在 l/r/j 后常简化为 /uː/）',
+    vs: '对比：cub /kʌb/（短）→ cube /kjuːb/（长）；June /dʒuːn/、rule /ruːl/ 只读 /uː/',
+    words: [ {w:'cute',ipa:'/kjuːt/',c:'u_e'}, {w:'use',ipa:'/juːz/',c:'u_e'}, {w:'cube',ipa:'/kjuːb/',c:'u_e'},
+             {w:'tube',ipa:'/tjuːb/',c:'u_e'}, {w:'huge',ipa:'/hjuːdʒ/',c:'u_e'}, {w:'June',ipa:'/dʒuːn/',c:'u_e',note:'l/r/j 后读 /uː/'},
+             {w:'rule',ipa:'/ruːl/',c:'u_e',note:'l/r/j 后读 /uː/'}, {w:'rude',ipa:'/ruːd/',c:'u_e',note:'l/r/j 后读 /uː/'} ] },
+
+  /* ===== 阶段 6：元音组（Vowel Teams） ===== */
+  { id: 'ai_ay', ipa: '/eɪ/', sym: 'eɪ', label: 'ai / ay 元音组', combos: ['ai', 'ay'],
+    say: '两个元音一起走，第一个说自己的名字：ai / ay 读 /eɪ/',
+    vs: '拼写规律：ai 多在词中（rain），ay 几乎总在词尾（day）',
+    words: [ {w:'rain',ipa:'/reɪn/',c:'ai'}, {w:'wait',ipa:'/weɪt/',c:'ai'}, {w:'train',ipa:'/treɪn/',c:'ai'},
+             {w:'tail',ipa:'/teɪl/',c:'ai'}, {w:'day',ipa:'/deɪ/',c:'ay'}, {w:'play',ipa:'/pleɪ/',c:'ay'},
+             {w:'say',ipa:'/seɪ/',c:'ay'}, {w:'way',ipa:'/weɪ/',c:'ay'} ] },
+  { id: 'ee_ea', ipa: '/iː/', sym: 'iː', label: 'ee / ea 元音组', combos: ['ee', 'ea'],
+    say: 'ee 几乎永远读 /iː/；ea 多数读 /iː/，但也有 /e/（head）和 /eɪ/（great）',
+    vs: '⚠️ ea 有三个常见读音：/iː/（tea）、/e/（head, bread）、/eɪ/（great, break）',
+    words: [ {w:'see',ipa:'/siː/',c:'ee'}, {w:'tree',ipa:'/triː/',c:'ee'}, {w:'green',ipa:'/ɡriːn/',c:'ee'},
+             {w:'sleep',ipa:'/sliːp/',c:'ee'}, {w:'tea',ipa:'/tiː/',c:'ea'}, {w:'eat',ipa:'/iːt/',c:'ea'},
+             {w:'sea',ipa:'/siː/',c:'ea'}, {w:'clean',ipa:'/kliːn/',c:'ea'} ] },
+  { id: 'igh_ie', ipa: '/aɪ/', sym: 'aɪ', label: 'igh / ie 元音组', combos: ['igh', 'ie'],
+    say: 'igh 三个字母只读一个音 /aɪ/，gh 完全不发音；词尾 ie 也读 /aɪ/',
+    vs: '⚠️ igh 是"三字母一音"的三合字母（trigraph）；ie 在词中常读 /iː/（chief）或 /e/（friend）',
+    words: [ {w:'light',ipa:'/laɪt/',c:'igh'}, {w:'night',ipa:'/naɪt/',c:'igh'}, {w:'high',ipa:'/haɪ/',c:'igh'},
+             {w:'right',ipa:'/raɪt/',c:'igh'}, {w:'bright',ipa:'/braɪt/',c:'igh'}, {w:'pie',ipa:'/paɪ/',c:'ie'},
+             {w:'tie',ipa:'/taɪ/',c:'ie'}, {w:'die',ipa:'/daɪ/',c:'ie'} ] },
+  { id: 'oa_ow', ipa: '/əʊ/', sym: 'əʊ', label: 'oa / ow 元音组', combos: ['oa', 'ow'],
+    say: 'oa 几乎总读 /əʊ/；ow 有两种读音 —— /əʊ/（snow）与 /aʊ/（cow），要靠耳朵分',
+    vs: '⚠️ ow 是"一拼两音"的典型：snow /snəʊ/ vs cow /kaʊ/，只能逐个记',
+    words: [ {w:'boat',ipa:'/bəʊt/',c:'oa'}, {w:'coat',ipa:'/kəʊt/',c:'oa'}, {w:'road',ipa:'/rəʊd/',c:'oa'},
+             {w:'soap',ipa:'/səʊp/',c:'oa'}, {w:'snow',ipa:'/snəʊ/',c:'ow'}, {w:'know',ipa:'/nəʊ/',c:'ow',note:'k 不发音'},
+             {w:'slow',ipa:'/sləʊ/',c:'ow'}, {w:'yellow',ipa:'/ˈjeləʊ/',c:'ow'} ] },
+  { id: 'oo_long', ipa: '/uː/', sym: 'uː', label: 'oo 长音', combos: ['oo'],
+    say: '双唇高度收圆前突（像吹口哨），舌后抬到最高，音拉长',
+    vs: '⚠️ oo 有长短两读：长 /uː/（food, moon）｜短 /ʊ/（book, good）。没有完美规律，逐个记',
+    words: [ {w:'food',ipa:'/fuːd/',c:'oo'}, {w:'moon',ipa:'/muːn/',c:'oo'}, {w:'school',ipa:'/skuːl/',c:'oo'},
+             {w:'zoo',ipa:'/zuː/',c:'oo'}, {w:'soon',ipa:'/suːn/',c:'oo'}, {w:'room',ipa:'/ruːm/',c:'oo'},
+             {w:'spoon',ipa:'/spuːn/',c:'oo'}, {w:'cool',ipa:'/kuːl/',c:'oo'} ] },
+  { id: 'oo_short', ipa: '/ʊ/', sym: 'ʊ', label: 'oo 短音', combos: ['oo', 'ou'],
+    say: '双唇收圆但放松，舌后抬起，短促 —— 是 /uː/ 的"松音版"',
+    vs: '⚠️ 对比：food /fuːd/ vs foot /fʊt/；在 k 前多半读短音（book, look, cook）',
+    words: [ {w:'book',ipa:'/bʊk/',c:'oo'}, {w:'good',ipa:'/ɡʊd/',c:'oo'}, {w:'look',ipa:'/lʊk/',c:'oo'},
+             {w:'foot',ipa:'/fʊt/',c:'oo'}, {w:'cook',ipa:'/kʊk/',c:'oo'}, {w:'wood',ipa:'/wʊd/',c:'oo'},
+             {w:'took',ipa:'/tʊk/',c:'oo'}, {w:'could',ipa:'/kʊd/',c:'ou',note:'l 不发音'} ] },
+  { id: 'ue_ew', ipa: '/uː/', sym: 'uː', label: 'ue / ew / ui', combos: ['ue', 'ew', 'ui'],
+    say: 'ue、ew 多在词尾读 /uː/ 或 /juː/；英式在 n/t/d/s/l 后保留 /j/（new /njuː/）',
+    vs: '⚠️ 美式常把 new 读成 /nuː/，英式是 /njuː/，这是英美最明显的差别之一',
+    words: [ {w:'blue',ipa:'/bluː/',c:'ue'}, {w:'true',ipa:'/truː/',c:'ue'}, {w:'glue',ipa:'/ɡluː/',c:'ue'},
+             {w:'new',ipa:'/njuː/',c:'ew',note:'英式 /njuː/，不是 /nuː/'}, {w:'few',ipa:'/fjuː/',c:'ew'},
+             {w:'grew',ipa:'/ɡruː/',c:'ew'}, {w:'fruit',ipa:'/fruːt/',c:'ui'}, {w:'suit',ipa:'/suːt/',c:'ui'} ] },
+
+  /* ===== 阶段 7：r 控制元音 + 双元音 ===== */
+  { id: 'ar', ipa: '/ɑː/', sym: 'ɑː', label: 'ar（r 控制）', combos: ['ar'],
+    say: '嘴张到最大，舌后缩，音拉长；英式词尾 r 不卷舌',
+    vs: '⚠️ w 后的 ar 会变音读 /ɔː/：warm /wɔːm/、war /wɔː/（属不规则词，第 10 阶段）',
+    words: [ {w:'car',ipa:'/kɑː/',c:'ar'}, {w:'park',ipa:'/pɑːk/',c:'ar'}, {w:'star',ipa:'/stɑː/',c:'ar'},
+             {w:'hard',ipa:'/hɑːd/',c:'ar'}, {w:'arm',ipa:'/ɑːm/',c:'ar'}, {w:'farm',ipa:'/fɑːm/',c:'ar'},
+             {w:'garden',ipa:'/ˈɡɑːdən/',c:'ar'}, {w:'card',ipa:'/kɑːd/',c:'ar'} ] },
+  { id: 'or', ipa: '/ɔː/', sym: 'ɔː', label: 'or（r 控制）', combos: ['or', 'ore', 'oor', 'our'],
+    say: '双唇收得又圆又小并前突，舌后抬高，音拉长',
+    vs: '⚠️ w 后的 or 变音读 /ɜː/：work /wɜːk/、word /wɜːd/（第 10 阶段专门练）',
+    words: [ {w:'for',ipa:'/fɔː/',c:'or'}, {w:'horse',ipa:'/hɔːs/',c:'or'}, {w:'short',ipa:'/ʃɔːt/',c:'or'},
+             {w:'corn',ipa:'/kɔːn/',c:'or'}, {w:'sport',ipa:'/spɔːt/',c:'or'}, {w:'morning',ipa:'/ˈmɔːnɪŋ/',c:'or'},
+             {w:'born',ipa:'/bɔːn/',c:'or'}, {w:'fork',ipa:'/fɔːk/',c:'or'} ] },
+  { id: 'er_ir_ur', ipa: '/ɜː/', sym: 'ɜː', label: 'er / ir / ur（r 控制）', combos: ['er', 'ir', 'ur'],
+    say: '三种拼写同一个音：舌中部抬起，唇不圆不扁，音拉长',
+    vs: '⚠️ 英式绝不卷舌（对比美式 /ɝː/）。重读时读 /ɜː/，非重读时弱化成 /ə/（teacher /ˈtiːtʃə/）',
+    words: [ {w:'her',ipa:'/hɜː/',c:'er'}, {w:'bird',ipa:'/bɜːd/',c:'ir'}, {w:'girl',ipa:'/ɡɜːl/',c:'ir'},
+             {w:'shirt',ipa:'/ʃɜːt/',c:'ir'}, {w:'turn',ipa:'/tɜːn/',c:'ur'}, {w:'nurse',ipa:'/nɜːs/',c:'ur'},
+             {w:'purple',ipa:'/ˈpɜːpəl/',c:'ur'}, {w:'first',ipa:'/fɜːst/',c:'ir'} ] },
+  { id: 'ou_ow2', ipa: '/aʊ/', sym: 'aʊ', label: 'ou / ow 双元音', combos: ['ou', 'ow'],
+    say: '从大开口 /a/ 滑向圆唇 /ʊ/，前重后轻，一气呵成',
+    vs: '拼写规律：ou 多在词中（house），ow 常在词尾（cow）—— 但 ow 也读 /əʊ/（snow）',
+    words: [ {w:'house',ipa:'/haʊs/',c:'ou'}, {w:'mouse',ipa:'/maʊs/',c:'ou'}, {w:'out',ipa:'/aʊt/',c:'ou'},
+             {w:'cloud',ipa:'/klaʊd/',c:'ou'}, {w:'sound',ipa:'/saʊnd/',c:'ou'}, {w:'cow',ipa:'/kaʊ/',c:'ow'},
+             {w:'now',ipa:'/naʊ/',c:'ow'}, {w:'down',ipa:'/daʊn/',c:'ow'} ] },
+  { id: 'oi_oy', ipa: '/ɔɪ/', sym: 'ɔɪ', label: 'oi / oy 双元音', combos: ['oi', 'oy'],
+    say: '从圆唇 /ɔ/ 滑向 /ɪ/，先圆后扁',
+    vs: '拼写规律：oi 在词中（oil），oy 在词尾（boy）—— 这条规律很可靠',
+    words: [ {w:'oil',ipa:'/ɔɪl/',c:'oi'}, {w:'coin',ipa:'/kɔɪn/',c:'oi'}, {w:'noise',ipa:'/nɔɪz/',c:'oi'},
+             {w:'point',ipa:'/pɔɪnt/',c:'oi'}, {w:'boy',ipa:'/bɔɪ/',c:'oy'}, {w:'toy',ipa:'/tɔɪ/',c:'oy'},
+             {w:'enjoy',ipa:'/ɪnˈdʒɔɪ/',c:'oy'}, {w:'boil',ipa:'/bɔɪl/',c:'oi'} ] },
+  { id: 'ear_eer', ipa: '/ɪə/', sym: 'ɪə', label: 'ear / eer / ere 双元音', combos: ['ear', 'eer', 'ere'],
+    say: '从 /ɪ/ 滑向 /ə/，收尾舌与唇完全放松',
+    vs: '⚠️ 英式词尾不卷舌，别读成 /ɪr/；ere 另有 /eə/（there）与 /ɜː/（were）两种读法',
+    words: [ {w:'near',ipa:'/nɪə/',c:'ear'}, {w:'ear',ipa:'/ɪə/',c:'ear'}, {w:'year',ipa:'/jɪə/',c:'ear'},
+             {w:'hear',ipa:'/hɪə/',c:'ear'}, {w:'beer',ipa:'/bɪə/',c:'eer'}, {w:'here',ipa:'/hɪə/',c:'ere'},
+             {w:'clear',ipa:'/klɪə/',c:'ear'}, {w:'deer',ipa:'/dɪə/',c:'eer'} ] },
+  { id: 'air_are', ipa: '/eə/', sym: 'eə', label: 'air / are / ear 双元音', combos: ['air', 'are', 'ear'],
+    say: '从 /e/ 滑向 /ə/，起点嘴角略开，终点放松',
+    vs: '⚠️ 英式不卷舌：hair /heə/，不是 /her/；同音词 there / their / they\'re 要靠意思区分',
+    words: [ {w:'hair',ipa:'/heə/',c:'air'}, {w:'chair',ipa:'/tʃeə/',c:'air'}, {w:'pair',ipa:'/peə/',c:'air'},
+             {w:'care',ipa:'/keə/',c:'are'}, {w:'bear',ipa:'/beə/',c:'ear'}, {w:'there',ipa:'/ðeə/',c:'ere'},
+             {w:'where',ipa:'/weə/',c:'ere'}, {w:'fair',ipa:'/feə/',c:'air'} ] },
+  { id: 'ure_oor', ipa: '/ʊə/', sym: 'ʊə', label: 'ure / oor / our 双元音', combos: ['ure', 'oor', 'our'],
+    say: '从圆唇 /ʊ/ 滑向 /ə/，收尾唇放平',
+    vs: '现代英式里常简化为 /ɔː/（sure 也可读 /ʃɔː/），两种都算对。这是最"濒危"的英式音',
+    words: [ {w:'sure',ipa:'/ʃʊə/',c:'ure'}, {w:'poor',ipa:'/pʊə/',c:'oor'}, {w:'tour',ipa:'/tʊə/',c:'our'},
+             {w:'cure',ipa:'/kjʊə/',c:'ure'} ] }
+];
+
+/* ---------- CVC 拼读词库（阶段 2：合音 / 拆音） ---------- */
+const CVC_WORDS = [
+  { w: 'cat', ipa: '/kæt/', sounds: ['/k/', '/æ/', '/t/'], blocks: ['c', 'a', 't'] },
+  { w: 'dog', ipa: '/dɒɡ/', sounds: ['/d/', '/ɒ/', '/ɡ/'], blocks: ['d', 'o', 'g'] },
+  { w: 'sun', ipa: '/sʌn/', sounds: ['/s/', '/ʌ/', '/n/'], blocks: ['s', 'u', 'n'] },
+  { w: 'bed', ipa: '/bed/', sounds: ['/b/', '/e/', '/d/'], blocks: ['b', 'e', 'd'] },
+  { w: 'pig', ipa: '/pɪɡ/', sounds: ['/p/', '/ɪ/', '/ɡ/'], blocks: ['p', 'i', 'g'] },
+  { w: 'cup', ipa: '/kʌp/', sounds: ['/k/', '/ʌ/', '/p/'], blocks: ['c', 'u', 'p'] },
+  { w: 'hat', ipa: '/hæt/', sounds: ['/h/', '/æ/', '/t/'], blocks: ['h', 'a', 't'] },
+  { w: 'net', ipa: '/net/', sounds: ['/n/', '/e/', '/t/'], blocks: ['n', 'e', 't'] },
+  { w: 'box', ipa: '/bɒks/', sounds: ['/b/', '/ɒ/', '/ks/'], blocks: ['b', 'o', 'x'], note: 'x 一个字母发两个音 /ks/' },
+  { w: 'run', ipa: '/rʌn/', sounds: ['/r/', '/ʌ/', '/n/'], blocks: ['r', 'u', 'n'] },
+  { w: 'jam', ipa: '/dʒæm/', sounds: ['/dʒ/', '/æ/', '/m/'], blocks: ['j', 'a', 'm'] },
+  { w: 'van', ipa: '/væn/', sounds: ['/v/', '/æ/', '/n/'], blocks: ['v', 'a', 'n'] },
+  { w: 'win', ipa: '/wɪn/', sounds: ['/w/', '/ɪ/', '/n/'], blocks: ['w', 'i', 'n'] },
+  { w: 'fox', ipa: '/fɒks/', sounds: ['/f/', '/ɒ/', '/ks/'], blocks: ['f', 'o', 'x'] },
+  { w: 'mug', ipa: '/mʌɡ/', sounds: ['/m/', '/ʌ/', '/ɡ/'], blocks: ['m', 'u', 'g'] },
+  { w: 'ten', ipa: '/ten/', sounds: ['/t/', '/e/', '/n/'], blocks: ['t', 'e', 'n'] }
+];
+
+/* ---------- CCVC / CVCC 拼读词库（阶段 4：相邻辅音） ---------- */
+const CCVC_WORDS = [
+  { w: 'black', ipa: '/blæk/', sounds: ['/bl/', '/æ/', '/k/'], blocks: ['bl', 'a', 'ck'] },
+  { w: 'clock', ipa: '/klɒk/', sounds: ['/kl/', '/ɒ/', '/k/'], blocks: ['cl', 'o', 'ck'] },
+  { w: 'flag',  ipa: '/flæɡ/', sounds: ['/fl/', '/æ/', '/ɡ/'], blocks: ['fl', 'a', 'g'] },
+  { w: 'glove', ipa: '/ɡlʌv/', sounds: ['/ɡl/', '/ʌ/', '/v/'], blocks: ['gl', 'o', 've'] },
+  { w: 'plane', ipa: '/pleɪn/', sounds: ['/pl/', '/eɪ/', '/n/'], blocks: ['pl', 'a', 'ne'] },
+  { w: 'bread', ipa: '/bred/', sounds: ['/br/', '/e/', '/d/'], blocks: ['br', 'ea', 'd'] },
+  { w: 'crab',  ipa: '/kræb/', sounds: ['/kr/', '/æ/', '/b/'], blocks: ['cr', 'a', 'b'] },
+  { w: 'drum',  ipa: '/drʌm/', sounds: ['/dr/', '/ʌ/', '/m/'], blocks: ['dr', 'u', 'm'] },
+  { w: 'frog',  ipa: '/frɒɡ/', sounds: ['/fr/', '/ɒ/', '/ɡ/'], blocks: ['fr', 'o', 'g'] },
+  { w: 'green', ipa: '/ɡriːn/', sounds: ['/ɡr/', '/iː/', '/n/'], blocks: ['gr', 'ee', 'n'] },
+  { w: 'press', ipa: '/pres/', sounds: ['/pr/', '/e/', '/s/'], blocks: ['pr', 'e', 'ss'] },
+  { w: 'tree',  ipa: '/triː/', sounds: ['/tr/', '/iː/'], blocks: ['tr', 'ee'] },
+  { w: 'skip',  ipa: '/skɪp/', sounds: ['/sk/', '/ɪ/', '/p/'], blocks: ['sk', 'i', 'p'] },
+  { w: 'smile', ipa: '/smaɪl/', sounds: ['/sm/', '/aɪ/', '/l/'], blocks: ['sm', 'i', 'le'] },
+  { w: 'snack', ipa: '/snæk/', sounds: ['/sn/', '/æ/', '/k/'], blocks: ['sn', 'a', 'ck'] },
+  { w: 'spot',  ipa: '/spɒt/', sounds: ['/sp/', '/ɒ/', '/t/'], blocks: ['sp', 'o', 't'] },
+  { w: 'stop',  ipa: '/stɒp/', sounds: ['/st/', '/ɒ/', '/p/'], blocks: ['st', 'o', 'p'] },
+  { w: 'swim',  ipa: '/swɪm/', sounds: ['/sw/', '/ɪ/', '/m/'], blocks: ['sw', 'i', 'm'] },
+  { w: 'twin',  ipa: '/twɪn/', sounds: ['/tw/', '/ɪ/', '/n/'], blocks: ['tw', 'i', 'n'] }
+];
+
+/* ---------- 知识点构造helper ---------- */
+function LPT(l) { const x = LETTER_SOUNDS.find(y => y.l === l); return { kind: 'letter', id: 'L:' + l, n: 2, grp: '第 ' + x.batch + ' 批', ...x }; }
+function PPT(ipa) { const p = BY_IPA[ipa]; if (!p) throw new Error('缺音素 ' + ipa); return { kind: 'ph', id: 'P:' + ipa, n: 2, ...p }; }
+function TPT(id) { const p = PH_PAT.find(x => x.id === id); if (!p) throw new Error('缺模式 ' + id); return { ...p, kind: 'ph', id: 'T:' + id, n: 2 }; }
+function BPT(w) { const x = CVC_WORDS.find(y => y.w === w); return { kind: 'blend', id: 'B:' + w, n: 1, label: '拼读 ' + w, ...x }; }
+function CPT(w) { const x = CCVC_WORDS.find(y => y.w === w); return { kind: 'blend', id: 'C:' + w, n: 1, label: '拼读 ' + w, ...x }; }
+
+/* =========================================================================
+   10 个阶段：由易到难
+   ========================================================================= */
+const STAGES = [
+  /* ---------- 阶段 1 ---------- */
+  {
+    id: 's1', no: 1, day: 1, emoji: '🔤', name: '字母音 · 26 个字母的「声音」',
+    sub: '先学「音」，不学「名字」',
+    goal: '听到一个音能选出字母，看到一个字母能发出它的音（不是念 A B C 的名字）',
+    why: 'Jolly Phonics 的第一组只有 6 个音 s a t i p n，却能拼出 sat / pin / tip / nap 等几十个真词 —— 让孩子第一天就体验「我能读」。教学顺序刻意不是 A→Z。',
+    howto: {
+      prep: '准备一面小镜子（看口型）+ 一支笔（敲桌子数音）',
+      steps: [
+        { h: '听 3 遍', d: '点开字母卡，先听 3 遍，注意听「音」—— a 是 /æ/，不是"诶"' },
+        { h: '做动作', d: '边说边做动作（蛇、咬苹果、敲鼓……）。动作是记忆的第二个挂钩，忘了音想想动作就想起来了' },
+        { h: '跟读 3 遍', d: '对着镜子跟读，确认嘴型和图上一致' },
+        { h: '抢答', d: '进入「练一练」：听音选字母，每题 10 秒。答错没关系，一定要看「为什么」' }
+      ],
+      chant: '字母有名字，更有声音；读书用声音，不用名字。',
+      time: '约 15 分钟 × 2 轮（上午字母，下午 CVC）',
+      pass: '26 个字母全部练过 + 正确率 ≥ 80%',
+      tips: [
+        'b 和 d 刻意分在不同批次教（Jolly 的做法），避免形音双重混淆',
+        '孩子念错时不要说"不对"，说"再听一次"—— 听觉辨别需要重复暴露',
+        'x 不发 /eks/ 而发 /ks/，qu 是一个音 /kw/，这两个要单独强调'
+      ]
+    },
+    points: LETTER_SOUNDS.map(x => LPT(x.l)),
+    mix: 10
+  },
+
+  /* ---------- 阶段 2 ---------- */
+  {
+    id: 's2', no: 2, day: 1, emoji: '🔴', name: '短元音与 CVC 拼读',
+    sub: '会合音（blending），会拆音（segmenting）',
+    goal: '看到 cat 能自己拼出 /k/ /æ/ /t/ → cat；听到 cat 能敲出 3 个音',
+    why: '短元音（/æ/ /e/ /ɪ/ /ɒ/ /ʌ/ /ʊ/）是英语解码的地基，CVC（辅-元-辅）是最小可读单位。Letters and Sounds 把 Phase 2–4 全部押在这里，因为地基不牢，后面的长元音、双元音都立不住。',
+    howto: {
+      prep: '一支笔或一根手指（用来点着每个音）',
+      steps: [
+        { h: '点着读', d: '手指点住每个音，一个一个慢慢读：/k/ …… /æ/ …… /t/' },
+        { h: '越连越快', d: '同样的三个音，一次比一次快，直到它们黏成一个词：cat' },
+        { h: '反过来拆', d: '成人说 cat，孩子敲 3 下桌子并说出 3 个音 —— 这就是 segmenting，拼写的起点' },
+        { h: '练一练', d: '16 个 CVC 词逐个拼，拼完进入混合复习关' }
+      ],
+      chant: '手指点，慢慢连；越连越快就成词。',
+      time: '约 20 分钟',
+      pass: '16 个 CVC 词能不看提示独立拼出',
+      tips: [
+        '一开始慢是正常的，不要催。合音是"自动化"技能，练够次数自然变快',
+        '英式 /ɒ/ 要圆唇（hot /hɒt/），美式常读成 /ɑː/ —— 本页全用英式 RP',
+        '/ʌ/ 与 /æ/ 是中国孩子最容易混的一对，多听 cup / cat'
+      ]
+    },
+    points: [
+      PPT('/æ/'), PPT('/e/'), PPT('/ɪ/'), PPT('/ɒ/'), PPT('/ʌ/'), PPT('/ʊ/'),
+      ...CVC_WORDS.map(x => BPT(x.w))
+    ],
+    mix: 10
+  },
+
+  /* ---------- 阶段 3 ---------- */
+  {
+    id: 's3', no: 3, day: 2, emoji: '🟢', name: '辅音二合字母（Digraphs）',
+    sub: '两个字母，一个新音',
+    goal: '能一眼认出 sh / ch / th / ng 等二合字母，并把它们当成一个整体来读',
+    why: 'Letters and Sounds Phase 3 的核心：二合字母（digraph）是「两个字母、一个音」，和下一阶段的连缀（两个字母、两个音）是孩子最容易搞混的一组概念。先建立「整体认读」的习惯。',
+    howto: {
+      prep: '一支彩色笔（把二合字母圈成一个整体）',
+      steps: [
+        { h: '圈起来', d: '读到 ship 时把 sh 圈成一个框 —— 它是一个音 /ʃ/，不是 /s/ + /h/' },
+        { h: '摸喉咙', d: 'th 有清浊两种：think /θ/ 声带不振动，this /ð/ 手摸喉咙有震动。用这个方法自己判断' },
+        { h: '找一找', d: '在一页书里把所有 sh / ch / th 圈出来，做成"寻宝游戏"' },
+        { h: '练一练', d: '逐个音素练习 + 混合复习关' }
+      ],
+      chant: '两个字母手拉手，只发一个音。',
+      time: '约 20 分钟',
+      pass: '8 个二合字母音全部练过 + 正确率 ≥ 80%',
+      tips: [
+        '实词里的 th 多读清音 /θ/（think, bath），虚词多读浊音 /ð/（the, this, mother）',
+        'ng 在词尾读 /ŋ/（sing），后面跟 k/g 时 n 也读 /ŋ/（think, bank）',
+        '/ʒ/ 是 /ʃ/ 的浊音版，只出现在少数词里（television, usually, garage），认识即可'
+      ]
+    },
+    points: [PPT('/ʃ/'), PPT('/tʃ/'), PPT('/dʒ/'), PPT('/θ/'), PPT('/ð/'), PPT('/ŋ/'), PPT('/ŋk/'), PPT('/ʒ/')],
+    mix: 10
+  },
+
+  /* ---------- 阶段 4 ---------- */
+  {
+    id: 's4', no: 4, day: 2, emoji: '🔠', name: '辅音连缀与相邻辅音',
+    sub: '两个字母，两个音，快速连读',
+    goal: '分清「二合字母（1 个音）」与「连缀（2 个音）」，能拼 stop / black / green 这类词',
+    why: '对应 Letters and Sounds Phase 4：不教新音素，专练「相邻辅音」的合音。这是 CVC 通往多音节词的桥，也是很多孩子读长词卡住的地方。',
+    howto: {
+      prep: '节拍器（或拍手）',
+      steps: [
+        { h: '先拆开', d: 'st 不是新音，是两个音 /s/ + /t/。先分开读两遍' },
+        { h: '再挤紧', d: '中间不加任何元音，越挤越紧：/stɒp/ → stop。加元音变成 /sətɒp/ 就错了' },
+        { h: '加元音', d: '连缀 + 元音一起读：/bl/ /æ/ /k/ → black' },
+        { h: '练一练', d: '20 个连缀逐个听辨 + 19 个 CCVC/CVCC 词拼读' }
+      ],
+      chant: '连缀不是新音，是两个音挤在一起。',
+      time: '约 25 分钟',
+      pass: '19 个 CCVC/CVCC 词能独立拼出',
+      tips: [
+        '判断口诀：听到一个音 → 二合字母；听到两个音 → 连缀。用耳朵，别用眼睛',
+        'l-连缀（bl cl fl gl pl）与 r-连缀（br cr dr fr gr pr tr）各成一家，一起记更省力',
+        's-连缀（sk sm sn sp st sw）里，英式不发"额"起首音，直接 /st/'
+      ]
+    },
+    points: [
+      PPT('/bl/'), PPT('/kl/'), PPT('/fl/'), PPT('/ɡl/'), PPT('/pl/'),
+      PPT('/br/'), PPT('/kr/'), PPT('/dr/'), PPT('/fr/'), PPT('/ɡr/'), PPT('/pr/'), PPT('/tr/'),
+      PPT('/sk/'), PPT('/sm/'), PPT('/sn/'), PPT('/sp/'), PPT('/st/'), PPT('/sw/'), PPT('/tw/'),
+      ...CCVC_WORDS.map(x => CPT(x.w))
+    ],
+    mix: 10
+  },
+
+  /* ---------- 阶段 5 ---------- */
+  {
+    id: 's5', no: 5, day: 2, emoji: '🪄', name: '魔法 e（VCe 音节）',
+    sub: '词尾的 e 不发音，只负责把元音撑长',
+    goal: '掌握 a_e / e_e / i_e / o_e / u_e 五种魔法 e，能读出 make / like / home 这类词',
+    why: '魔法 e（split digraph）是英语里最高产的长元音拼写之一。Orton-Gillingham 把它排在六大音节类型第 3 位，因为它把「短元音」和「长元音」用一次拼写变化演示得极其直观：hat → hate。',
+    howto: {
+      prep: '两张卡片：一张写 hat，一张写 hate',
+      steps: [
+        { h: '对比读', d: '先读 hat /hæt/，再加上 e 变成 hate /heɪt/。同一个 a，读音完全不同' },
+        { h: '指出哑巴', d: '词尾的 e 完全不发音。它的工作只有一个：让前面的元音"喊自己的名字"' },
+        { h: '自己变魔法', d: '成人给 kit / not / cub，孩子加 e 变成 kite / note / cube' },
+        { h: '练一练', d: '5 种魔法 e 逐个练习，每题都标出被"撑长"的元音' }
+      ],
+      chant: '魔法 e 不说话，只让前面的元音变长。',
+      time: '约 20 分钟',
+      pass: '5 种魔法 e 全部练过 + 正确率 ≥ 80%',
+      tips: [
+        '只有「元音 + 单个辅音 + e」才是魔法 e；有两个辅音时不是（badge 不是"巴极"）',
+        'e_e 在英语里词很少（these, complete），别花太多时间',
+        '注意 have / give / live / gone 这几个高频词「魔法失效」，第 10 阶段专门练'
+      ]
+    },
+    points: [TPT('a_e'), TPT('e_e'), TPT('i_e'), TPT('o_e'), TPT('u_e')],
+    mix: 10
+  },
+
+  /* ---------- 阶段 6 ---------- */
+  {
+    id: 's6', no: 6, day: 3, emoji: '🔵', name: '元音组（Vowel Teams）',
+    sub: '两个元音一起走，第一个说自己的名字',
+    goal: '掌握 ai/ay、ee/ea、igh/ie、oa/ow、oo（长短）、ue/ew 六组元音组的读音与拼写分工',
+    why: 'Letters and Sounds Phase 5 的「复杂代码」：同一个音有多种拼写（/iː/ 可以是 ee 或 ea），同一种拼写又有多种读音（ow = /əʊ/ 或 /aʊ/）。这是从"能读"走向"能拼写"的关键一步。',
+    howto: {
+      prep: '一张"元音组对照表"（本页「学一学」里可随时看）',
+      steps: [
+        { h: '圈出元音组', d: '读 rain 时把 ai 圈起来，读 boat 时把 oa 圈起来' },
+        { h: '读第一个的名字', d: '两个元音一起走，第一个说自己的名字：ai 读作字母 A 的名字 /eɪ/' },
+        { h: '记住分工', d: 'ai 在词中、ay 在词尾；oa 在词中、ow 常在词尾。这条规律很可靠' },
+        { h: '练一练', d: '7 组元音组逐个练习；oo 的长短两读是重点' }
+      ],
+      chant: '两个元音一起走，第一个说自己的名字。',
+      time: '约 25 分钟',
+      pass: '7 组元音组全部练过 + 正确率 ≥ 80%',
+      tips: [
+        '⚠️ ea 有三个常见读音：/iː/（tea）、/e/（head, bread）、/eɪ/（great, break）',
+        '⚠️ ow 两个读音：/əʊ/（snow）与 /aʊ/（cow）。只能逐个记，别硬套规律',
+        '⚠️ oo 长短：book / good / look / foot 在 k 前多半读短音 /ʊ/'
+      ]
+    },
+    points: [TPT('ai_ay'), TPT('ee_ea'), TPT('igh_ie'), TPT('oa_ow'), TPT('oo_long'), TPT('oo_short'), TPT('ue_ew')],
+    mix: 10
+  },
+
+  /* ---------- 阶段 7 ---------- */
+  {
+    id: 's7', no: 7, day: 3, emoji: '🟣', name: 'r 控制元音与双元音',
+    sub: 'r 骑在元音头上；两个元音滑在一起',
+    goal: '掌握 ar / or / er-ir-ur 三组 r 控制元音，以及 /aʊ/ /ɔɪ/ /ɪə/ /eə/ /ʊə/ 五个双元音',
+    why: 'r 控制元音是英语拼读里"元音被改写"的典型；双元音则是两个元音的滑动。这一阶段完成后，孩子基本掌握了英式 RP 的全部核心元音，可以去啃多音节词了。',
+    howto: {
+      prep: '一面镜子（确认英式 r 不卷舌）',
+      steps: [
+        { h: '听三种 r', d: 'ar /ɑː/、or /ɔː/、er-ir-ur /ɜː/ —— 三个音三种拼写，先能听出区别' },
+        { h: '确认不卷舌', d: '照镜子发 car / her：英式舌头是平的，绝不卷起来。卷了就是美音' },
+        { h: '滑双元音', d: '/aʊ/ 是 /a/ 滑向 /ʊ/：前重后轻，一气呵成，别拆成两个音' },
+        { h: '练一练', d: '8 组逐个练习；双元音部分要重点听「滑动感」' }
+      ],
+      chant: 'r 是 boss，元音听它的；双元音前重后轻滑着走。',
+      time: '约 25 分钟',
+      pass: '8 组全部练过 + 正确率 ≥ 80%',
+      tips: [
+        '⚠️ w 会改写后面的元音：warm /wɔːm/（不是 /wɑːm/）、work /wɜːk/（不是 /wɔːk/）',
+        'er / ir / ur 三种拼写同一个音 /ɜː/ —— 重读读 /ɜː/，非重读弱化成 /ə/（teacher）',
+        '/ʊə/ 是最"濒危"的英式音，现代英式常简化为 /ɔː/（sure 也可读 /ʃɔː/），两种都算对'
+      ]
+    },
+    points: [TPT('ar'), TPT('or'), TPT('er_ir_ur'), TPT('ou_ow2'), TPT('oi_oy'), TPT('ear_eer'), TPT('air_are'), TPT('ure_oor')],
+    mix: 12
+  },
+
+  /* ---------- 阶段 8 ---------- */
+  {
+    id: 's8', no: 8, day: 4, emoji: '🧱', name: '音节、重音与弱读',
+    sub: '长词不怕：切音节 → 找重音 → 其余弱读',
+    goal: '会用六大音节类型判断元音长短，会用 7 条规则切分长词，能敲出主重音并把非重读音节弱读成 /ə/',
+    why: 'Orton-Gillingham 的六大音节类型决定了「元音读长还是读短」，是长词解码的总开关；弱读 /ə/ 是英式英语出现频率最高的音，不掌握它，读出来的英语永远是"一字一顿"的中式节奏。',
+    howto: {
+      prep: '一只拳头（敲重音用）',
+      steps: [
+        { h: '数元音音', d: '数音节 = 数「元音音」，不是数字母。词尾不发音的 e 不算一个音节（make 是 1 个音节）' },
+        { h: '判类型', d: '看每个音节属于六大类型中的哪一种，元音该读长还是读短就定了' },
+        { h: '切一刀', d: '用 7 条划分规则把长词切开：VCCV → 中间分；V/CV → 辅音归后；VC/V → 辅音归前' },
+        { h: '敲重音', d: '拳头敲一下主重音，其余音节一律轻读成 /ə/。这是英式节奏的灵魂' }
+      ],
+      chant: '一个音节一个元音；重音敲一下，其余轻读 /ə/。',
+      time: '约 25 分钟',
+      pass: '六大类型 + 7 条规则 + 12 个重音词全部练过',
+      tips: [
+        '六大类型出现频率：闭音节约 50%、开音节约 20%、魔法 e 约 10%、元音组约 10%、r 控制约 5%、辅音+le 约 5%',
+        '英语里 2/3 的多音节词重音在第一个音节；-tion / -ic / -ity 前的一个音节必重读',
+        '弱读不是"小声读"，是"换一个音读"：非重读的元音八成变成 /ə/'
+      ]
+    },
+    points: [
+      ...SYLLABLE_TYPES.map(t => ({ ...t, kind: 'syltype', id: 'Y:' + t.key, n: 2, grp: '六大音节类型' })),
+      ...SYLLABLE_RULES.map(r => ({ ...r, kind: 'sylrule', id: 'R:' + r.n, n: 1, grp: '七条划分规则' })),
+      { ...PPT('/ə/'), grp: '弱读元音' },
+      { ...PPT('/i/'), grp: '弱读元音' },
+      ...STRESS_WORDS.slice(0, 12).map(w => ({ ...w, kind: 'stress', id: 'S:' + w.w, n: 1, grp: '敲重音' }))
+    ],
+    mix: 12
+  },
+
+  /* ---------- 阶段 9 ---------- */
+  {
+    id: 's9', no: 9, day: 4, emoji: '➕', name: '词尾与后缀、拼写通则',
+    sub: '-s 读 /s/ /z/ 还是 /ɪz/？',
+    goal: '掌握 -s / -ed / -ing / -tion 等词尾的三种读音规则，以及 14 条拼写通则',
+    why: '对应 Letters and Sounds Phase 6：从"会读"转向"会写"。词尾 -ed 的三种读法是英式英语最常被读错的地方，而 14 条拼写通则（FLOSS、-ck、-dge、-tch、双写去 e）覆盖了小学阶段绝大多数的拼写错误。',
+    howto: {
+      prep: '把手放在喉咙上（判断清浊）',
+      steps: [
+        { h: '摸喉咙', d: '发 /z/ 时喉咙震动，发 /s/ 时不震动。用这个方法判断词尾前的那个音是清是浊' },
+        { h: '套口诀', d: '清后 /s/ /t/、浊后 /z/ /d/、咝音后加一个 /ɪ/（/ɪz/ /ɪd/）' },
+        { h: '看拼写', d: 'FLOSS：短元音后的 /f/ /l/ /s/ /z/ 词尾要双写（hill, kiss, buzz）' },
+        { h: '练一练', d: '24 道词尾题 + 14 条拼写规则题，全部覆盖' }
+      ],
+      chant: '清清浊浊，咝音加 /ɪ/。',
+      time: '约 25 分钟',
+      pass: '24 道词尾题 + 14 条拼写规则全部练过',
+      tips: [
+        '咝音指的是 /s/ /z/ /ʃ/ /ʒ/ /tʃ/ /dʒ/ —— 它们后面必须加一个音节，否则两个咝音撞在一起发不出来',
+        '本页刻意不教「i before e except after c」：实证统计它在 c 之后失败率约 75%（ancient, efficient, science），Orton-Gillingham 与英国 DfE 都已不推荐',
+        '-ed 的三种读法：清后 /t/（jumped）、浊后 /d/（played）、/t/ /d/ 后 /ɪd/（wanted）'
+      ]
+    },
+    points: [
+      ...SUFFIX_Q.map((q, i) => ({ ...q, kind: 'suffix', id: 'F:' + i, n: 1,
+        grp: i <= 6 ? '词尾 -s / -es' : i <= 12 ? '词尾 -ed' : '其他后缀（-ing / -tion / -sion / -er / -or / -est / -ly）' })),
+      ...SPELLING_RULES.map(r => ({ ...r, kind: 'spell', id: 'W:' + r.n, n: 1, grp: '14 条拼写通则' }))
+    ],
+    mix: 12
+  },
+
+  /* ---------- 阶段 10 ---------- */
+  {
+    id: 's10', no: 10, day: 5, emoji: '💥', name: '静默字母与高频不规则词',
+    sub: '规则只覆盖约 85%，剩下的必须整体记忆',
+    goal: '掌握 39 个静默字母词与约 100 个高频不规则词（tricky / heart words）',
+    why: '英国 DfE 的《Letters and Sounds》从 Phase 2 起就安排 Tricky Words 单独教学，因为这些词在儿童读物中出现频率极高却无法按规则拼读。研究显示仅 100 个高频词就覆盖了初阶读物约一半的文字量 —— 值得单独背。',
+    howto: {
+      prep: '一张白纸（看-盖-写-查）',
+      steps: [
+        { h: '看', d: '先看整词，找出"不按套路"的那一部分（said 的 ai、listen 的 t）' },
+        { h: '说', d: '说出它难在哪：不是 sa-id，而是 /sed/' },
+        { h: '写', d: '看-盖-写-查：看 3 秒 → 盖住 → 默写 → 检查。四步循环 3 遍' },
+        { h: '练一练', d: '按 9 个难点分组逐个练习，每组一次练完' }
+      ],
+      chant: '规则管 85%，剩下的靠眼熟。',
+      time: '约 30 分钟（可拆成 3 次 10 分钟）',
+      pass: '9 组不规则词 + 7 组静默字母全部练过',
+      tips: [
+        '不要试图给不规则词找规律 —— 它们就是例外。整体记忆比分析更快',
+        '高频词每天接触 10 个、连续 5 天，比一天背 50 个有效得多（间隔效应）',
+        '同音词（there / their / they\'re）只能靠意思区分，放到句子里练'
+      ]
+    },
+    points: [
+      ...SILENT_WORDS.map((w, i) => {
+        const key = /kn-|wr-/.test(w.note) ? '① kn- / wr- 词首'
+          : /-mb|-bt|-gn|gn-/.test(w.note) ? '② -mb / -bt / -gn'
+          : /gh-|rh-|wh-/.test(w.note) ? '③ gh- / rh- / wh-'
+          : /-sten|-stle|-ften/.test(w.note) ? '④ -sten / -stle / -ften'
+          : /-alf|-alk|-alm/.test(w.note) ? '⑤ -alf / -alk / -alm'
+          : /gu|ui/.test(w.note) ? '⑥ -gu / -ui'
+          : '⑦ 魔法 e（不发音的 e）';
+        return { ...w, kind: 'silent', id: 'X:' + i, n: 1, grp: key };
+      }),
+      ...TRICKY_WORDS.map((w, i) => ({ ...w, kind: 'tricky', id: 'K:' + w.w, n: 1, grp: '不规则词 ' + w.g + ' 组·' + ((TRICKY_GROUPS.find(g => g.id === w.g) || {}).name || '') }))
+    ],
+    mix: 15
+  }
+];
+
+/* ---------- 5 天计划 ---------- */
+const DAYS = [
+  { d: 1, title: '地基日', emoji: '🌱', goal: '会听音、会合音，第一天就能读出真单词',
+    stages: ['s1', 's2'], warm: 'A 组高频词 6 个',
+    desc: '上午练 26 个字母音（先 s a t i p n），下午用短元音拼出 cat / dog / sun。今天的成就感最重要。' },
+  { d: 2, title: '解码日', emoji: '🔧', goal: '搞定二合字母、连缀与魔法 e',
+    stages: ['s3', 's4', 's5'], warm: 'B / C 组高频词 6 个',
+    desc: 'sh / ch / th 是一个音，st / bl 是两个音 —— 分清楚这一对，长词就不怕了。晚上用魔法 e 把 hat 变成 hate。' },
+  { d: 3, title: '元音日', emoji: '🎨', goal: '元音组 + r 控制 + 双元音，收齐英式全部核心元音',
+    stages: ['s6', 's7'], warm: 'D / E 组高频词 6 个',
+    desc: '两个元音一起走、第一个说自己的名字；r 骑在元音头上元音就变音。今天过后，元音体系基本完整。' },
+  { d: 4, title: '长词日', emoji: '🏗️', goal: '切音节、敲重音、弱读 /ə/，再收词尾与拼写',
+    stages: ['s8', 's9'], warm: 'F / G 组高频词 6 个',
+    desc: '长词不可怕：数元音音 → 判类型 → 切一刀 → 敲重音 → 其余弱读。再拿下 -s / -ed 三种读法。' },
+  { d: 5, title: '收网日', emoji: '🏆', goal: '不规则词总复习 + 混合冲刺 + 跟读输出',
+    stages: ['s10'], warm: 'H / I 组高频词 + A–G 组复习',
+    desc: '规则管 85%，剩下的靠眼熟。最后用混合题把 10 个阶段打乱重考一遍 —— 交错练习才是真正检验掌握度的方式。' }
+];
+
+
+if (typeof module !== 'undefined' && module.exports) {
+  module.exports = { GROUPS, MIN_PAIRS, STRESS_WORDS, BUILD_WORDS, SENTENCES, PLAN_STEPS,
+  SUFFIX_Q, SILENT_WORDS, SYLLABLE_RULES,
+  SYLLABLE_TYPES, SYL_TYPE_WORDS, SYL_TYPE_HINT, SPELLING_RULES, TRICKY_WORDS, TRICKY_GROUPS };
+}
+
+</script>
+<script>
+/* Phonics Quest — 交互逻辑 */
+
+/* ================= 基础工具 ================= */
+/* =========================================================================
+   Phonics Quest — 阶段化学习系统（交互逻辑）
+   ========================================================================= */
+
+/* ================= 基础工具 ================= */
+const $ = s => document.querySelector(s);
+const app = $('#app');
+const LS = {
+  get(k, d) { try { return JSON.parse(localStorage.getItem(k)) ?? d; } catch (e) { return d; } },
+  set(k, v) { try { localStorage.setItem(k, JSON.stringify(v)); } catch (e) {} }
+};
+const rnd = a => a[Math.floor(Math.random() * a.length)];
+const shuffle = a => { a = a.slice(); for (let i = a.length - 1; i > 0; i--) { const j = Math.floor(Math.random() * (i + 1)); [a[i], a[j]] = [a[j], a[i]]; } return a; };
+const today = () => new Date().toISOString().slice(0, 10);
+const esc = s => String(s).replace(/[&<>]/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;' })[c]);
+const clamp = (v, a, b) => Math.max(a, Math.min(b, v));
+
+/* ================= 题库索引 ================= */
+function comboIndex(word, combo) {
+  if (combo.includes('_')) {
+    const m = word.match(new RegExp(combo.replace(/_/g, '.')));
+    return m ? m.index : -1;
+  }
+  return word.indexOf(combo);
+}
+function hlWord(word, combo) {
+  if (!combo) return esc(word);
+  const i = comboIndex(word, combo), len = combo.length;
+  if (i < 0) return esc(word);
+  return esc(word.slice(0, i)) + '<span class="hl">' + esc(word.slice(i, i + len)) + '</span>' + esc(word.slice(i + len));
+}
+
+/* 全局词池：用于生成干扰项 */
+const WPOOL = [];
+function pushW(w) { if (w && w.w && !WPOOL.some(x => x.w === w.w)) WPOOL.push({ w: w.w, ipa: w.ipa, c: w.c }); }
+GROUPS.forEach(g => g.phonemes.forEach(p => p.words.forEach(w => pushW(w))));
+PH_PAT.forEach(p => p.words.forEach(w => pushW(w)));
+CVC_WORDS.forEach(w => pushW(w));
+CCVC_WORDS.forEach(w => pushW(w));
+TRICKY_WORDS.forEach(w => pushW(w));
+SILENT_WORDS.forEach(w => pushW(w));
+
+/* 全局音标池 */
+function ipaPool(stage, exclude) {
+  const set = [];
+  const add = x => { if (x && x !== exclude && !set.includes(x)) set.push(x); };
+  if (stage) stage.points.forEach(p => add(p.ipa));
+  ALL_PHONEMES.forEach(p => add(p.ipa));
+  PH_PAT.forEach(p => add(p.ipa));
+  return set;
+}
+
+/* ================= 状态 ================= */
+const S = {
+  view: 'home',
+  viewP: null,
+  sound: LS.get('pq_sound', true),
+  rate: LS.get('pq_rate', .85),
+  prog: LS.get('pq_prog', {}),      // { pointId: {best, tries, last} }
+  lv: LS.get('pq_lv', {}),          // { stageId|idx: {best, done} }
+  wrong: LS.get('pq_wrong', []),    // 错题本
+  tab: {},
+  openPt: null,
+  day: LS.get('pq_day', 1)
+};
+function saveProg() { LS.set('pq_prog', S.prog); LS.set('pq_lv', S.lv); }
+
+/* ================= 发音 ================= */
+let voices = [];
+function loadVoices() { try { voices = speechSynthesis.getVoices() || []; } catch (e) { voices = []; } }
+if (window.speechSynthesis) { loadVoices(); speechSynthesis.onvoiceschanged = loadVoices; }
+function pickVoice() {
+  if (!voices.length) loadVoices();
+  return voices.find(v => /en[-_]GB/i.test(v.lang)) || voices.find(v => /^en/i.test(v.lang)) || null;
+}
+function speak(text, opt) {
+  opt = opt || {};
+  if (!S.sound || !window.speechSynthesis) return;
+  try {
+    speechSynthesis.cancel();
+    const u = new SpeechSynthesisUtterance(text);
+    const v = pickVoice();
+    if (v) u.voice = v;
+    u.lang = (v && v.lang) || 'en-GB';
+    u.rate = opt.rate || S.rate;
+    speechSynthesis.speak(u);
+  } catch (e) {}
+}
+
+/* ================= 嘴型图 ================= */
+function mouthSVG(m, cap) {
+  if (!m) return '';
+  const open = m.open, round = m.round, spread = m.spread;
+  const w = 82 - round * 26 + spread * 14;
+  const h = 4 + open * 44;
+  const ry = Math.max(2.5, h / 2);
+  const cy = 110, cx = 100;
+  const tx = cx + (m.place === '前' ? -w * .12 : m.place === '后' ? w * .12 : 0);
+  const tongue = m.place === '软腭' || m.place === '声门' || m.place === '齿龈后';
+  return `<svg viewBox="0 0 200 150" width="150" height="112">
+    <ellipse cx="100" cy="72" rx="60" ry="66" fill="#ffe3cd"/>
+    <ellipse cx="78" cy="56" rx="3.6" ry="4.6" fill="#3a3a4a"/>
+    <ellipse cx="122" cy="56" rx="3.6" ry="4.6" fill="#3a3a4a"/>
+    <path d="M100 60 q7 14 -3 17" stroke="#e6a487" stroke-width="3" fill="none" stroke-linecap="round"/>
+    <ellipse cx="${cx}" cy="${cy}" rx="${w / 2 + 3}" ry="${ry + 3}" fill="#e8a08f"/>
+    <ellipse cx="${cx}" cy="${cy}" rx="${w / 2}" ry="${ry}" fill="#7d2c39"/>
+    <ellipse cx="${cx}" cy="${cy + ry * .22}" rx="${Math.max(1, w / 2 - 3)}" ry="${Math.max(1, ry * .62)}" fill="#4a1622"/>
+    <rect x="${cx - w / 2 + 4}" y="${cy - ry + 1}" width="${Math.max(1, w - 8)}" height="3.4" rx="1.6" fill="#fff"/>
+    ${tongue ? '' : `<ellipse cx="${tx}" cy="${cy + ry * .45}" rx="${w * .26}" ry="${ry * .3}" fill="#e0736f"/>`}
+    <text x="100" y="140" text-anchor="middle" font-size="11" fill="#5b6488">${esc(cap || '')}</text>
+  </svg>`;
+}
+function gauge(label, v) {
+  return `<div class="gauge"><span style="width:52px">${label}</span><span class="g"><i style="width:${Math.round(v * 100)}%"></i></span><span style="width:32px">${Math.round(v * 100)}%</span></div>`;
+}
+function mouthOf(p) {
+  const m = BY_IPA[p.ipa];
+  return m ? m.mouth : null;
+}
+
+/* ================= 提示 / 特效 ================= */
+function toast(msg, ms) {
+  const d = document.createElement('div');
+  d.className = 'toast'; d.textContent = msg;
+  $('#fx-root').appendChild(d);
+  setTimeout(() => d.remove(), ms || 1600);
+}
+function confetti() {
+  const colors = ['#5b5bd6', '#ec4899', '#f59e0b', '#12b981', '#22d3ee'];
+  for (let i = 0; i < 60; i++) {
+    const c = document.createElement('i');
+    c.className = 'cf';
+    c.style.left = Math.random() * 100 + 'vw';
+    c.style.top = '-20px';
+    c.style.background = colors[i % colors.length];
+    c.style.animationDelay = (Math.random() * .5) + 's';
+    c.style.transform = `rotate(${Math.random() * 180}deg)`;
+    $('#fx-root').appendChild(c);
+    setTimeout(() => c.remove(), 2200);
+  }
+}
+function modal(title, sub, html) {
+  $('#modal-root').innerHTML = `
+    <div class="mask" data-act="closeModal">
+      <div class="modal">
+        <button class="modal-close" data-act="closeModal">✕</button>
+        <h3>${title}</h3>
+        <div class="sub">${sub}</div>
+        ${html}
+      </div>
+    </div>`;
+}
+
+/* ================= 全局动作 ================= */
+const ACT = {};
+document.addEventListener('click', e => {
+  const el = e.target.closest('[data-act]');
+  if (!el) return;
+  if (el.classList.contains('mask') && e.target !== el) return;
+  const fn = ACT[el.dataset.act];
+  if (fn) fn(el.dataset, el, e);
+});
+
+ACT.home = () => { stopTimer(); go('home'); };
+ACT.back = () => { stopTimer(); go(S.view === 'drill' && D ? 'stage' : 'home', D ? D.st.id : null); };
+ACT.speak = d => speak(d.text || d.w, d.slow ? { rate: .6 } : null);
+ACT.closeModal = () => { $('#modal-root').innerHTML = ''; };
+ACT.sound = () => {
+  S.sound = !S.sound; LS.set('pq_sound', S.sound);
+  $('#btn-sound').textContent = S.sound ? '🔊' : '🔇';
+  $('#btn-sound').classList.toggle('off', !S.sound);
+};
+ACT.stage = d => go('stage', d.id);
+ACT.tab = d => { S.tab[d.id] = d.t; render(); };
+ACT.pt = d => { S.openPt = (S.openPt === d.k) ? null : d.k; render(); };
+ACT.goday = d => { S.day = +d.d; LS.set('pq_day', S.day); render(); };
+ACT.startDay = d => {
+  const day = +d.d;
+  S.day = day; LS.set('pq_day', day);
+  const stages = DAYS.find(x => x.d === day).stages.map(id => STAGES.find(s => s.id === id));
+  const next = stages.find(s => stageStat(s).pct < 100) || stages[0];
+  go('stage', next.id);
+};
+
+/* ================= 路由 ================= */
+function go(v, p) { S.view = v; S.viewP = p; render(); window.scrollTo(0, 0); }
+function render() {
+  const v = VIEWS[S.view] || VIEWS.home;
+  app.innerHTML = '<div class="view">' + v(S.viewP) + '</div>';
+  $('#btn-sound').textContent = S.sound ? '🔊' : '🔇';
+  $('#btn-sound').classList.toggle('off', !S.sound);
+  const wb = $('#wrong-badge');
+  wb.textContent = S.wrong.length > 99 ? '99+' : S.wrong.length;
+  wb.style.display = S.wrong.length ? '' : 'none';
+}
+
+/* ================= 进度计算 ================= */
+const KIND_GRP = {
+  letter: '字母音', ph: '音素与拼写', blend: '拼读练习',
+  syltype: '六大音节类型', sylrule: '七条划分规则', stress: '敲重音',
+  suffix: '词尾与后缀', spell: '拼写通则', silent: '静默字母', tricky: '不规则词'
+};
+function ptGrp(p) { return p.grp || KIND_GRP[p.kind] || '练习'; }
+function ptName(p) {
+  if (p.kind === 'letter') return p.l.toUpperCase() + ' / ' + p.ipa;
+  if (p.kind === 'blend') return p.w;
+  if (p.kind === 'syltype') return p.name;
+  if (p.kind === 'sylrule') return '规则 ' + p.n + '·' + p.name;
+  if (p.kind === 'stress') return p.w;
+  if (p.kind === 'suffix') return p.w;
+  if (p.kind === 'spell') return p.n + '·' + p.name;
+  if (p.kind === 'silent') return p.w;
+  if (p.kind === 'tricky') return p.w;
+  return p.label || p.ipa;
+}
+function mastered(p) { const r = S.prog[p.id]; return !!r && r.best >= .8; }
+function seen(p) { return !!S.prog[p.id]; }
+
+/* 关卡切分：按 grp 分段 → 每段内按题数上限切 → 末尾过小的并入上一关 → 追加混合复习关 */
+function chunkRun(items, maxQ) {
+  const out = []; let cur = [], q = 0;
+  items.forEach(p => {
+    const n = p.n || 1;
+    if (cur.length && q + n > maxQ) { out.push(cur); cur = []; q = 0; }
+    cur.push(p); q += n;
+  });
+  if (cur.length) out.push(cur);
+  if (out.length > 1) {
+    const last = out[out.length - 1];
+    const lq = last.reduce((a, b) => a + (b.n || 1), 0);
+    if (lq < 4) { out[out.length - 2] = out[out.length - 2].concat(last); out.pop(); }
+  }
+  return out;
+}
+function stageLevels(st) {
+  if (st._lv) return st._lv;
+  const runs = [];
+  st.points.forEach(p => {
+    const g = ptGrp(p);
+    if (!runs.length || runs[runs.length - 1].g !== g) runs.push({ g, items: [] });
+    runs[runs.length - 1].items.push(p);
+  });
+  const lv = [];
+  runs.forEach(run => chunkRun(run.items, st.maxQ || 14).forEach(part => lv.push({ grp: run.g, items: part })));
+  lv.forEach((l, i) => {
+    l.i = i; l.id = st.id + '|' + i;
+    l.n = l.items.reduce((a, b) => a + (b.n || 1), 0);
+    l.name = l.grp;
+  });
+  if (st.mix) {
+    lv.push({ i: lv.length, id: st.id + '|' + lv.length, grp: '混合复习', mix: st.mix, items: [], n: st.mix, name: '🎲 混合复习（交错练习）' });
+  }
+  // 同名关卡加序号
+  const cnt = {};
+  lv.forEach(l => {
+    if (l.mix) return;
+    cnt[l.grp] = (cnt[l.grp] || 0) + 1;
+    const total = lv.filter(x => x.grp === l.grp && !x.mix).length;
+    l.name = total > 1 ? l.grp + ' · ' + cnt[l.grp] + '/' + total : l.grp;
+  });
+  st._lv = lv;
+  return lv;
+}
+function stageStat(st) {
+  const tot = st.points.length;
+  let done = 0;
+  st.points.forEach(p => { if (mastered(p)) done++; });
+  const lv = stageLevels(st);
+  const lvDone = lv.filter(l => S.lv[l.id] && S.lv[l.id].done).length;
+  return { tot, done, lvTot: lv.length, lvDone, pct: tot ? Math.round(done / tot * 100) : 0, q: lv.reduce((a, b) => a + b.n, 0) };
+}
+function dayStat(day) {
+  const stages = DAYS.find(d => d.d === day).stages.map(id => STAGES.find(s => s.id === id));
+  const tot = stages.reduce((a, s) => a + s.points.length, 0);
+  const done = stages.reduce((a, s) => a + stageStat(s).done, 0);
+  return { tot, done, pct: tot ? Math.round(done / tot * 100) : 0, stages };
+}
+function totalStat() {
+  const tot = STAGES.reduce((a, s) => a + s.points.length, 0);
+  const done = STAGES.reduce((a, s) => a + stageStat(s).done, 0);
+  return { tot, done, pct: tot ? Math.round(done / tot * 100) : 0 };
+}
+/* 待复习：练过但没掌握的 + 完全没练的优先排在后面 */
+function reviewQueue(n) {
+  const weak = [], fresh = [];
+  STAGES.forEach(st => st.points.forEach(p => {
+    if (mastered(p)) return;
+    if (seen(p)) weak.push({ p, st }); else fresh.push({ p, st });
+  }));
+  weak.sort((a, b) => (S.prog[a.p.id].best) - (S.prog[b.p.id].best));
+  return { weak, fresh: fresh.slice(0, Math.max(0, (n || 12) - weak.length)) };
+}
+
+/* =========================================================================
+   题目生成器：每个知识点按 n 逐题穷举
+   ========================================================================= */
+function pickN(arr, n, filter) {
+  const a = shuffle(arr.filter(filter || (() => true)));
+  return a.slice(0, n);
+}
+function uniqIpaOpts(correct, pool, n) {
+  const opts = [{ t: correct, ok: true }];
+  const used = {}; used[correct] = 1;
+  shuffle(pool).forEach(x => { if (opts.length < n && !used[x]) { used[x] = 1; opts.push({ t: x, ok: false }); } });
+  return shuffle(opts);
+}
+function uniqWordOpts(correct, pool, n) {
+  const opts = [{ w: correct.w, ipa: correct.ipa, ok: true }];
+  const used = {}; used[correct.w] = 1;
+  shuffle(pool).forEach(x => { if (opts.length < n && !used[x.w]) { used[x.w] = 1; opts.push({ w: x.w, ipa: x.ipa, ok: false }); } });
+  return shuffle(opts);
+}
+
+const QGEN = {};
+
+/* ---------- 字母音 ---------- */
+QGEN.letter = (p, st, i) => {
+  if (i === 0) {
+    const batch = LETTER_SOUNDS.filter(x => x.batch === p.batch && x.l !== p.l);
+    const fill = shuffle(LETTER_SOUNDS.filter(x => x.l !== p.l && !batch.includes(x)));
+    const others = shuffle(batch).concat(fill).slice(0, 3);
+    const opts = shuffle([
+      { main: (p.l[0].toUpperCase() + p.l.slice(1)) + (p.l.length > 1 ? '' : p.l), sub: p.ipa, ok: true },
+      ...others.map(x => ({ main: (x.l[0].toUpperCase() + x.l.slice(1)) + (x.l.length > 1 ? '' : x.l), sub: x.ipa, ok: false }))
+    ]);
+    return {
+      pid: p.id, type: '听音选字母',
+      head: `<div class="hl-word">${esc(p.kw)}</div>
+             <div class="sub">这个词的<b>第一个音</b>是哪个字母？</div>
+             <button class="listen-btn" data-act="speak" data-text="${esc(p.kw)}">🔊 再听一次</button>`,
+      opts, autoplay: true, speakText: p.kw,
+      why: `${p.kw} 的第一个音是 ${p.ipa}，对应字母 <b>${p.l.toUpperCase()}</b>。记住：问的是"音"，不是字母名字。`
+    };
+  }
+  const pool = ipaPool(null, p.ipa);
+  const opts = uniqIpaOpts(p.ipa, pool, 4);
+  return {
+    pid: p.id, type: '字母 → 音',
+    head: `<div class="big" style="font-size:44px;font-weight:800">${esc(p.l.toUpperCase())} ${esc(p.l)}</div>
+           <div class="sub">这个字母发什么音？（关键词：${esc(p.kw)}）</div>`,
+    opts: opts.map(o => ({ main: o.t, cls: 'ipa', ok: o.ok })),
+    speakText: p.kw,
+    why: `<b>${p.l.toUpperCase()}</b> 发 ${p.ipa}，关键词 ${p.kw} ${p.kwIpa}。动作记忆：${p.act}`
+  };
+};
+
+/* ---------- 音素 / 拼写模式 ---------- */
+QGEN.ph = (p, st, i) => {
+  const key = i % 2;
+  if (key === 0) {
+    const ws = p.words.filter(w => !p.sym || w.ipa.includes(p.sym));
+    const w = rnd(ws.length ? ws : p.words);
+    const opts = uniqIpaOpts(p.ipa, ipaPool(st, p.ipa), 4);
+    return {
+      pid: p.id, type: '组合 → 音',
+      head: `<div class="hl-word">${hlWord(w.w, w.c)}</div>
+             <div class="sub">红色的 <b>${esc(w.c || '')}</b> 在这里发什么音？</div>
+             ${w.note ? `<div class="sub" style="color:var(--warn)">${esc(w.note)}</div>` : ''}`,
+      opts: opts.map(o => ({ main: o.t, cls: 'ipa', ok: o.ok })),
+      speakText: w.w,
+      why: `<b>${esc(w.w)}</b> ${esc(w.ipa)}：${esc(w.c || '')} 读 ${p.ipa}。${p.vs ? esc(p.vs) : ''}`
+    };
+  }
+  const ws = p.words.filter(w => !p.sym || w.ipa.includes(p.sym));
+  const w = rnd(ws.length ? ws : p.words);
+  const bad = WPOOL.filter(x => x.w !== w.w && (!p.sym || !x.ipa.includes(p.sym)));
+  const opts = uniqWordOpts(w, bad, 4);
+  return {
+    pid: p.id, type: '音 → 单词',
+    head: `<div class="big ipa">${esc(p.ipa)}</div><div class="sub">哪个词里含这个音？</div>`,
+    opts: opts.map(o => ({ main: o.w, sub: o.ipa, ok: o.ok })),
+    speakText: w.w,
+    why: `<b>${esc(w.w)}</b> ${esc(w.ipa)} 含 ${p.ipa}。${p.label || ''}：${esc(p.say || '')}`
+  };
+};
+
+/* ---------- 拼读（CVC / CCVC） ---------- */
+QGEN.blend = (p, st) => {
+  const pool = st.points.filter(x => x.kind === 'blend' && x.w !== p.w);
+  const others = pickN(pool.length >= 3 ? pool : WPOOL.filter(x => x.w !== p.w), 3);
+  const opts = shuffle([{ w: p.w, ipa: p.ipa, ok: true }, ...others.map(x => ({ w: x.w, ipa: x.ipa, ok: false }))]);
+  return {
+    pid: p.id, type: '合音拼词',
+    head: `<div class="sub">把这些音连起来读，是哪个词？</div>
+           <div class="snds">${p.sounds.map(s => `<span class="snd ipa">${esc(s)}</span>`).join('<span class="plus">+</span>')}</div>
+           <button class="listen-btn" data-act="speak" data-text="${esc(p.w)}">🔊 听答案</button>`,
+    opts: opts.map(o => ({ main: o.w, sub: o.ipa, ok: o.ok })),
+    autoplay: true, speakText: p.w,
+    why: `${p.sounds.join(' + ')} → <b>${esc(p.w)}</b> ${esc(p.ipa)}${p.note ? '（' + esc(p.note) + '）' : ''}<br>拼写块：${p.blocks.join(' · ')}`
+  };
+};
+
+/* ---------- 音节类型 ---------- */
+QGEN.syltype = (p, st, i) => {
+  const cand = SYL_TYPE_WORDS.filter(x => x.types.includes(p.key));
+  const t = cand[(i || 0) % cand.length];
+  const idxs = t.types.map((x, k) => x === p.key ? k : -1).filter(k => k >= 0);
+  const i2 = idxs[(i || 0) % idxs.length];
+  const bad = shuffle(SYLLABLE_TYPES.filter(x => x.key !== p.key)).slice(0, 3);
+  const opts = shuffle([{ k: p.key, ok: true }, ...bad.map(x => ({ k: x.key, ok: false }))]);
+  return {
+    pid: p.id, type: '音节类型',
+    head: `<div class="hl-word">${esc(t.w)}</div>
+           <div class="sub ipa">${esc(t.ipa)}</div>
+           <div class="sub">慢速拆分：<b>${t.syl.map((s, k) => (k === i2 ? '<u>' + esc(s) + '</u>' : esc(s))).join(' · ')}</b></div>
+           <div class="sub">${t.syl.length > 1 ? `第 <b>${i2 + 1}</b> 个音节 ` : ''}<b>「${esc(t.syl[i2])}」</b> 属于哪种类型？</div>`,
+    opts: opts.map(o => {
+      const T = SYLLABLE_TYPES.find(x => x.key === o.k);
+      return { main: T.name.split(' ')[0], sub: T.name.split(' ').slice(1).join(' '), ok: o.ok };
+    }),
+    speakText: t.w,
+    why: `${esc(t.w)} 全部音节：${t.syl.map((s, k) => esc(s) + '(' + (SYLLABLE_TYPES.find(x => x.key === t.types[k]).name.split(' ')[0]) + ')').join(' · ')}<br><b>${p.name}</b>：${SYL_TYPE_HINT[p.key] || p.say}`
+  };
+};
+
+/* ---------- 音节划分规则 ---------- */
+QGEN.sylrule = (p, st) => {
+  const cand = STRESS_WORDS.filter(x => x.rule === p.n);
+  const t = cand.length ? rnd(cand) : rnd(STRESS_WORDS);
+  const bad = shuffle(SYLLABLE_RULES.filter(x => x.n !== p.n)).slice(0, 3);
+  const opts = shuffle([{ n: p.n, ok: true }, ...bad.map(x => ({ n: x.n, ok: false }))]);
+  return {
+    pid: p.id, type: '音节划分',
+    head: `<div class="hl-word">${esc(t.w)}</div>
+           <div class="sub ipa">${esc(t.ipa)}</div>
+           <div class="sub">音节：<b>${t.syl.join(' · ')}</b></div>
+           <div class="sub">这个词按哪条规则切分？</div>`,
+    opts: opts.map(o => {
+      const R = SYLLABLE_RULES.find(x => x.n === o.n);
+      return { main: R.name, sub: R.ex.split(',')[0], ok: o.ok };
+    }),
+    speakText: t.w,
+    why: `规则 ${p.n}「${p.name}」：${p.ex}<br>${esc(t.w)} → ${t.syl.join(' · ')}`
+  };
+};
+
+/* ---------- 重音 ---------- */
+QGEN.stress = (p, st) => {
+  const opts = p.syl.map((s, i) => ({ main: s, sub: '第 ' + (i + 1) + ' 音节', ok: i === p.stress }));
+  return {
+    pid: p.id, type: '敲重音',
+    head: `<div class="hl-word">${esc(p.w)}</div>
+           <div class="sub ipa">${esc(p.ipa)}</div>
+           <div class="sub">主重音在哪个音节？（敲一下拳头试试）</div>
+           <button class="listen-btn" data-act="speak" data-text="${esc(p.w)}">🔊 听</button>`,
+    opts, speakText: p.w,
+    why: `<b>${esc(p.w)}</b> ${esc(p.ipa)}：重音在第 <b>${p.stress + 1}</b> 个音节「${esc(p.syl[p.stress])}」。<br>其余音节一律弱读成 /ə/，这是英式节奏的灵魂。`
+  };
+};
+
+/* ---------- 词尾与后缀 ---------- */
+QGEN.suffix = (p, st) => ({
+  pid: p.id, type: '词尾发音',
+  head: `<div class="hl-word">${esc(p.w)}</div>
+         <div class="sub ipa">${esc(p.ipa)}</div>
+         <div class="sub">${esc(p.q)}</div>
+         <button class="listen-btn" data-act="speak" data-text="${esc(p.w)}">🔊 听</button>`,
+  opts: p.opts.map((o, i) => ({ main: o, cls: 'ipa', ok: i === p.ans })),
+  speakText: p.w,
+  why: `<b>${esc(p.w)}</b> ${esc(p.ipa)}：${esc(p.why)}`
+});
+
+/* ---------- 拼写通则 ---------- */
+QGEN.spell = (p, st, i) => {
+  if (p.n % 2 === 0) {
+    const bad = shuffle(SPELLING_RULES.filter(x => x.n !== p.n)).slice(0, 3);
+    const opts = shuffle([{ n: p.n, ok: true }, ...bad.map(x => ({ n: x.n, ok: false }))]);
+    return {
+      pid: p.id, type: '拼写通则',
+      head: `<div class="rulebox">${esc(p.rule)}</div><div class="sub">这是哪条规则？</div>`,
+      opts: opts.map(o => ({ main: SPELLING_RULES.find(x => x.n === o.n).name, ok: o.ok })),
+      why: `<b>规则 ${p.n}·${p.name}</b><br>${esc(p.ex)}`
+    };
+  }
+  const bad = shuffle(SPELLING_RULES.filter(x => x.n !== p.n)).slice(0, 3);
+  const opts = shuffle([{ n: p.n, ok: true }, ...bad.map(x => ({ n: x.n, ok: false }))]);
+  return {
+    pid: p.id, type: '拼写通则',
+    head: `<div class="hl-word" style="font-size:26px">${esc(p.name)}</div><div class="sub">这条规则说的是什么？</div>`,
+    opts: opts.map(o => ({ main: SPELLING_RULES.find(x => x.n === o.n).rule.slice(0, 34) + '…', ok: o.ok })),
+    why: `<b>规则 ${p.n}·${p.name}</b>：${esc(p.rule)}<br>${esc(p.ex)}`
+  };
+};
+
+/* ---------- 静默字母 ---------- */
+QGEN.silent = (p, st) => {
+  const pool = [...new Set(p.w.split('').filter(c => c !== p.s))];
+  const filler = shuffle(['b', 'c', 'd', 'g', 'h', 'k', 'l', 'm', 'p', 'r', 't', 'w'].filter(c => c !== p.s && !pool.includes(c)));
+  const ps = shuffle(pool);
+  const others = ps.slice(0, 3).concat(filler.slice(0, Math.max(0, 3 - ps.length)));
+  const opts = shuffle([{ t: p.s, ok: true }, ...others.map(t => ({ t, ok: false }))]);
+  return {
+    pid: p.id, type: '静默字母',
+    head: `<div class="hl-word">${esc(p.w)}</div>
+           <div class="sub ipa">${esc(p.ipa)}</div>
+           <div class="sub">哪个字母<b>不发音</b>？</div>
+           <button class="listen-btn" data-act="speak" data-text="${esc(p.w)}">🔊 听</button>`,
+    opts: opts.map(o => ({ main: o.t, ok: o.ok })),
+    speakText: p.w,
+    why: `<b>${esc(p.w)}</b> ${esc(p.ipa)}：字母 <b>${esc(p.s)}</b> 不发音。${esc(p.note)}`
+  };
+};
+
+/* ---------- 高频不规则词 ---------- */
+QGEN.tricky = (p, st) => {
+  const gs = p.gs || [p.g];
+  const same = shuffle(TRICKY_WORDS.filter(x => (x.gs || [x.g]).some(k => gs.includes(k)) && x.ipa !== p.ipa));
+  const rest = shuffle(TRICKY_WORDS.filter(x => x.ipa !== p.ipa));
+  const pool = same.concat(rest).map(x => x.ipa);
+  const opts = uniqIpaOpts(p.ipa, pool, 4);
+  return {
+    pid: p.id, type: '不规则词',
+    head: `<div class="hl-word">${esc(p.w)}</div>
+           <div class="sub">规则只覆盖约 <b>85%</b> 的词，这个必须整体记忆</div>
+           <button class="listen-btn" data-act="speak" data-text="${esc(p.w)}">🔊 听单词</button>`,
+    opts: opts.map(o => ({ main: o.t, cls: 'ipa', ok: o.ok })),
+    autoplay: true, speakText: p.w,
+    why: `<b>${esc(p.w)}</b> ${esc(p.ipa)}：${esc(p.why)}<br>💡 ${esc(p.tip)}`
+  };
+};
+
+/* ---------- 最小对立对（听力反向验证） ---------- */
+function genPair() {
+  const pair = rnd(MIN_PAIRS);
+  const flip = Math.random() < .5;
+  const target = flip ? pair.b : pair.a;
+  const other = flip ? pair.a : pair.b;
+  const opts = shuffle([{ ...target, ok: true }, { ...other, ok: false }]);
+  return {
+    pid: 'PAIR:' + pair.a.w + '-' + pair.b.w, type: '听音辨词',
+    head: `<div style="font-size:15px;font-weight:700">你听到的是哪个词？</div>
+           <div class="sub">对立音：${esc(pair.focus)}</div>
+           <button class="listen-btn" data-act="speak" data-text="${esc(target.w)}">🔊 再听一次</button>`,
+    opts: opts.map(o => ({ main: o.w, sub: o.ipa, ok: o.ok })),
+    autoplay: true, speakText: target.w,
+    why: `答案是 <b>${esc(target.w)}</b> ${esc(target.ipa)}；另一个是 ${esc(other.w)} ${esc(other.ipa)}。区分点：${esc(pair.focus)}`
+  };
+}
+const PAIR_STAGES = ['s2', 's3', 's6', 's7', 's10'];
+
+/* 生成某关的全部题目（穷举 + 保序） */
+function buildQuestions(st, lv) {
+  const qs = [];
+  if (lv.mix) {
+    for (let i = 0; i < lv.mix; i++) {
+      const p = rnd(st.points);
+      const g = QGEN[p.kind];
+      if (!g) continue;
+      if (PAIR_STAGES.includes(st.id) && i % 4 === 3) { qs.push(genPair()); continue; }
+      const q = g(p, st, Math.floor(Math.random() * (p.n || 1)));
+      if (q) qs.push(q);
+    }
+    return qs;
+  }
+  lv.items.forEach(p => {
+    const g = QGEN[p.kind];
+    if (!g) return;
+    for (let i = 0; i < (p.n || 1); i++) {
+      const q = g(p, st, i);
+      if (q) qs.push(q);
+    }
+  });
+  return qs;
+}
+
+/* =========================================================================
+   练习运行器
+   ========================================================================= */
+const VIEWS = {};
+let D = null;
+
+function startDrill(stageId, lvIdx) {
+  const st = STAGES.find(x => x.id === stageId);
+  const lv = stageLevels(st)[lvIdx];
+  const qs = buildQuestions(st, lv);
+  if (!qs.length) { toast('这一关暂时没有题目'); return; }
+  stopTimer();
+  D = { st, lv, qs, i: 0, ok: 0, wrongs: [], per: {}, locked: false, from: S.view };
+  go('drill');
+  nextQ();
+}
+function nextQ() {
+  if (!D) return;
+  if (D.i >= D.qs.length) return finishDrill();
+  D.locked = false;
+  drawGame();
+  const q = D.qs[D.i];
+  if (q.autoplay) setTimeout(() => speak(q.speakText), 380);
+}
+function drawGame() {
+  app.innerHTML = '<div class="view">' + VIEWS.drill() + '</div>';
+}
+function stopTimer() { if (D && D.t1) { clearTimeout(D.t1); D.t1 = null; } }
+
+VIEWS.drill = () => {
+  const q = D.qs[D.i];
+  const pct = Math.round(D.i / D.qs.length * 100);
+  const one = q.opts.length >= 4 ? '' : 'one';
+  return `
+  <div class="game-head">
+    <button class="back" data-act="drillQuit">✕</button>
+    <div class="grow">
+      <div class="bar"><i style="width:${pct}%"></i></div>
+      <div style="font-size:11px;color:var(--ink2);margin-top:5px">${esc(D.st.name)} · ${esc(D.lv.name)}</div>
+    </div>
+    <div class="hud">
+      <span><b>${D.i + 1}</b>/${D.qs.length}</span>
+      <span>✅ <b>${D.ok}</b></span>
+    </div>
+  </div>
+  <div class="qbar">
+    <span class="qtype">${esc(q.type)}</span>
+    <span style="font-size:11px;color:var(--ink2)">不计时 · 想清楚再选</span>
+  </div>
+  <div class="card">
+    <div class="prompt">${q.head}</div>
+    <div class="opts ${one}">
+      ${q.opts.map((o, i) => `<button class="opt" data-act="opt" data-i="${i}"><span class="${o.cls || ''}">${o.main}</span><small class="ipa">${o.sub || ''}</small></button>`).join('')}
+    </div>
+    <div id="fb"></div>
+  </div>
+  <p class="tip" style="margin-top:12px;font-size:12px">答错不要紧 —— 一定要读完「为什么」，这一步才是真正长记忆的地方。</p>`;
+};
+
+ACT.opt = d => {
+  if (!D || D.locked) return;
+  const i = +d.i;
+  const q = D.qs[D.i];
+  judge(i === q.opts.findIndex(o => o.ok), i);
+};
+ACT.drillQuit = () => { stopTimer(); const id = D && D.st.id; D = null; go(id === 'sprint' ? 'home' : 'stage', id === 'sprint' ? null : id); };
+
+function judge(ok, myIdx) {
+  if (!D || D.locked) return;
+  D.locked = true; stopTimer();
+  const q = D.qs[D.i];
+  const ri = q.opts.findIndex(o => o.ok);
+  const btns = [...document.querySelectorAll('.opt')];
+  if (ok) {
+    D.ok++;
+    if (btns[ri]) btns[ri].classList.add('ok');
+    speak(q.speakText || (q.opts[ri] && q.opts[ri].main));
+  } else {
+    if (btns[ri]) btns[ri].classList.add('ok');
+    if (myIdx != null && btns[myIdx]) btns[myIdx].classList.add('bad');
+    D.wrongs.push({ w: q.speakText || (q.opts[ri] && q.opts[ri].main), ipa: q.opts[ri] && q.opts[ri].sub, why: q.why, type: q.type, pid: q.pid, st: D.st.id });
+  }
+  const per = D.per[q.pid] || (D.per[q.pid] = { n: 0, ok: 0 });
+  per.n++; if (ok) per.ok++;
+  const fb = $('#fb');
+  if (fb && (!ok || q.why)) {
+    fb.innerHTML = `<div class="tip ${ok ? 'ok' : ''}">${ok ? '✅ 答对了' : '❌ 正确答案'} —— ${q.why || ''}</div>`;
+  }
+  D.t1 = setTimeout(() => { D.i++; nextQ(); }, ok ? 1000 : (q.why && q.why.length > 60 ? 3200 : 2300));
+}
+
+function finishDrill() {
+  stopTimer();
+  const total = D.qs.length || 1;
+  const acc = Math.round(D.ok / total * 100);
+  const key = D.lv.id;
+  const prev = S.lv[key] || { best: 0, done: false };
+  S.lv[key] = { best: Math.max(prev.best, acc), done: true, tries: (prev.tries || 0) + 1 };
+  // 知识点掌握度
+  Object.keys(D.per).forEach(pid => {
+    if (pid.indexOf('PAIR:') === 0) return;
+    const r = D.per[pid], o = S.prog[pid] || { best: 0, tries: 0 };
+    const cur = r.n ? r.ok / r.n : 0;
+    S.prog[pid] = { best: Math.max(o.best || 0, cur), tries: (o.tries || 0) + 1, last: today() };
+  });
+  D.wrongs.forEach(w => {
+    if (w.w && !S.wrong.some(x => x.w === w.w && x.type === w.type)) S.wrong.unshift({ w: w.w, ipa: w.ipa, why: w.why, type: w.type, st: w.st, ts: Date.now() });
+  });
+  S.wrong = S.wrong.slice(0, 60);
+  saveProg(); LS.set('pq_wrong', S.wrong);
+  D.result = { acc, total };
+  if (acc >= 80) confetti();
+  go('drillEnd');
+}
+
+VIEWS.drillEnd = () => {
+  const r = D.result, st = D.st;
+  const isSprint = st.id === 'sprint';
+  const lv = isSprint ? [] : stageLevels(st);
+  const i = D.lv.i;
+  const nextLv = isSprint ? null : lv[i + 1];
+  const weakList = isSprint ? [] : Object.keys(D.per).filter(k => D.per[k].n && D.per[k].ok / D.per[k].n < 1)
+    .map(k => st.points.find(p => p.id === k)).filter(Boolean);
+  return `
+  <div class="card result">
+    <div style="font-size:34px">${r.acc >= 80 ? '🏆' : r.acc >= 60 ? '👏' : '💪'}</div>
+    <div class="meta" style="font-size:15px">${esc(st.name)}</div>
+    <div class="score">${r.acc}%</div>
+    <div class="meta">${esc(D.lv.name)} · ${r.total} 题 · 答对 ${D.ok} 题</div>
+
+    ${D.wrongs.length ? `
+      <div class="acc">
+        <h4>❌ 本关错题（已存进错题本，明天会再考）</h4>
+        ${D.wrongs.map(w => `
+          <div class="acc-item">
+            <span><b>${esc(w.w || '')}</b> <span class="ipa" style="color:var(--ink2)">${esc(w.ipa || '')}</span>
+              <small style="display:block;color:var(--ink2);margin-top:3px">${w.why || ''}</small></span>
+            <button class="mini-btn ghost" data-act="speak" data-text="${esc(w.w || '')}">🔊</button>
+          </div>`).join('')}
+      </div>` : '<div class="meta" style="margin-top:10px">🎉 全对，没有错题</div>'}
+
+    ${weakList.length ? `<div class="tip" style="text-align:left">还没完全掌握：${weakList.map(p => esc(ptName(p))).join('、')}<br>明天「今日复习」里会自动再考一遍。</div>` : ''}
+
+    <div class="btn-row">
+      <button class="btn ghost" data-act="toStage">${isSprint ? '返回首页' : '返回阶段'}</button>
+      ${nextLv ? `<button class="btn primary" data-act="nextLv">下一关：${esc(nextLv.name)}</button>`
+        : `<button class="btn primary" data-act="toStage">${isSprint ? '回首页' : '本阶段完成 🎉'}</button>`}
+    </div>
+    <div class="btn-row" style="margin-top:8px">
+      <button class="btn ghost" data-act="retryLv">再练一次</button>
+    </div>
+  </div>`;
+};
+ACT.toStage = () => { const id = D.st.id; D = null; go(id === 'sprint' ? 'home' : 'stage', id === 'sprint' ? null : id); };
+ACT.nextLv = () => { const id = D.st.id, i = D.lv.i + 1; D = null; startDrill(id, i); };
+ACT.retryLv = () => { const id = D.st.id, i = D.lv.i; D = null; startDrill(id, i); };
+
+/* =========================================================================
+   首页：5 天闯关地图
+   ========================================================================= */
+function ring(pct, size) {
+  size = size || 54;
+  const r = size / 2 - 5, c = 2 * Math.PI * r;
+  return `<svg width="${size}" height="${size}" viewBox="0 0 ${size} ${size}">
+    <circle cx="${size / 2}" cy="${size / 2}" r="${r}" fill="none" stroke="#e8ebf8" stroke-width="6"/>
+    <circle cx="${size / 2}" cy="${size / 2}" r="${r}" fill="none" stroke="url(#g1)" stroke-width="6"
+      stroke-linecap="round" stroke-dasharray="${c}" stroke-dashoffset="${c * (1 - pct / 100)}"
+      transform="rotate(-90 ${size / 2} ${size / 2})"/>
+    <defs><linearGradient id="g1" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#5b5bd6"/><stop offset="100%" stop-color="#ec4899"/></linearGradient></defs>
+    <text x="50%" y="50%" text-anchor="middle" dy="4" font-size="${size / 3.6}" font-weight="800" fill="#1e2340">${pct}%</text>
+  </svg>`;
+}
+
+VIEWS.home = () => {
+  const T = totalStat();
+  const rq = reviewQueue(10);
+  const cur = S.day || 1;
+  const day = DAYS.find(d => d.d === cur);
+  return `
+  <div class="hero">
+    <h1>Phonics Quest · 自然拼读闯关</h1>
+    <p>把自然拼读拆成 <b>10 个阶段、${T.tot} 个知识点</b>，按由易到难的顺序排列。
+       每个阶段都是同一套结构：<b>① 玩儿法说明 → ② 系统学一遍本阶段全部内容 → ③ 逐个知识点穷举练习</b>。<br>
+       跟着 5 天计划走，每天 40–60 分钟，第 5 天用混合题把全部内容打乱重考。</p>
+  <p class="tip" style="margin-top:10px">
+    ⚠️ 说实话：5 天是<b>高强度冲刺</b>，能做到的是"见词能拼、听音能写"的规则框架 + 全部音素过一遍手。
+    之后请每天花 10 分钟做「今日复习」，坚持两周 —— 间隔重复才是把短期记忆变长期记忆的那一步。
+  </p>
+  </div>
+
+  <div class="card totalrow">
+    ${ring(T.pct)}
+    <div class="grow">
+      <b style="font-size:15px">总进度</b>
+      <p style="margin:4px 0 0;font-size:12px;color:var(--ink2);line-height:1.6">
+        已掌握 <b>${T.done}</b> / ${T.tot} 个知识点 ·
+        共 ${STAGES.reduce((a, s) => a + stageLevels(s).reduce((x, l) => x + l.n, 0), 0)} 道练习题<br>
+        今天建议练：<b>第 ${cur} 天 · ${esc(day.title)}</b>
+      </p>
+    </div>
+    <button class="mini-btn" data-act="method">设计依据</button>
+  </div>
+
+  ${(rq.weak.length || S.wrong.length) ? `
+  <div class="sec-title"><h3>🔁 今日复习（间隔重复）</h3><span>先复习，再学新的</span></div>
+  <div class="card">
+    ${rq.weak.length ? `<p style="margin:0 0 10px;font-size:12px;color:var(--ink2)">上次没掌握的 ${rq.weak.length} 个知识点：</p>
+    <div class="chips" style="flex-wrap:wrap;overflow:visible">
+      ${rq.weak.slice(0, 24).map(x => `<button class="chip" data-act="stage" data-id="${x.st.id}">
+        ${esc(ptName(x.p))}<small>${Math.round(S.prog[x.p.id].best * 100)}%</small></button>`).join('')}
+    </div>` : ''}
+    ${S.wrong.length ? `<div class="btn-row"><button class="btn ghost" data-act="review">📕 打开错题本（${S.wrong.length}）</button></div>` : ''}
+  </div>` : ''}
+
+  <div class="sec-title"><h3>🗓 5 天闯关计划</h3><span>点「开始」进入当天第一阶段</span></div>
+  <div class="days">
+    ${DAYS.map(d => {
+      const st = dayStat(d.d);
+      return `<div class="daycard ${d.d === cur ? 'on' : ''} ${st.pct >= 100 ? 'done' : ''}" data-act="goday" data-d="${d.d}">
+        <div class="day-top">
+          <span class="day-no">Day ${d.d}</span>
+          <span class="day-emo">${d.emoji}</span>
+          ${st.pct >= 100 ? '<span class="day-flag">✓</span>' : ''}
+        </div>
+        <b>${esc(d.title)}</b>
+        <p>${esc(d.goal)}</p>
+        <div class="day-stages">
+          ${d.stages.map(id => {
+            const s = STAGES.find(x => x.id === id), ss = stageStat(s);
+            return `<button class="smini ${ss.pct >= 100 ? 'done' : ''}" data-act="stage" data-id="${id}">
+              <span>${s.emoji} 阶段 ${s.no}</span><small>${ss.done}/${ss.tot}</small></button>`;
+          }).join('')}
+        </div>
+        <div class="bar" style="margin-top:10px"><i style="width:${st.pct}%"></i></div>
+        <div class="day-foot">
+          <span>${st.done}/${st.tot} 知识点 · ${st.pct}%</span>
+          <button class="mini-btn" data-act="startDay" data-d="${d.d}">▶ ${st.pct >= 100 ? '再练一遍' : st.done > 0 ? '继续' : '开始'} Day ${d.d}</button>
+        </div>
+        <div class="day-warm">🔥 每日热身：${esc(d.warm)}</div>
+      </div>`;
+    }).join('')}
+  </div>
+
+  <div class="sec-title"><h3>📚 全部 10 个阶段</h3><span>由易到难</span></div>
+  <div class="stagelist">
+    ${STAGES.map(s => {
+      const ss = stageStat(s);
+      return `<button class="stagerow ${ss.pct >= 100 ? 'done' : ''}" data-act="stage" data-id="${s.id}">
+        <span class="sr-no">${s.emoji}</span>
+        <span class="sr-body">
+          <b>阶段 ${s.no} · ${esc(s.name)}</b>
+          <small>${esc(s.sub)} · ${ss.tot} 个知识点 · ${ss.q} 道题</small>
+        </span>
+        <span class="sr-ring">${ss.pct >= 100 ? '✓' : ss.pct + '%'}</span>
+      </button>`;
+    }).join('')}
+  </div>
+
+  <div class="sec-title"><h3>🎧 输出练习</h3><span>拼读最终要落到"说得出"</span></div>
+  <div class="modes">
+    <button class="mode" data-act="shadow">
+      <div class="emo">🎙</div><h4>跟读对比</h4>
+      <p>听原声 → 录音 → 回听对比。每天 2 分钟，练的是语流不是单音。</p>
+    </button>
+    <button class="mode" data-act="sprint">
+      <div class="emo">🎲</div><h4>综合冲刺</h4>
+      <p>打乱 10 个阶段的全部知识点随机抽题，交错练习才是真正的掌握度检验。</p>
+    </button>
+  </div>
+
+  <p class="tip" style="margin-top:18px">
+    💡 使用顺序：每天先做「今日复习」→ 再看该阶段的<b>玩儿法</b> → 过一遍<b>学一学</b> → 最后做<b>练一练</b>。
+    右上角 🔊 可开关英式发音（优先 en-GB 人声）。
+  </p>`;
+};
+
+ACT.method = () => {
+  modal('为什么这样安排？', '三套经典体系 + 三条记忆规律', `
+    <div class="mdoc">
+      <h4>① 教学顺序：Jolly Phonics（英国 Sue Lloyd / Sara Wernham）</h4>
+      <p>42 个音素分 7 组，第一组只有 <b>s a t i p n</b> —— 六个音就能拼出 sat / pin / tip / nap 等真词，
+      让孩子第一天就体验到"我能读"。顺序刻意不是 A→Z；b 和 d 被分在不同批次，避免形音双重混淆。</p>
+
+      <h4>② 阶段划分：Letters and Sounds（英国 DfE，2007）</h4>
+      <p>Phase 2 单字母 → Phase 3 二合字母 → Phase 4 相邻辅音（不教新音，专练合音）
+      → Phase 5 复杂代码（一音多拼）→ Phase 6 词缀与拼写。
+      同时强调 <b>Tricky Words</b>（不规则词）必须单独整体记忆 —— 规则只能覆盖约 85% 的词。</p>
+
+      <h4>③ 长词解码：Orton-Gillingham 六大音节类型</h4>
+      <p>closed → open → VCe → vowel team → r-controlled → consonant-le。
+      这六种类型决定了元音"读长还是读短"，是长词解码的总开关。</p>
+
+      <h4>④ 记忆规律：检索 &gt; 重复阅读</h4>
+      <p>Roediger &amp; Karpicke（2006）：同样时间下，做测验比重复阅读一周后多记住约 50%。
+      所以本页以<b>做题</b>为主，不做"看着读"。答错后必须给出"为什么"——
+      检索失败而没有反馈，是不会强化记忆的。</p>
+
+      <h4>⑤ 间隔 + 交错</h4>
+      <p>Cepeda 等（2006）：分散练习比集中练习留存高 10–30%；Rohrer（2020）的课堂实验显示，
+      交错练习一个月后的突击测验成绩 61% vs 38%。所以每阶段末都有<b>混合复习关</b>，
+      每天开始先做<b>今日复习</b>（上次没掌握的知识点）。</p>
+
+      <h4>⑥ 多感官编码</h4>
+      <p>每个字母音配一个动作（Jolly 做法）。信息经由视觉、听觉、动觉三条通道编码时，
+      提取线索更多、记得更牢 —— 忘了音，想想动作就想起来了。</p>
+    </div>`);
+};
+
+/* =========================================================================
+   综合冲刺（跨阶段交错）
+   ========================================================================= */
+ACT.sprint = () => {
+  const qs = [];
+  for (let i = 0; i < 20; i++) {
+    const st = rnd(STAGES);
+    const p = rnd(st.points);
+    const g = QGEN[p.kind];
+    if (!g) continue;
+    const q = g(p, st, Math.floor(Math.random() * (p.n || 1)));
+    if (q) qs.push(q);
+    if (i % 5 === 4) qs.push(genPair());
+  }
+  stopTimer();
+  D = { st: { id: 'sprint', name: '综合冲刺' }, lv: { id: 'sprint', name: '跨阶段交错', i: -1 }, qs, i: 0, ok: 0, wrongs: [], per: {}, locked: false };
+  go('drill'); nextQ();
+};
+
+/* =========================================================================
+   阶段页
+   ========================================================================= */
+VIEWS.stage = id => {
+  const st = STAGES.find(x => x.id === id);
+  const ss = stageStat(st);
+  const tab = S.tab[st.id] || 'how';
+  const day = DAYS.find(d => d.d === st.day);
+  return `
+  <div class="game-head">
+    <button class="back" data-act="home">←</button>
+    <div class="grow">
+      <b>${st.emoji} 阶段 ${st.no} · ${esc(st.name)}</b>
+      <div style="font-size:12px;color:var(--ink2)">Day ${st.day} · ${esc(day.title)} · ${esc(st.sub)}</div>
+    </div>
+    <div class="hud"><span>${ss.done}/${ss.tot}</span></div>
+  </div>
+  <div class="bar" style="margin-bottom:14px"><i style="width:${ss.pct}%"></i></div>
+
+  <div class="tabs">
+    <button class="tab ${tab === 'how' ? 'on' : ''}" data-act="tab" data-id="${st.id}" data-t="how">🎮 玩儿法</button>
+    <button class="tab ${tab === 'learn' ? 'on' : ''}" data-act="tab" data-id="${st.id}" data-t="learn">📖 学一学</button>
+    <button class="tab ${tab === 'drill' ? 'on' : ''}" data-act="tab" data-id="${st.id}" data-t="drill">✏️ 练一练</button>
+  </div>
+
+  ${tab === 'how' ? howHTML(st) : tab === 'learn' ? learnHTML(st) : drillHTML(st)}
+
+  <div class="stage-nav">
+    ${st.no > 1 ? `<button class="mini-btn ghost" data-act="stage" data-id="${STAGES[st.no - 2].id}">← 阶段 ${st.no - 1}</button>` : '<span></span>'}
+    ${st.no < STAGES.length ? `<button class="mini-btn ghost" data-act="stage" data-id="${STAGES[st.no].id}">阶段 ${st.no + 1} →</button>` : '<span></span>'}
+  </div>`;
+};
+
+function howHTML(st) {
+  const h = st.howto;
+  return `
+  <div class="card goal">
+    <div class="qtype">🎯 本阶段目标</div>
+    <p>${esc(st.goal)}</p>
+  </div>
+
+  <div class="card" style="margin-top:12px">
+    <div class="qtype">🎮 怎么玩</div>
+    <div class="sec-title" style="margin:10px 0 4px"><h3>准备</h3></div>
+    <p style="font-size:13px;color:var(--ink2);margin:0">${esc(h.prep)}</p>
+    <div class="steps" style="margin-top:14px">
+      ${h.steps.map(s => `<div class="step"><h4>${esc(s.h)}</h4><p>${esc(s.d)}</p></div>`).join('')}
+    </div>
+  </div>
+
+  <div class="card chant" style="margin-top:12px">
+    <div class="qtype">🗣 口诀</div>
+    <p>${esc(h.chant)}</p>
+  </div>
+
+  <div class="two" style="margin-top:12px">
+    <div class="card"><div class="qtype">⏱ 用时</div><p style="margin:8px 0 0;font-size:13px">${esc(h.time)}</p></div>
+    <div class="card"><div class="qtype">🏁 过关标准</div><p style="margin:8px 0 0;font-size:13px">${esc(h.pass)}</p></div>
+  </div>
+
+  <div class="card" style="margin-top:12px">
+    <div class="qtype">💡 给家长的提示</div>
+    <ul class="tips">
+      ${h.tips.map(t => `<li>${esc(t)}</li>`).join('')}
+    </ul>
+  </div>
+
+  <div class="tip" style="margin-top:12px"><b>为什么这样安排：</b>${esc(st.why)}</div>
+
+  <div class="btn-row">
+    <button class="btn ghost" data-act="tab" data-id="${st.id}" data-t="learn">📖 先系统学一遍</button>
+    <button class="btn primary" data-act="tab" data-id="${st.id}" data-t="drill">✏️ 直接去练习</button>
+  </div>`;
+}
+
+/* ---------- 学一学：本阶段全部内容 ---------- */
+function groupBy(st, fn) {
+  const m = [];
+  st.points.forEach(p => {
+    const k = fn(p);
+    if (!m.length || m[m.length - 1].k !== k) m.push({ k, items: [] });
+    m[m.length - 1].items.push(p);
+  });
+  return m;
+}
+
+function learnHTML(st) {
+  const groups = groupBy(st, ptGrp);
+  return `
+  <div class="tip ok" style="margin-top:0">
+    <b>这一阶段要学的全部内容都在下面（${st.points.length} 个知识点）。</b>
+    点任意一张卡片可以展开细节、听发音、看例词。建议先整体过一遍，再去「练一练」。
+  </div>
+  ${groups.map(g => `
+    <div class="sec-title"><h3>${esc(g.k)}</h3><span>${g.items.length} 项</span></div>
+    ${renderGroup(g, st)}
+  `).join('')}`;
+}
+
+function renderGroup(g, st) {
+  const k = g.items[0].kind;
+  if (k === 'letter') return `<div class="pgrid">${g.items.map(p => `
+    <button class="pc ${S.openPt === p.id ? 'on' : ''}" data-act="pt" data-k="${esc(p.id)}">
+      <div class="s">${esc(p.l.toUpperCase())}<span class="ipa" style="font-size:14px"> ${esc(p.ipa)}</span></div>
+      <div class="l">${esc(p.kw)}</div></button>`).join('')}</div>
+    ${g.items.filter(p => S.openPt === p.id).map(p => letterCard(p)).join('')}`;
+
+  if (k === 'ph') return g.items.map(p => phCard(p)).join('');
+
+  if (k === 'blend') return `<div class="wlist" style="justify-content:flex-start">
+    ${g.items.map(p => `<button class="wchip" data-act="speak" data-text="${esc(p.w)}">
+      <span>${esc(p.w)}</span><small class="ipa">${esc(p.ipa)}</small>
+      <span class="cmb">${p.sounds.join(' ')}</span></button>`).join('')}
+    </div>
+    <p class="tip" style="font-size:12px">拼读顺序：${g.items.slice(0, 4).map(p => esc(p.sounds.join('+')) + ' → ' + esc(p.w)).join('；')} …… 每个词都按"先点着读、再连起来"练。</p>`;
+
+  if (k === 'syltype') return `<div class="rtable">
+    ${g.items.map(p => `<div class="rrow">
+      <div class="rname"><b>${esc(p.name)}</b><small>${esc(p.pat)}</small></div>
+      <div class="rbody">${esc(p.say)}<br><small>元音读${esc(p.vowel)} · 占比 ${esc(p.ratio)} · 例：${esc(p.ex)}</small></div>
+    </div>`).join('')}</div>`;
+
+  if (k === 'sylrule') return `<div class="rtable">
+    ${g.items.map(p => `<div class="rrow">
+      <div class="rname"><b>规则 ${p.n}</b><small>${esc(p.name)}</small></div>
+      <div class="rbody">${esc(p.ex)}</div>
+    </div>`).join('')}</div>`;
+
+  if (k === 'stress') return `<div class="wlist" style="justify-content:flex-start">
+    ${g.items.map(p => `<button class="wchip" data-act="speak" data-text="${esc(p.w)}">
+      <span>${p.syl.map((s, i) => (i === p.stress ? '<u>' + esc(s) + '</u>' : esc(s))).join('·')}</span>
+      <small class="ipa">${esc(p.ipa)}</small></button>`).join('')}
+    </div>
+    <p class="tip" style="font-size:12px">下划线的是主重音音节，敲一下拳头；其余音节一律弱读成 /ə/。</p>`;
+
+  if (k === 'suffix') return `<div class="rtable">
+    ${g.items.map(p => `<div class="rrow">
+      <div class="rname"><b>${esc(p.w)}</b><small class="ipa">${esc(p.ipa)}</small></div>
+      <div class="rbody">${esc(p.q)} <b class="ipa">${esc(p.opts[p.ans])}</b><br><small>${esc(p.why)}</small></div>
+    </div>`).join('')}</div>`;
+
+  if (k === 'spell') return `<div class="rtable">
+    ${g.items.map(p => `<div class="rrow">
+      <div class="rname"><b>${p.n}. ${esc(p.name)}</b></div>
+      <div class="rbody">${esc(p.rule)}<br><small>${esc(p.ex)}</small></div>
+    </div>`).join('')}</div>`;
+
+  if (k === 'silent') return `<div class="wlist" style="justify-content:flex-start">
+    ${g.items.map(p => `<button class="wchip" data-act="speak" data-text="${esc(p.w)}">
+      <span>${esc(p.w.slice(0, p.si))}<span style="color:var(--bad);text-decoration:line-through">${esc(p.s)}</span>${esc(p.w.slice(p.si + p.s.length))}</span>
+      <small class="ipa">${esc(p.ipa)}</small></button>`).join('')}
+    </div>
+    <p class="tip" style="font-size:12px">${esc(g.items[0].note)}</p>`;
+
+  if (k === 'tricky') {
+    const gid = g.items[0].g, G = TRICKY_GROUPS.find(x => x.id === gid);
+    return `<div class="tip" style="margin:0 0 10px"><b>${esc(gid)} 组：${esc(G ? G.name : '')}</b> —— ${esc(G ? G.desc : '')}</div>
+    <div class="rtable">
+      ${g.items.map(p => `<div class="rrow">
+        <div class="rname"><button class="lk" data-act="speak" data-text="${esc(p.w)}"><b>${esc(p.w)}</b></button><small class="ipa">${esc(p.ipa)}</small></div>
+        <div class="rbody">${esc(p.why)}<br><small>💡 ${esc(p.tip)}</small></div>
+      </div>`).join('')}</div>`;
+  }
+  return '';
+}
+
+function letterCard(p) {
+  const m = mouthOf(p);
+  return `<div class="card kp" style="margin-top:12px">
+    <div style="display:flex;align-items:center;gap:12px;flex-wrap:wrap">
+      <div style="font-size:34px;font-weight:800">${esc(p.l.toUpperCase())} ${esc(p.l)}</div>
+      <b class="ipa" style="font-size:24px">${esc(p.ipa)}</b>
+      <button class="mini-btn" data-act="speak" data-text="${esc(p.kw)}">🔊 ${esc(p.kw)}</button>
+    </div>
+    ${m ? `<div class="mouth-wrap" style="margin-top:10px">
+      <div class="mouth-box">${mouthSVG(m, '舌位：' + m.place)}<div class="mouth-cap">${esc(p.ipa)} 嘴型</div></div>
+      <div style="max-width:280px;margin:0 auto">
+        ${gauge('开合度', m.open)}${gauge('圆唇度', m.round)}${gauge('嘴角展', m.spread)}
+      </div></div>` : ''}
+    <p class="tip" style="margin-top:12px">🗣 <b>怎么摆</b>：${esc(p.say)}</p>
+    <p class="tip">🤸 <b>动作记忆</b>：${esc(p.act)}</p>
+    <p class="tip">🔤 <b>关键词</b>：${esc(p.kw)} <span class="ipa">${esc(p.kwIpa)}</span>（第 ${p.batch} 批）</p>
+  </div>`;
+}
+
+function phCard(p) {
+  const open = S.openPt === p.id;
+  const m = mouthOf(p);
+  return `<div class="kpbox ${open ? 'on' : ''}" style="margin-top:10px">
+    <button class="kphead" data-act="pt" data-k="${esc(p.id)}">
+      <span class="kp-ipa ipa">${esc(p.ipa)}</span>
+      <span class="kp-name">${esc(p.label || p.name || '')}</span>
+      <span class="kp-cmb">${(p.combos || []).map(c => '<code>' + esc(c) + '</code>').join(' ')}</span>
+      <span class="kp-ar">${open ? '−' : '+'}</span>
+    </button>
+    ${open ? `<div class="kpbody">
+      ${m ? `<div class="mouth-wrap" style="margin:6px 0">
+        <div class="mouth-box">${mouthSVG(m, '舌位：' + m.place)}<div class="mouth-cap">${esc(p.ipa)} 嘴型</div></div>
+        <div style="max-width:280px;margin:0 auto">
+          ${gauge('开合度', m.open)}${gauge('圆唇度', m.round)}${gauge('嘴角展', m.spread)}
+        </div></div>` : ''}
+      <p class="tip" style="margin-top:10px">🗣 <b>怎么摆</b>：${esc(p.say || '')}</p>
+      ${p.vs ? `<p class="tip">⚠️ <b>易混 / 规律</b>：${esc(p.vs)}</p>` : ''}
+      <div class="sec-title" style="margin:14px 2px 6px"><h3>例词（点击听发音）</h3><span>${p.words.length} 个</span></div>
+      <div class="wlist" style="justify-content:flex-start">
+        ${p.words.map(w => `<button class="wchip" data-act="speak" data-text="${esc(w.w)}">
+          <span>${hlWord(w.w, w.c)}</span><small class="ipa">${esc(w.ipa)}</small>
+          <span class="cmb">${esc(w.c || '')}${w.note ? ' ' + esc(w.note) : ''}</span></button>`).join('')}
+      </div>
+    </div>` : ''}
+  </div>`;
+}
+
+/* ---------- 练一练 ---------- */
+function drillHTML(st) {
+  const lv = stageLevels(st);
+  return `
+  <div class="tip ok" style="margin-top:0">
+    <b>练习按知识点穷举排列</b>：本阶段 ${st.points.length} 个知识点、${lv.reduce((a, l) => a + l.n, 0)} 道题，
+    一关一关做完，就能把这一阶段全部覆盖一遍。最后的「混合复习」会把顺序打乱再考一次（交错练习）。
+  </div>
+  <div class="lvlist">
+    ${lv.map(l => {
+      const r = S.lv[l.id];
+      const pts = l.items.map(p => `<span class="pt ${mastered(p) ? 'ok' : seen(p) ? 'mid' : ''}" title="${esc(ptName(p))}">${esc(ptName(p))}</span>`).join('');
+      return `<div class="lvrow ${r && r.done ? 'done' : ''}">
+        <div class="lv-main">
+          <div class="lv-top">
+            <b>${esc(l.name)}</b>
+            <span class="lv-n">${l.n} 题</span>
+          </div>
+          ${l.mix ? '<div class="lv-sub">打乱顺序重考本阶段全部内容 —— 这是检验"真掌握"的地方</div>'
+            : `<div class="lv-pts">${pts}</div>`}
+          ${r ? `<div class="lv-sub">最好成绩 <b>${r.best}%</b> · 已练 ${r.tries} 次</div>` : ''}
+        </div>
+        <button class="mini-btn ${r && r.done ? 'ghost' : ''}" data-act="drill" data-id="${st.id}" data-i="${l.i}">
+          ${r && r.done ? '再练' : '开始'}
+        </button>
+      </div>`;
+    }).join('')}
+  </div>
+  <p class="tip" style="font-size:12px">
+    小提示：一关最好一次做完（10–15 题，约 5 分钟）。中途退出不会保存进度，但做过的题目会计入掌握度。
+  </p>`;
+}
+ACT.drill = d => startDrill(d.id, +d.i);
+
+/* =========================================================================
+   错题本
+   ========================================================================= */
+VIEWS.review = () => `
+  <div class="game-head">
+    <button class="back" data-act="home">←</button>
+    <div class="grow"><b>📕 错题本</b><div style="font-size:12px;color:var(--ink2)">会保留最近 ${S.wrong.length} 条</div></div>
+    ${S.wrong.length ? '<button class="mini-btn ghost" data-act="clearWrong">清空</button>' : ''}
+  </div>
+  ${S.wrong.length ? S.wrong.map(w => `
+    <div class="acc-item" style="margin-bottom:8px">
+      <span><b>${esc(w.w)}</b> <span class="ipa" style="color:var(--ink2)">${esc(w.ipa || '')}</span>
+        <small style="display:block;color:var(--ink2);margin-top:3px">${w.why || ''}</small></span>
+      <button class="mini-btn ghost" data-act="speak" data-text="${esc(w.w)}">🔊</button>
+    </div>`).join('')
+    : '<div class="empty">🎉 还没有错题</div>'}
+  <div class="btn-row"><button class="btn primary" data-act="sprint">🎲 用综合冲刺检验一下</button></div>`;
+ACT.review = () => go('review');
+ACT.clearWrong = () => { S.wrong = []; LS.set('pq_wrong', []); render(); };
+
+/* =========================================================================
+   跟读（输出练习）
+   ========================================================================= */
+VIEWS.shadow = () => {
+  const list = shuffle(SENTENCES).slice(0, 3);
+  return `
+  <div class="game-head">
+    <button class="back" data-act="home">←</button>
+    <div class="grow"><b>🎙 跟读对比</b><div style="font-size:12px;color:var(--ink2)">先听原声 → 跟读录音 → 回听对比</div></div>
+  </div>
+  ${list.map((s, i) => `
+    <div class="card" style="margin-bottom:12px">
+      <div style="font-size:17px;font-weight:700;line-height:1.5">${esc(s.en)}</div>
+      <div class="ipa" style="font-size:12px;color:var(--ink2);margin-top:6px">${esc(s.ipa)}</div>
+      <div style="font-size:12px;color:var(--pink);font-weight:700;margin-top:4px">重点音：${esc(s.focus)}</div>
+      <div class="btn-row" style="margin-top:12px">
+        <button class="btn ghost" data-act="speak" data-text="${esc(s.en)}">🔊 原声</button>
+        <button class="btn ghost" data-act="speak" data-text="${esc(s.en)}" data-slow="1">🐢 慢速</button>
+      </div>
+      <div class="rec">
+        <button class="rec-btn" data-act="rec" data-i="${i}">🎙</button>
+        <div id="rec-box-${i}"></div>
+      </div>
+    </div>`).join('')}
+  <p class="tip">英式要点：词尾 r 不卷舌（car /kɑː/），弱读音节一律轻读成 /ə/。</p>`;
+};
+ACT.shadow = () => go('shadow');
+
+let recState = { rec: null, chunks: [], stream: null };
+ACT.rec = async (d, el) => {
+  const i = d.i, box = $('#rec-box-' + i);
+  if (recState.rec && recState.rec.state === 'recording') {
+    recState.rec.stop(); el.classList.remove('recording'); return;
+  }
+  if (!navigator.mediaDevices || !window.MediaRecorder) {
+    box.innerHTML = '<div style="font-size:12px;color:var(--ink2)">当前环境不支持录音（需 https 或 localhost）。可改用手机自带录音机，再与原声对比。</div>';
+    return;
+  }
+  try {
+    const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
+    const rec = new MediaRecorder(stream);
+    recState = { rec, chunks: [], stream };
+    rec.ondataavailable = e => recState.chunks.push(e.data);
+    rec.onstop = () => {
+      const url = URL.createObjectURL(new Blob(recState.chunks));
+      box.innerHTML = `<audio controls src="${url}"></audio><div style="font-size:12px;color:var(--ink2)">← 点播放回听，再点上方原声对比</div>`;
+      recState.stream.getTracks().forEach(t => t.stop());
+      el.classList.remove('recording');
+    };
+    rec.start();
+    el.classList.add('recording');
+    box.innerHTML = '<div class="timer-num">录音中… 3 秒后自动停止</div>';
+    setTimeout(() => { if (rec.state === 'recording') rec.stop(); }, 3000);
+  } catch (err) {
+    box.innerHTML = '<div style="font-size:12px;color:var(--ink2)">麦克风被拒绝或不可用：' + esc(err.name || '') + '</div>';
+  }
+};
+
+/* ================= 启动 ================= */
+render();
+
+</script>
+</body>
+</html>
