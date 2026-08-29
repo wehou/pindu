@@ -16,7 +16,7 @@
 ## 使用
 
 - 本地：双击 `index.html`。
-- 在线：https://wehou.github.io/fenci/
+- 在线：https://wehou.github.io/pindu/
 
 > 5 天是高强度冲刺——目标是建立完整的规则框架、把所有音素过一遍手；之后每天 10 分钟复习两周，才能把规则变成长期记忆。
 
