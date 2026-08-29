@@ -1016,23 +1016,24 @@ const PHONEMES = [
 ];
 
 /* =========================================================================
-   配置层 2：LEVELS —— 关卡路径（5 组难度递进）
+   配置层 2：LEVELS —— 音标闯关路径（音标维度，5 组难度递进；id 用 P1..P5，
+   与词汇闯关 VOCAB_LEVELS 的年级 G1..G6 区分）
    每组挑出该阶段的音标；认知依据写在 why 里（玩家可见）
    ========================================================================= */
 const LEVELS = [
-  {id:'G1',name:'唯一拼写音',emoji:'🎯',lv:1,
+  {id:'P1',name:'唯一拼写音',emoji:'🎯',lv:1,
    ipas:['/θ/','/ð/','/tr/','/dr/','/ts/','/dz/','/ŋ/','/h/','/w/','/j/'],
    why:'这些音基本"一音只有一种写法"（th / tr / dr / ts / dz）。先在这里建立"听到音就知道怎么写"的确定感，不用做选择。'},
-  {id:'G2',name:'清浊成对辅音',emoji:'⚖️',lv:2,
+  {id:'P2',name:'清浊成对辅音',emoji:'⚖️',lv:2,
    ipas:['/p/','/b/','/t/','/d/','/k/','/g/','/f/','/v/','/s/','/z/','/ʃ/','/ʒ/','/tʃ/','/dʒ/'],
    why:'14 个辅音两两成对，只有"声带振不振动"的差别。成对练、用最小对立对听辨（pig/big、fan/van），一次记两个。'},
-  {id:'G3',name:'长短元音与双元音',emoji:'🎨',lv:3,
+  {id:'P3',name:'长短元音与双元音',emoji:'🎨',lv:3,
    ipas:['/iː/','/ɪ/','/e/','/æ/','/ɑː/','/ɒ/','/ɔː/','/ʊ/','/uː/','/ʌ/','/ɜː/','/ə/','/eɪ/','/aɪ/','/ɔɪ/','/əʊ/','/aʊ/','/ɪə/','/eə/','/ʊə/'],
    why:'元音是拼写歧义最大的地方（一个 /iː/ 有 ee/ea/e/ie/ei 五种写法）。放在辅音之后学，因为辅音先把单词"骨架"搭好了。'},
-  {id:'G4',name:'位置规则',emoji:'📍',lv:4,
+  {id:'P4',name:'位置规则',emoji:'📍',lv:4,
    ipas:['/eɪ/','/aɪ/','/ɔɪ/','/k/','/s/','/g/','/dʒ/','/ʃ/','/ʒ/','/ŋ/'],
    why:'同一个音的写法由"它在哪儿"决定：ai 在词中、ay 在词尾；c 在 a/o/u 前读 /k/、在 e/i/y 前读 /s/；oi 词中、oy 词尾。'},
-  {id:'G5',name:'开闭音节',emoji:'🔓',lv:5,
+  {id:'P5',name:'开闭音节',emoji:'🔓',lv:5,
    ipas:['/eɪ/','/iː/','/aɪ/','/əʊ/','/j/','/uː/','/æ/','/e/','/ɪ/','/ɒ/','/ʌ/'],
    why:'元音字母读"字母本音(长)"还是"短音"，取决于音节是开还是闭：no /nəʊ/ 开音节长，not /nɒt/ 闭音节短。这是收网的综合规则。'}
 ];
@@ -1049,83 +1050,87 @@ const E = (ipa, sp, note) => (ipa ? {ipa, sp, note} : {ipa:'', sp, silent:1, not
 
 /* 组合音：不是 48 音标里的独立音素，但"一个字母表示两个音"，
    练习时按一个整体处理（computer 的 u = /j/+/uː/） */
-const COMBINED = { '/juː/': '由 /j/ + /uː/ 合成，字母 u 一个字母表示两个音' };
+const COMBINED = {
+  '/juː/': '由 /j/ + /uː/ 合成，字母 u 一个字母表示两个音',
+  '/əl/': '辅音 + le / el / al / ul 读 /əl/（成音节）, 如 table / purple / hospital',
+  '/ks/': '字母 x 一个字母表示 /k/ + /s/ 两个音，如 box / experiment'
+};
 const DRILL_WORDS = [
 /* ---- G1 唯一拼写音 ---- */
-{w:'thin',ipa:'/θɪn/',zh:'薄的',syl:['thin'],stress:0,lv:'G1',ph:[E('/θ/','th'),E('/ɪ/','i'),E('/n/','n')]},
-{w:'three',ipa:'/θriː/',zh:'三',syl:['three'],stress:0,lv:'G1',ph:[E('/θ/','th'),E('/r/','r'),E('/iː/','ee')]},
-{w:'this',ipa:'/ðɪs/',zh:'这个',syl:['this'],stress:0,lv:'G1',ph:[E('/ð/','th'),E('/ɪ/','i'),E('/s/','s')]},
-{w:'mother',ipa:'/ˈmʌðə/',zh:'母亲',syl:['mo','ther'],stress:0,lv:'G1',ph:[E('/m/','m'),E('/ʌ/','o'),E('/ð/','th'),E('/ə/','er')]},
-{w:'tree',ipa:'/triː/',zh:'树',syl:['tree'],stress:0,lv:'G1',ph:[E('/t/','t'),E('/r/','r'),E('/iː/','ee')]},
-{w:'dress',ipa:'/dres/',zh:'连衣裙',syl:['dress'],stress:0,lv:'G1',ph:[E('/d/','d'),E('/r/','r'),E('/e/','e'),E('/s/','ss')]},
-{w:'cats',ipa:'/kæts/',zh:'猫（复数）',syl:['cats'],stress:0,lv:'G1',ph:[E('/k/','c'),E('/æ/','a'),E('/t/','t'),E('/s/','s')]},
-{w:'birds',ipa:'/bɜːdz/',zh:'鸟（复数）',syl:['birds'],stress:0,lv:'G1',ph:[E('/b/','b'),E('/ɜː/','ir'),E('/dz/','ds')]},
-{w:'hat',ipa:'/hæt/',zh:'帽子',syl:['hat'],stress:0,lv:'G1',ph:[E('/h/','h'),E('/æ/','a'),E('/t/','t')]},
-{w:'yes',ipa:'/jes/',zh:'是的',syl:['yes'],stress:0,lv:'G1',ph:[E('/j/','y'),E('/e/','e'),E('/s/','s')]},
+{w:'thin',ipa:'/θɪn/',zh:'薄的',syl:['thin'],stress:0,lv:'P1',ph:[E('/θ/','th'),E('/ɪ/','i'),E('/n/','n')]},
+{w:'three',ipa:'/θriː/',zh:'三',syl:['three'],stress:0,lv:'P1',ph:[E('/θ/','th'),E('/r/','r'),E('/iː/','ee')]},
+{w:'this',ipa:'/ðɪs/',zh:'这个',syl:['this'],stress:0,lv:'P1',ph:[E('/ð/','th'),E('/ɪ/','i'),E('/s/','s')]},
+{w:'mother',ipa:'/ˈmʌðə/',zh:'母亲',syl:['mo','ther'],stress:0,lv:'P1',ph:[E('/m/','m'),E('/ʌ/','o'),E('/ð/','th'),E('/ə/','er')]},
+{w:'tree',ipa:'/triː/',zh:'树',syl:['tree'],stress:0,lv:'P1',ph:[E('/tr/','tr'),E('/iː/','ee')]},
+{w:'dress',ipa:'/dres/',zh:'连衣裙',syl:['dress'],stress:0,lv:'P1',ph:[E('/dr/','dr'),E('/e/','e'),E('/s/','ss')]},
+{w:'cats',ipa:'/kæts/',zh:'猫（复数）',syl:['cats'],stress:0,lv:'P1',ph:[E('/k/','c'),E('/æ/','a'),E('/ts/','ts')]},
+{w:'birds',ipa:'/bɜːdz/',zh:'鸟（复数）',syl:['birds'],stress:0,lv:'P1',ph:[E('/b/','b'),E('/ɜː/','ir'),E('/dz/','ds')]},
+{w:'hat',ipa:'/hæt/',zh:'帽子',syl:['hat'],stress:0,lv:'P1',ph:[E('/h/','h'),E('/æ/','a'),E('/t/','t')]},
+{w:'yes',ipa:'/jes/',zh:'是的',syl:['yes'],stress:0,lv:'P1',ph:[E('/j/','y'),E('/e/','e'),E('/s/','s')]},
 /* ---- G2 清浊成对辅音 ---- */
-{w:'pen',ipa:'/pen/',zh:'钢笔',syl:['pen'],stress:0,lv:'G2',ph:[E('/p/','p'),E('/e/','e'),E('/n/','n')]},
-{w:'bed',ipa:'/bed/',zh:'床',syl:['bed'],stress:0,lv:'G2',ph:[E('/b/','b'),E('/e/','e'),E('/d/','d')]},
-{w:'cat',ipa:'/kæt/',zh:'猫',syl:['cat'],stress:0,lv:'G2',ph:[E('/k/','c'),E('/æ/','a'),E('/t/','t')]},
-{w:'back',ipa:'/bæk/',zh:'后面',syl:['back'],stress:0,lv:'G2',ph:[E('/b/','b'),E('/æ/','a'),E('/k/','ck')]},
-{w:'go',ipa:'/ɡəʊ/',zh:'去',syl:['go'],stress:0,lv:'G2',ph:[E('/g/','g'),E('/əʊ/','o')]},
-{w:'fish',ipa:'/fɪʃ/',zh:'鱼',syl:['fish'],stress:0,lv:'G2',ph:[E('/f/','f'),E('/ɪ/','i'),E('/ʃ/','sh')]},
-{w:'van',ipa:'/væn/',zh:'货车',syl:['van'],stress:0,lv:'G2',ph:[E('/v/','v'),E('/æ/','a'),E('/n/','n')]},
-{w:'sun',ipa:'/sʌn/',zh:'太阳',syl:['sun'],stress:0,lv:'G2',ph:[E('/s/','s'),E('/ʌ/','u'),E('/n/','n')]},
-{w:'zoo',ipa:'/zuː/',zh:'动物园',syl:['zoo'],stress:0,lv:'G2',ph:[E('/z/','z'),E('/uː/','oo')]},
-{w:'ship',ipa:'/ʃɪp/',zh:'船',syl:['ship'],stress:0,lv:'G2',ph:[E('/ʃ/','sh'),E('/ɪ/','i'),E('/p/','p')]},
-{w:'chair',ipa:'/tʃeə/',zh:'椅子',syl:['chair'],stress:0,lv:'G2',ph:[E('/tʃ/','ch'),E('/eə/','air')]},
-{w:'bridge',ipa:'/brɪdʒ/',zh:'桥',syl:['bridge'],stress:0,lv:'G2',ph:[E('/b/','b'),E('/r/','r'),E('/ɪ/','i'),E('/dʒ/','dge')]},
+{w:'pen',ipa:'/pen/',zh:'钢笔',syl:['pen'],stress:0,lv:'P2',ph:[E('/p/','p'),E('/e/','e'),E('/n/','n')]},
+{w:'bed',ipa:'/bed/',zh:'床',syl:['bed'],stress:0,lv:'P2',ph:[E('/b/','b'),E('/e/','e'),E('/d/','d')]},
+{w:'cat',ipa:'/kæt/',zh:'猫',syl:['cat'],stress:0,lv:'P2',ph:[E('/k/','c'),E('/æ/','a'),E('/t/','t')]},
+{w:'back',ipa:'/bæk/',zh:'后面',syl:['back'],stress:0,lv:'P2',ph:[E('/b/','b'),E('/æ/','a'),E('/k/','ck')]},
+{w:'go',ipa:'/ɡəʊ/',zh:'去',syl:['go'],stress:0,lv:'P2',ph:[E('/g/','g'),E('/əʊ/','o')]},
+{w:'fish',ipa:'/fɪʃ/',zh:'鱼',syl:['fish'],stress:0,lv:'P2',ph:[E('/f/','f'),E('/ɪ/','i'),E('/ʃ/','sh')]},
+{w:'van',ipa:'/væn/',zh:'货车',syl:['van'],stress:0,lv:'P2',ph:[E('/v/','v'),E('/æ/','a'),E('/n/','n')]},
+{w:'sun',ipa:'/sʌn/',zh:'太阳',syl:['sun'],stress:0,lv:'P2',ph:[E('/s/','s'),E('/ʌ/','u'),E('/n/','n')]},
+{w:'zoo',ipa:'/zuː/',zh:'动物园',syl:['zoo'],stress:0,lv:'P2',ph:[E('/z/','z'),E('/uː/','oo')]},
+{w:'ship',ipa:'/ʃɪp/',zh:'船',syl:['ship'],stress:0,lv:'P2',ph:[E('/ʃ/','sh'),E('/ɪ/','i'),E('/p/','p')]},
+{w:'chair',ipa:'/tʃeə/',zh:'椅子',syl:['chair'],stress:0,lv:'P2',ph:[E('/tʃ/','ch'),E('/eə/','air')]},
+{w:'bridge',ipa:'/brɪdʒ/',zh:'桥',syl:['bridge'],stress:0,lv:'P2',ph:[E('/b/','b'),E('/r/','r'),E('/ɪ/','i'),E('/dʒ/','dge')]},
 /* ---- G3 长短元音与双元音 ---- */
-{w:'sheep',ipa:'/ʃiːp/',zh:'绵羊',syl:['sheep'],stress:0,lv:'G3',ph:[E('/ʃ/','sh'),E('/iː/','ee'),E('/p/','p')]},
-{w:'car',ipa:'/kɑː/',zh:'汽车',syl:['car'],stress:0,lv:'G3',ph:[E('/k/','c'),E('/ɑː/','ar')]},
-{w:'cup',ipa:'/kʌp/',zh:'杯子',syl:['cup'],stress:0,lv:'G3',ph:[E('/k/','c'),E('/ʌ/','u'),E('/p/','p')]},
-{w:'food',ipa:'/fuːd/',zh:'食物',syl:['food'],stress:0,lv:'G3',ph:[E('/f/','f'),E('/uː/','oo'),E('/d/','d')]},
-{w:'foot',ipa:'/fʊt/',zh:'脚',syl:['foot'],stress:0,lv:'G3',ph:[E('/f/','f'),E('/ʊ/','oo'),E('/t/','t')]},
-{w:'bird',ipa:'/bɜːd/',zh:'鸟',syl:['bird'],stress:0,lv:'G3',ph:[E('/b/','b'),E('/ɜː/','ir'),E('/d/','d')]},
-{w:'teacher',ipa:'/ˈtiːtʃə/',zh:'老师',syl:['tea','cher'],stress:0,lv:'G3',ph:[E('/t/','t'),E('/iː/','ea'),E('/tʃ/','ch'),E('/ə/','er')]},
-{w:'boat',ipa:'/bəʊt/',zh:'船',syl:['boat'],stress:0,lv:'G3',ph:[E('/b/','b'),E('/əʊ/','oa'),E('/t/','t')]},
-{w:'rain',ipa:'/reɪn/',zh:'雨',syl:['rain'],stress:0,lv:'G3',ph:[E('/r/','r'),E('/eɪ/','ai'),E('/n/','n')]},
-{w:'day',ipa:'/deɪ/',zh:'白天',syl:['day'],stress:0,lv:'G3',ph:[E('/d/','d'),E('/eɪ/','ay')]},
-{w:'bike',ipa:'/baɪk/',zh:'自行车',syl:['bike'],stress:0,lv:'G3',ph:[E('/b/','b'),E('/aɪ/','i'),E('/k/','k'),E('','e','魔法 e 不发音')]},
-{w:'light',ipa:'/laɪt/',zh:'光',syl:['light'],stress:0,lv:'G3',ph:[E('/l/','l'),E('/aɪ/','igh'),E('/t/','t')]},
-{w:'boy',ipa:'/bɔɪ/',zh:'男孩',syl:['boy'],stress:0,lv:'G3',ph:[E('/b/','b'),E('/ɔɪ/','oy')]},
-{w:'home',ipa:'/həʊm/',zh:'家',syl:['home'],stress:0,lv:'G3',ph:[E('/h/','h'),E('/əʊ/','o'),E('/m/','m'),E('','e','魔法 e 不发音')]},
-{w:'house',ipa:'/haʊs/',zh:'房子',syl:['house'],stress:0,lv:'G3',ph:[E('/h/','h'),E('/aʊ/','ou'),E('/s/','s'),E('','e','魔法 e 不发音')]},
-{w:'name',ipa:'/neɪm/',zh:'名字',syl:['name'],stress:0,lv:'G3',ph:[E('/n/','n'),E('/eɪ/','a'),E('/m/','m'),E('','e','魔法 e 不发音')]},
-{w:'ear',ipa:'/ɪə/',zh:'耳朵',syl:['ear'],stress:0,lv:'G3',ph:[E('/ɪə/','ear')]},
-{w:'hair',ipa:'/heə/',zh:'头发',syl:['hair'],stress:0,lv:'G3',ph:[E('/h/','h'),E('/eə/','air')]},
+{w:'sheep',ipa:'/ʃiːp/',zh:'绵羊',syl:['sheep'],stress:0,lv:'P3',ph:[E('/ʃ/','sh'),E('/iː/','ee'),E('/p/','p')]},
+{w:'car',ipa:'/kɑː/',zh:'汽车',syl:['car'],stress:0,lv:'P3',ph:[E('/k/','c'),E('/ɑː/','ar')]},
+{w:'cup',ipa:'/kʌp/',zh:'杯子',syl:['cup'],stress:0,lv:'P3',ph:[E('/k/','c'),E('/ʌ/','u'),E('/p/','p')]},
+{w:'food',ipa:'/fuːd/',zh:'食物',syl:['food'],stress:0,lv:'P3',ph:[E('/f/','f'),E('/uː/','oo'),E('/d/','d')]},
+{w:'foot',ipa:'/fʊt/',zh:'脚',syl:['foot'],stress:0,lv:'P3',ph:[E('/f/','f'),E('/ʊ/','oo'),E('/t/','t')]},
+{w:'bird',ipa:'/bɜːd/',zh:'鸟',syl:['bird'],stress:0,lv:'P3',ph:[E('/b/','b'),E('/ɜː/','ir'),E('/d/','d')]},
+{w:'teacher',ipa:'/ˈtiːtʃə/',zh:'老师',syl:['tea','cher'],stress:0,lv:'P3',ph:[E('/t/','t'),E('/iː/','ea'),E('/tʃ/','ch'),E('/ə/','er')]},
+{w:'boat',ipa:'/bəʊt/',zh:'船',syl:['boat'],stress:0,lv:'P3',ph:[E('/b/','b'),E('/əʊ/','oa'),E('/t/','t')]},
+{w:'rain',ipa:'/reɪn/',zh:'雨',syl:['rain'],stress:0,lv:'P3',ph:[E('/r/','r'),E('/eɪ/','ai'),E('/n/','n')]},
+{w:'day',ipa:'/deɪ/',zh:'白天',syl:['day'],stress:0,lv:'P3',ph:[E('/d/','d'),E('/eɪ/','ay')]},
+{w:'bike',ipa:'/baɪk/',zh:'自行车',syl:['bike'],stress:0,lv:'P3',ph:[E('/b/','b'),E('/aɪ/','i'),E('/k/','k'),E('','e','魔法 e 不发音')]},
+{w:'light',ipa:'/laɪt/',zh:'光',syl:['light'],stress:0,lv:'P3',ph:[E('/l/','l'),E('/aɪ/','igh'),E('/t/','t')]},
+{w:'boy',ipa:'/bɔɪ/',zh:'男孩',syl:['boy'],stress:0,lv:'P3',ph:[E('/b/','b'),E('/ɔɪ/','oy')]},
+{w:'home',ipa:'/həʊm/',zh:'家',syl:['home'],stress:0,lv:'P3',ph:[E('/h/','h'),E('/əʊ/','o'),E('/m/','m'),E('','e','魔法 e 不发音')]},
+{w:'house',ipa:'/haʊs/',zh:'房子',syl:['house'],stress:0,lv:'P3',ph:[E('/h/','h'),E('/aʊ/','ou'),E('/s/','s'),E('','e','魔法 e 不发音')]},
+{w:'name',ipa:'/neɪm/',zh:'名字',syl:['name'],stress:0,lv:'P3',ph:[E('/n/','n'),E('/eɪ/','a'),E('/m/','m'),E('','e','魔法 e 不发音')]},
+{w:'ear',ipa:'/ɪə/',zh:'耳朵',syl:['ear'],stress:0,lv:'P3',ph:[E('/ɪə/','ear')]},
+{w:'hair',ipa:'/heə/',zh:'头发',syl:['hair'],stress:0,lv:'P3',ph:[E('/h/','h'),E('/eə/','air')]},
 /* ---- G4 位置规则 ---- */
-{w:'city',ipa:'/ˈsɪti/',zh:'城市',syl:['ci','ty'],stress:0,lv:'G4',ph:[E('/s/','c','c 在 i 前读 /s/'),E('/ɪ/','i'),E('/t/','t'),E('/ɪ/','y','词尾 y 读 /ɪ/')]},
-{w:'cold',ipa:'/kəʊld/',zh:'冷的',syl:['cold'],stress:0,lv:'G4',ph:[E('/k/','c','c 在 o 前读 /k/'),E('/əʊ/','o'),E('/l/','l'),E('/d/','d')]},
-{w:'giant',ipa:'/ˈdʒaɪənt/',zh:'巨人',syl:['gi','ant'],stress:0,lv:'G4',ph:[E('/dʒ/','g','g 在 i 前读 /dʒ/'),E('/aɪ/','i'),E('/ə/','a'),E('/n/','n'),E('/t/','t')]},
-{w:'station',ipa:'/ˈsteɪʃən/',zh:'车站',syl:['sta','tion'],stress:0,lv:'G4',ph:[E('/s/','s'),E('/t/','t'),E('/eɪ/','a'),E('/ʃ/','ti','-tion 读 /ʃən/'),E('/ə/','o'),E('/n/','n')]},
-{w:'mission',ipa:'/ˈmɪʃən/',zh:'任务',syl:['mis','sion'],stress:0,lv:'G4',ph:[E('/m/','m'),E('/ɪ/','i'),E('/ʃ/','ssi','辅音后 -sion 读 /ʃən/'),E('/ə/','o'),E('/n/','n')]},
-{w:'vision',ipa:'/ˈvɪʒən/',zh:'视力',syl:['vi','sion'],stress:0,lv:'G4',ph:[E('/v/','v'),E('/ɪ/','i'),E('/ʒ/','si','元音后 -sion 读 /ʒən/'),E('/ə/','o'),E('/n/','n')]},
-{w:'bank',ipa:'/bæŋk/',zh:'银行',syl:['bank'],stress:0,lv:'G4',ph:[E('/b/','b'),E('/æ/','a'),E('/ŋ/','n','n 在 k 前读 /ŋ/'),E('/k/','k')]},
-{w:'thank',ipa:'/θæŋk/',zh:'感谢',syl:['thank'],stress:0,lv:'G4',ph:[E('/θ/','th'),E('/æ/','a'),E('/ŋ/','n','n 在 k 前读 /ŋ/'),E('/k/','k')]},
-{w:'school',ipa:'/skuːl/',zh:'学校',syl:['school'],stress:0,lv:'G4',ph:[E('/s/','s'),E('/k/','ch','ch 在这里读 /k/'),E('/uː/','oo'),E('/l/','l')]},
-{w:'phone',ipa:'/fəʊn/',zh:'电话',syl:['phone'],stress:0,lv:'G4',ph:[E('/f/','ph'),E('/əʊ/','o'),E('/n/','n'),E('','e','魔法 e 不发音')]},
+{w:'city',ipa:'/ˈsɪti/',zh:'城市',syl:['ci','ty'],stress:0,lv:'P4',ph:[E('/s/','c','c 在 i 前读 /s/'),E('/ɪ/','i'),E('/t/','t'),E('/ɪ/','y','词尾 y 读 /ɪ/')]},
+{w:'cold',ipa:'/kəʊld/',zh:'冷的',syl:['cold'],stress:0,lv:'P4',ph:[E('/k/','c','c 在 o 前读 /k/'),E('/əʊ/','o'),E('/l/','l'),E('/d/','d')]},
+{w:'giant',ipa:'/ˈdʒaɪənt/',zh:'巨人',syl:['gi','ant'],stress:0,lv:'P4',ph:[E('/dʒ/','g','g 在 i 前读 /dʒ/'),E('/aɪ/','i'),E('/ə/','a'),E('/n/','n'),E('/t/','t')]},
+{w:'station',ipa:'/ˈsteɪʃən/',zh:'车站',syl:['sta','tion'],stress:0,lv:'P4',ph:[E('/s/','s'),E('/t/','t'),E('/eɪ/','a'),E('/ʃ/','ti','-tion 读 /ʃən/'),E('/ə/','o'),E('/n/','n')]},
+{w:'mission',ipa:'/ˈmɪʃən/',zh:'任务',syl:['mis','sion'],stress:0,lv:'P4',ph:[E('/m/','m'),E('/ɪ/','i'),E('/ʃ/','ssi','辅音后 -sion 读 /ʃən/'),E('/ə/','o'),E('/n/','n')]},
+{w:'vision',ipa:'/ˈvɪʒən/',zh:'视力',syl:['vi','sion'],stress:0,lv:'P4',ph:[E('/v/','v'),E('/ɪ/','i'),E('/ʒ/','si','元音后 -sion 读 /ʒən/'),E('/ə/','o'),E('/n/','n')]},
+{w:'bank',ipa:'/bæŋk/',zh:'银行',syl:['bank'],stress:0,lv:'P4',ph:[E('/b/','b'),E('/æ/','a'),E('/ŋ/','n','n 在 k 前读 /ŋ/'),E('/k/','k')]},
+{w:'thank',ipa:'/θæŋk/',zh:'感谢',syl:['thank'],stress:0,lv:'P4',ph:[E('/θ/','th'),E('/æ/','a'),E('/ŋ/','n','n 在 k 前读 /ŋ/'),E('/k/','k')]},
+{w:'school',ipa:'/skuːl/',zh:'学校',syl:['school'],stress:0,lv:'P4',ph:[E('/s/','s'),E('/k/','ch','ch 在这里读 /k/'),E('/uː/','oo'),E('/l/','l')]},
+{w:'phone',ipa:'/fəʊn/',zh:'电话',syl:['phone'],stress:0,lv:'P4',ph:[E('/f/','ph'),E('/əʊ/','o'),E('/n/','n'),E('','e','魔法 e 不发音')]},
 /* ---- G5 开闭音节 + 多音节重音 ---- */
-{w:'no',ipa:'/nəʊ/',zh:'不',syl:['no'],stress:0,lv:'G5',ph:[E('/n/','n'),E('/əʊ/','o','开音节读字母本音')]},
-{w:'not',ipa:'/nɒt/',zh:'不（否定）',syl:['not'],stress:0,lv:'G5',ph:[E('/n/','n'),E('/ɒ/','o','闭音节读短音'),E('/t/','t')]},
-{w:'she',ipa:'/ʃiː/',zh:'她',syl:['she'],stress:0,lv:'G5',ph:[E('/ʃ/','sh'),E('/iː/','e','开音节读字母本音')]},
-{w:'animal',ipa:'/ˈænɪməl/',zh:'动物',syl:['a','ni','mal'],stress:0,lv:'G5',ph:[E('/æ/','a'),E('/n/','n'),E('/ɪ/','i'),E('/m/','m'),E('/ə/','a'),E('/l/','l')]},
-{w:'family',ipa:'/ˈfæməli/',zh:'家庭',syl:['fa','mi','ly'],stress:0,lv:'G5',ph:[E('/f/','f'),E('/æ/','a'),E('/m/','m'),E('/ə/','i'),E('/l/','l'),E('/ɪ/','y','词尾 y 读 /ɪ/')]},
-{w:'banana',ipa:'/bəˈnɑːnə/',zh:'香蕉',syl:['ba','na','na'],stress:1,lv:'G5',ph:[E('/b/','b'),E('/ə/','a'),E('/n/','n'),E('/ɑː/','a'),E('/n/','n'),E('/ə/','a')]},
-{w:'computer',ipa:'/kəmˈpjuːtə/',zh:'计算机',syl:['com','pu','ter'],stress:1,lv:'G5',ph:[E('/k/','c'),E('/ə/','o'),E('/m/','m'),E('/p/','p'),E('/juː/','u','u 一个字母表示 /j/+/uː/ 两个音'),E('/t/','t'),E('/ə/','er')]},
-{w:'tomato',ipa:'/təˈmɑːtəʊ/',zh:'西红柿',syl:['to','ma','to'],stress:1,lv:'G5',ph:[E('/t/','t'),E('/ə/','o'),E('/m/','m'),E('/ɑː/','a'),E('/t/','t'),E('/əʊ/','o')]},
-{w:'together',ipa:'/təˈɡeðə/',zh:'一起',syl:['to','ge','ther'],stress:1,lv:'G5',ph:[E('/t/','t'),E('/ə/','o'),E('/g/','g'),E('/e/','e'),E('/ð/','th'),E('/ə/','er')]},
-{w:'remember',ipa:'/rɪˈmembə/',zh:'记得',syl:['re','mem','ber'],stress:1,lv:'G5',ph:[E('/r/','r'),E('/ɪ/','e'),E('/m/','m'),E('/e/','e'),E('/m/','m'),E('/b/','b'),E('/ə/','er')]},
-{w:'holiday',ipa:'/ˈhɒlədeɪ/',zh:'假日',syl:['ho','li','day'],stress:0,lv:'G5',ph:[E('/h/','h'),E('/ɒ/','o'),E('/l/','l'),E('/ə/','i'),E('/d/','d'),E('/eɪ/','ay')]},
-{w:'information',ipa:'/ˌɪnfəˈmeɪʃən/',zh:'信息',syl:['in','for','ma','tion'],stress:2,soft:0,lv:'G5',
+{w:'no',ipa:'/nəʊ/',zh:'不',syl:['no'],stress:0,lv:'P5',ph:[E('/n/','n'),E('/əʊ/','o','开音节读字母本音')]},
+{w:'not',ipa:'/nɒt/',zh:'不（否定）',syl:['not'],stress:0,lv:'P5',ph:[E('/n/','n'),E('/ɒ/','o','闭音节读短音'),E('/t/','t')]},
+{w:'she',ipa:'/ʃiː/',zh:'她',syl:['she'],stress:0,lv:'P5',ph:[E('/ʃ/','sh'),E('/iː/','e','开音节读字母本音')]},
+{w:'animal',ipa:'/ˈænɪməl/',zh:'动物',syl:['a','ni','mal'],stress:0,lv:'P5',ph:[E('/æ/','a'),E('/n/','n'),E('/ɪ/','i'),E('/m/','m'),E('/ə/','a'),E('/l/','l')]},
+{w:'family',ipa:'/ˈfæməli/',zh:'家庭',syl:['fa','mi','ly'],stress:0,lv:'P5',ph:[E('/f/','f'),E('/æ/','a'),E('/m/','m'),E('/ə/','i'),E('/l/','l'),E('/ɪ/','y','词尾 y 读 /ɪ/')]},
+{w:'banana',ipa:'/bəˈnɑːnə/',zh:'香蕉',syl:['ba','na','na'],stress:1,lv:'P5',ph:[E('/b/','b'),E('/ə/','a'),E('/n/','n'),E('/ɑː/','a'),E('/n/','n'),E('/ə/','a')]},
+{w:'computer',ipa:'/kəmˈpjuːtə/',zh:'计算机',syl:['com','pu','ter'],stress:1,lv:'P5',ph:[E('/k/','c'),E('/ə/','o'),E('/m/','m'),E('/p/','p'),E('/juː/','u','u 一个字母表示 /j/+/uː/ 两个音'),E('/t/','t'),E('/ə/','er')]},
+{w:'tomato',ipa:'/təˈmɑːtəʊ/',zh:'西红柿',syl:['to','ma','to'],stress:1,lv:'P5',ph:[E('/t/','t'),E('/ə/','o'),E('/m/','m'),E('/ɑː/','a'),E('/t/','t'),E('/əʊ/','o')]},
+{w:'together',ipa:'/təˈɡeðə/',zh:'一起',syl:['to','ge','ther'],stress:1,lv:'P5',ph:[E('/t/','t'),E('/ə/','o'),E('/g/','g'),E('/e/','e'),E('/ð/','th'),E('/ə/','er')]},
+{w:'remember',ipa:'/rɪˈmembə/',zh:'记得',syl:['re','mem','ber'],stress:1,lv:'P5',ph:[E('/r/','r'),E('/ɪ/','e'),E('/m/','m'),E('/e/','e'),E('/m/','m'),E('/b/','b'),E('/ə/','er')]},
+{w:'holiday',ipa:'/ˈhɒlədeɪ/',zh:'假日',syl:['ho','li','day'],stress:0,lv:'P5',ph:[E('/h/','h'),E('/ɒ/','o'),E('/l/','l'),E('/ə/','i'),E('/d/','d'),E('/eɪ/','ay')]},
+{w:'information',ipa:'/ˌɪnfəˈmeɪʃən/',zh:'信息',syl:['in','for','ma','tion'],stress:2,soft:0,lv:'P5',
  ph:[E('/ɪ/','i'),E('/n/','n'),E('/f/','f'),E('/ə/','or'),E('/m/','m'),E('/eɪ/','a'),E('/ʃ/','ti'),E('/ə/','o'),E('/n/','n')]},
-{w:'international',ipa:'/ˌɪntəˈnæʃənəl/',zh:'国际的',syl:['in','ter','na','tion','al'],stress:2,soft:0,lv:'G5',
+{w:'international',ipa:'/ˌɪntəˈnæʃənəl/',zh:'国际的',syl:['in','ter','na','tion','al'],stress:2,soft:0,lv:'P5',
  ph:[E('/ɪ/','i'),E('/n/','n'),E('/t/','t'),E('/ə/','er'),E('/n/','n'),E('/æ/','a'),E('/ʃ/','ti'),E('/ə/','o'),E('/n/','n'),E('/ə/','a'),E('/l/','l')]},
-{w:'university',ipa:'/ˌjuːnɪˈvɜːsəti/',zh:'大学',syl:['u','ni','ver','si','ty'],stress:2,soft:0,lv:'G5',
+{w:'university',ipa:'/ˌjuːnɪˈvɜːsəti/',zh:'大学',syl:['u','ni','ver','si','ty'],stress:2,soft:0,lv:'P5',
  ph:[E('/juː/','u','u 一个字母表示 /j/+/uː/ 两个音'),E('/n/','n'),E('/ɪ/','i'),E('/v/','v'),E('/ɜː/','er'),E('/s/','s'),E('/ə/','i'),E('/t/','t'),E('/ɪ/','y','词尾 y 读 /ɪ/')]},
-{w:'engineer',ipa:'/ˌendʒɪˈnɪə/',zh:'工程师',syl:['en','gi','neer'],stress:2,soft:0,lv:'G5',
+{w:'engineer',ipa:'/ˌendʒɪˈnɪə/',zh:'工程师',syl:['en','gi','neer'],stress:2,soft:0,lv:'P5',
  ph:[E('/e/','e'),E('/n/','n'),E('/dʒ/','g','g 在 i 前读 /dʒ/'),E('/ɪ/','i'),E('/n/','n'),E('/ɪə/','eer')]},
-{w:'photograph',ipa:'/ˈfəʊtəɡrɑːf/',zh:'照片',syl:['pho','to','graph'],stress:0,lv:'G5',
+{w:'photograph',ipa:'/ˈfəʊtəɡrɑːf/',zh:'照片',syl:['pho','to','graph'],stress:0,lv:'P5',
  ph:[E('/f/','ph'),E('/əʊ/','o'),E('/t/','t'),E('/ə/','o'),E('/g/','g'),E('/r/','r'),E('/ɑː/','a'),E('/f/','ph')]}
 ];
 
@@ -1200,7 +1205,194 @@ const CLUSTERS = [
 ];
 
 /* =========================================================================
-   索引层：启动时预建，运行时 O(1) 查询
+   配置层 2b：词汇闯关 —— G1–G6 小学核心词汇（按年级 × 音节数分层）
+     grade  1..6 年级
+     tier   由音节数自动派生：1=单音节 2=双音节 3=多音节(3+)
+     theme  该关主题
+   复用 DRILL_WORDS 的 ph[] 逐音素结构，不重复造数据结构
+   ========================================================================= */
+
+/* 现有关卡词(DRILL_WORDS)的年级归属：只写 grade，tier 由音节数自动算 */
+const GRADE_MAP = {
+  cat:1, pen:1, bed:1, hat:1, sun:1, fish:1, yes:1, no:1, not:1, tree:1,
+  car:1, cup:1, boy:1, ear:1, hair:1, ship:1, boat:1, rain:1, day:1,
+  home:1, name:1, bird:1, chair:1, house:1, zoo:1, ear:1,
+  thin:2, three:2, this:2, dress:2, back:2, van:2, sheep:2, food:2, foot:2,
+  bike:2, light:2, cold:2, city:2, school:2, phone:2, go:2, she:2,
+  cats:2, birds:2, bridge:2, bank:2, thank:2, giant:2, station:2,
+  mother:3, teacher:3, mission:3, holiday:3, family:3, animal:3, tomato:3,
+  together:3, remember:3,
+  vision:4, computer:4, banana:4, photograph:4, engineer:4,
+  information:5, international:5,
+  university:6
+};
+
+/* 新增：G1–G6 核心词汇（ph[] 的 sp 拼接 === w，由 validateData 校验） */
+const VOCAB_WORDS = [
+/* ---- G1 一年级：身边的事物 / 家人与情绪 ---- */
+{w:'dog',ipa:'/dɒɡ/',zh:'狗',syl:['dog'],stress:0,grade:1,ph:[E('/d/','d'),E('/ɒ/','o'),E('/g/','g')]},
+{w:'book',ipa:'/bʊk/',zh:'书',syl:['book'],stress:0,grade:1,ph:[E('/b/','b'),E('/ʊ/','oo'),E('/k/','k')]},
+{w:'bag',ipa:'/bæɡ/',zh:'包',syl:['bag'],stress:0,grade:1,ph:[E('/b/','b'),E('/æ/','a'),E('/g/','g')]},
+{w:'red',ipa:'/red/',zh:'红色的',syl:['red'],stress:0,grade:1,ph:[E('/r/','r'),E('/e/','e'),E('/d/','d')]},
+{w:'big',ipa:'/bɪɡ/',zh:'大的',syl:['big'],stress:0,grade:1,ph:[E('/b/','b'),E('/ɪ/','i'),E('/g/','g')]},
+{w:'run',ipa:'/rʌn/',zh:'跑',syl:['run'],stress:0,grade:1,ph:[E('/r/','r'),E('/ʌ/','u'),E('/n/','n')]},
+{w:'milk',ipa:'/mɪlk/',zh:'牛奶',syl:['milk'],stress:0,grade:1,ph:[E('/m/','m'),E('/ɪ/','i'),E('/l/','l'),E('/k/','k')]},
+{w:'cake',ipa:'/keɪk/',zh:'蛋糕',syl:['cake'],stress:0,grade:1,ph:[E('/k/','c'),E('/eɪ/','a'),E('/k/','k'),E('','e','魔法 e 不发音')]},
+{w:'green',ipa:'/ɡriːn/',zh:'绿色的',syl:['green'],stress:0,grade:1,ph:[E('/g/','g'),E('/r/','r'),E('/iː/','ee'),E('/n/','n')]},
+{w:'father',ipa:'/ˈfɑːðə/',zh:'父亲',syl:['fa','ther'],stress:0,grade:1,ph:[E('/f/','f'),E('/ɑː/','a'),E('/ð/','th'),E('/ə/','er')]},
+{w:'happy',ipa:'/ˈhæpi/',zh:'快乐的',syl:['ha','ppy'],stress:0,grade:1,ph:[E('/h/','h'),E('/æ/','a'),E('/p/','pp'),E('/ɪ/','y','词尾 y 读 /ɪ/')]},
+{w:'pencil',ipa:'/ˈpensəl/',zh:'铅笔',syl:['pen','cil'],stress:0,grade:1,ph:[E('/p/','p'),E('/e/','e'),E('/n/','n'),E('/s/','c','c 在 i 前读 /s/'),E('/ə/','i'),E('/l/','l')]},
+{w:'tiger',ipa:'/ˈtaɪɡə/',zh:'老虎',syl:['ti','ger'],stress:0,grade:1,ph:[E('/t/','t'),E('/aɪ/','i'),E('/g/','g'),E('/ə/','er')]},
+{w:'monkey',ipa:'/ˈmʌŋki/',zh:'猴子',syl:['mon','key'],stress:0,grade:1,ph:[E('/m/','m'),E('/ʌ/','o'),E('/ŋ/','n','n 在 k 前读 /ŋ/'),E('/k/','k'),E('/ɪ/','ey')]},
+{w:'yellow',ipa:'/ˈjeləʊ/',zh:'黄色的',syl:['yel','low'],stress:0,grade:1,ph:[E('/j/','y'),E('/e/','e'),E('/l/','ll'),E('/əʊ/','ow')]},
+{w:'water',ipa:'/ˈwɔːtə/',zh:'水',syl:['wa','ter'],stress:0,grade:1,ph:[E('/w/','w'),E('/ɔː/','a'),E('/t/','t'),E('/ə/','er')]},
+{w:'sister',ipa:'/ˈsɪstə/',zh:'姐妹',syl:['sis','ter'],stress:0,grade:1,ph:[E('/s/','s'),E('/ɪ/','i'),E('/s/','s'),E('/t/','t'),E('/ə/','er')]},
+{w:'brother',ipa:'/ˈbrʌðə/',zh:'兄弟',syl:['bro','ther'],stress:0,grade:1,ph:[E('/b/','b'),E('/r/','r'),E('/ʌ/','o'),E('/ð/','th'),E('/ə/','er')]},
+
+/* ---- G2 二年级：食物与玩耍 / 学校与动物 ---- */
+{w:'clock',ipa:'/klɒk/',zh:'时钟',syl:['clock'],stress:0,grade:2,ph:[E('/k/','c'),E('/l/','l'),E('/ɒ/','o'),E('/k/','ck')]},
+{w:'glass',ipa:'/ɡlɑːs/',zh:'玻璃杯',syl:['glass'],stress:0,grade:2,ph:[E('/g/','g'),E('/l/','l'),E('/ɑː/','a'),E('/s/','ss')]},
+{w:'grass',ipa:'/ɡrɑːs/',zh:'草',syl:['grass'],stress:0,grade:2,ph:[E('/g/','g'),E('/r/','r'),E('/ɑː/','a'),E('/s/','ss')]},
+{w:'plant',ipa:'/plɑːnt/',zh:'植物',syl:['plant'],stress:0,grade:2,ph:[E('/p/','p'),E('/l/','l'),E('/ɑː/','a'),E('/n/','n'),E('/t/','t')]},
+{w:'spoon',ipa:'/spuːn/',zh:'勺子',syl:['spoon'],stress:0,grade:2,ph:[E('/s/','s'),E('/p/','p'),E('/uː/','oo'),E('/n/','n')]},
+{w:'bread',ipa:'/bred/',zh:'面包',syl:['bread'],stress:0,grade:2,ph:[E('/b/','b'),E('/r/','r'),E('/e/','ea'),E('/d/','d')]},
+{w:'snow',ipa:'/snəʊ/',zh:'雪',syl:['snow'],stress:0,grade:2,ph:[E('/s/','s'),E('/n/','n'),E('/əʊ/','ow')]},
+{w:'star',ipa:'/stɑː/',zh:'星星',syl:['star'],stress:0,grade:2,ph:[E('/s/','s'),E('/t/','t'),E('/ɑː/','ar')]},
+{w:'window',ipa:'/ˈwɪndəʊ/',zh:'窗户',syl:['win','dow'],stress:0,grade:2,ph:[E('/w/','w'),E('/ɪ/','i'),E('/n/','n'),E('/d/','d'),E('/əʊ/','ow')]},
+{w:'doctor',ipa:'/ˈdɒktə/',zh:'医生',syl:['doc','tor'],stress:0,grade:2,ph:[E('/d/','d'),E('/ɒ/','o'),E('/k/','c'),E('/t/','t'),E('/ə/','or')]},
+{w:'farmer',ipa:'/ˈfɑːmə/',zh:'农民',syl:['far','mer'],stress:0,grade:2,ph:[E('/f/','f'),E('/ɑː/','ar'),E('/m/','m'),E('/ə/','er')]},
+{w:'orange',ipa:'/ˈɒrɪndʒ/',zh:'橙子；橙色的',syl:['or','ange'],stress:0,grade:2,ph:[E('/ɒ/','o'),E('/r/','r'),E('/ɪ/','a'),E('/n/','n'),E('/dʒ/','ge','词尾 ge 读 /dʒ/')]},
+{w:'purple',ipa:'/ˈpɜːpəl/',zh:'紫色的',syl:['pur','ple'],stress:0,grade:2,ph:[E('/p/','p'),E('/ɜː/','ur'),E('/p/','p'),E('/əl/','le','辅音+le 读 /əl/')]},
+{w:'dinner',ipa:'/ˈdɪnə/',zh:'晚餐',syl:['din','ner'],stress:0,grade:2,ph:[E('/d/','d'),E('/ɪ/','i'),E('/n/','nn'),E('/ə/','er')]},
+{w:'garden',ipa:'/ˈɡɑːdən/',zh:'花园',syl:['gar','den'],stress:0,grade:2,ph:[E('/g/','g'),E('/ɑː/','ar'),E('/d/','d'),E('/ə/','e'),E('/n/','n')]},
+{w:'flower',ipa:'/ˈflaʊə/',zh:'花',syl:['flow','er'],stress:0,grade:2,ph:[E('/f/','f'),E('/l/','l'),E('/aʊ/','ow'),E('/ə/','er')]},
+{w:'kitchen',ipa:'/ˈkɪtʃɪn/',zh:'厨房',syl:['kit','chen'],stress:0,grade:2,ph:[E('/k/','k'),E('/ɪ/','i'),E('/tʃ/','tch','短元音后用 tch'),E('/ɪ/','e'),E('/n/','n')]},
+{w:'elephant',ipa:'/ˈelɪfənt/',zh:'大象',syl:['el','e','phant'],stress:0,grade:2,ph:[E('/e/','e'),E('/l/','l'),E('/ɪ/','e'),E('/f/','ph'),E('/ə/','a'),E('/n/','n'),E('/t/','t')]},
+{w:'umbrella',ipa:'/ʌmˈbrelə/',zh:'雨伞',syl:['um','brel','la'],stress:1,grade:2,ph:[E('/ʌ/','u'),E('/m/','m'),E('/b/','b'),E('/r/','r'),E('/e/','e'),E('/l/','ll'),E('/ə/','a')]},
+{w:'potato',ipa:'/pəˈteɪtəʊ/',zh:'土豆',syl:['po','ta','to'],stress:1,grade:2,ph:[E('/p/','p'),E('/ə/','o'),E('/t/','t'),E('/eɪ/','a'),E('/t/','t'),E('/əʊ/','o')]},
+
+/* ---- G3 三年级：时间与天气 / 家居与场所 ---- */
+{w:'winter',ipa:'/ˈwɪntə/',zh:'冬天',syl:['win','ter'],stress:0,grade:3,ph:[E('/w/','w'),E('/ɪ/','i'),E('/n/','n'),E('/t/','t'),E('/ə/','er')]},
+{w:'summer',ipa:'/ˈsʌmə/',zh:'夏天',syl:['sum','mer'],stress:0,grade:3,ph:[E('/s/','s'),E('/ʌ/','u'),E('/m/','mm'),E('/ə/','er')]},
+{w:'morning',ipa:'/ˈmɔːnɪŋ/',zh:'早晨',syl:['mor','ning'],stress:0,grade:3,ph:[E('/m/','m'),E('/ɔː/','or'),E('/n/','n'),E('/ɪ/','i'),E('/ŋ/','ng')]},
+{w:'evening',ipa:'/ˈiːvənɪŋ/',zh:'傍晚',syl:['eve','ning'],stress:0,grade:3,ph:[E('/iː/','e'),E('/v/','v'),E('/ə/','e'),E('/n/','n'),E('/ɪ/','i'),E('/ŋ/','ng')]},
+{w:'bedroom',ipa:'/ˈbedruːm/',zh:'卧室',syl:['bed','room'],stress:0,grade:3,ph:[E('/b/','b'),E('/e/','e'),E('/d/','d'),E('/r/','r'),E('/uː/','oo'),E('/m/','m')]},
+{w:'forest',ipa:'/ˈfɒrɪst/',zh:'森林',syl:['for','est'],stress:0,grade:3,ph:[E('/f/','f'),E('/ɒ/','o'),E('/r/','r'),E('/ɪ/','e'),E('/s/','s'),E('/t/','t')]},
+{w:'market',ipa:'/ˈmɑːkɪt/',zh:'市场',syl:['mar','ket'],stress:0,grade:3,ph:[E('/m/','m'),E('/ɑː/','ar'),E('/k/','k'),E('/ɪ/','e'),E('/t/','t')]},
+{w:'picnic',ipa:'/ˈpɪknɪk/',zh:'野餐',syl:['pic','nic'],stress:0,grade:3,ph:[E('/p/','p'),E('/ɪ/','i'),E('/k/','c'),E('/n/','n'),E('/ɪ/','i'),E('/k/','c')]},
+{w:'rocket',ipa:'/ˈrɒkɪt/',zh:'火箭',syl:['rock','et'],stress:0,grade:3,ph:[E('/r/','r'),E('/ɒ/','o'),E('/k/','ck'),E('/ɪ/','e'),E('/t/','t')]},
+{w:'rainbow',ipa:'/ˈreɪnbəʊ/',zh:'彩虹',syl:['rain','bow'],stress:0,grade:3,ph:[E('/r/','r'),E('/eɪ/','ai'),E('/n/','n'),E('/b/','b'),E('/əʊ/','ow')]},
+{w:'football',ipa:'/ˈfʊtbɔːl/',zh:'足球',syl:['foot','ball'],stress:0,grade:3,ph:[E('/f/','f'),E('/ʊ/','oo'),E('/t/','t'),E('/b/','b'),E('/ɔː/','al'),E('/l/','l')]},
+{w:'science',ipa:'/ˈsaɪəns/',zh:'科学',syl:['sci','ence'],stress:0,grade:3,ph:[E('/s/','sc','sc 在 i 前读 /s/，c 不发音'),E('/aɪ/','i'),E('/ə/','e'),E('/n/','n'),E('/s/','c','c 在 e 前读 /s/'),E('','e','不发音')]},
+{w:'bicycle',ipa:'/ˈbaɪsɪkl/',zh:'自行车',syl:['bi','cy','cle'],stress:0,grade:3,ph:[E('/b/','b'),E('/aɪ/','i'),E('/s/','c','c 在 y 前读 /s/'),E('/ɪ/','y'),E('/k/','c'),E('/əl/','le','辅音+le 读 /əl/')]},
+{w:'hospital',ipa:'/ˈhɒspɪtəl/',zh:'医院',syl:['hos','pi','tal'],stress:0,grade:3,ph:[E('/h/','h'),E('/ɒ/','o'),E('/s/','s'),E('/p/','p'),E('/ɪ/','i'),E('/t/','t'),E('/əl/','al')]},
+{w:'museum',ipa:'/mjuˈziːəm/',zh:'博物馆',syl:['mu','se','um'],stress:1,grade:3,ph:[E('/m/','m'),E('/juː/','u'),E('/z/','s'),E('/iː/','e'),E('/ə/','u'),E('/m/','m')]},
+{w:'newspaper',ipa:'/ˈnjuːzpeɪpə/',zh:'报纸',syl:['news','pa','per'],stress:0,grade:3,ph:[E('/n/','n'),E('/juː/','ew'),E('/z/','s'),E('/p/','p'),E('/eɪ/','a'),E('/p/','p'),E('/ə/','er')]},
+
+/* ---- G4 四年级：城市与交通 / 自然与科学 ---- */
+{w:'journey',ipa:'/ˈdʒɜːni/',zh:'旅程',syl:['jour','ney'],stress:0,grade:4,ph:[E('/dʒ/','j'),E('/ɜː/','our'),E('/n/','n'),E('/ɪ/','ey')]},
+{w:'castle',ipa:'/ˈkɑːsəl/',zh:'城堡',syl:['cas','tle'],stress:0,grade:4,ph:[E('/k/','c'),E('/ɑː/','a'),E('/s/','s'),E('/t/','t'),E('/əl/','le','辅音+le 读 /əl/')]},
+{w:'desert',ipa:'/ˈdezət/',zh:'沙漠',syl:['de','sert'],stress:0,grade:4,ph:[E('/d/','d'),E('/e/','e'),E('/z/','s'),E('/ə/','er'),E('/t/','t')]},
+{w:'jungle',ipa:'/ˈdʒʌŋɡəl/',zh:'丛林',syl:['jun','gle'],stress:0,grade:4,ph:[E('/dʒ/','j'),E('/ʌ/','u'),E('/ŋ/','n','n 在 g 前读 /ŋ/'),E('/g/','g'),E('/əl/','le','辅音+le 读 /əl/')]},
+{w:'palace',ipa:'/ˈpælɪs/',zh:'宫殿',syl:['pa','lace'],stress:0,grade:4,ph:[E('/p/','p'),E('/æ/','a'),E('/l/','l'),E('/ɪ/','a'),E('/s/','c','c 在 e 前读 /s/'),E('','e','不发音')]},
+{w:'tunnel',ipa:'/ˈtʌnəl/',zh:'隧道',syl:['tun','nel'],stress:0,grade:4,ph:[E('/t/','t'),E('/ʌ/','u'),E('/n/','nn'),E('/əl/','el')]},
+{w:'silver',ipa:'/ˈsɪlvə/',zh:'银色的',syl:['sil','ver'],stress:0,grade:4,ph:[E('/s/','s'),E('/ɪ/','i'),E('/l/','l'),E('/v/','v'),E('/ə/','er')]},
+{w:'planet',ipa:'/ˈplænɪt/',zh:'行星',syl:['pla','net'],stress:0,grade:4,ph:[E('/p/','p'),E('/l/','l'),E('/æ/','a'),E('/n/','n'),E('/ɪ/','e'),E('/t/','t')]},
+{w:'important',ipa:'/ɪmˈpɔːtənt/',zh:'重要的',syl:['im','por','tant'],stress:1,grade:4,ph:[E('/ɪ/','i'),E('/m/','m'),E('/p/','p'),E('/ɔː/','or'),E('/t/','t'),E('/ə/','a'),E('/n/','n'),E('/t/','t')]},
+{w:'different',ipa:'/ˈdɪfrənt/',zh:'不同的',syl:['dif','fe','rent'],stress:0,grade:4,ph:[E('/d/','d'),E('/ɪ/','i'),E('/f/','ff'),E('/ə/','e'),E('/r/','r'),E('/ə/','e'),E('/n/','n'),E('/t/','t')]},
+{w:'wonderful',ipa:'/ˈwʌndəfəl/',zh:'精彩的',syl:['won','der','ful'],stress:0,grade:4,ph:[E('/w/','w'),E('/ʌ/','o'),E('/n/','n'),E('/d/','d'),E('/ə/','er'),E('/f/','f'),E('/əl/','ul')]},
+{w:'yesterday',ipa:'/ˈjestədeɪ/',zh:'昨天',syl:['yes','ter','day'],stress:0,grade:4,ph:[E('/j/','y'),E('/e/','e'),E('/s/','s'),E('/t/','t'),E('/ə/','er'),E('/d/','d'),E('/eɪ/','ay')]},
+{w:'adventure',ipa:'/ədˈventʃə/',zh:'冒险',syl:['ad','ven','ture'],stress:1,grade:4,ph:[E('/ə/','a'),E('/d/','d'),E('/v/','v'),E('/e/','e'),E('/n/','n'),E('/tʃ/','t'),E('/ə/','ure','-ture 读 /tʃə/')]},
+{w:'festival',ipa:'/ˈfestɪvəl/',zh:'节日',syl:['fes','ti','val'],stress:0,grade:4,ph:[E('/f/','f'),E('/e/','e'),E('/s/','s'),E('/t/','t'),E('/ɪ/','i'),E('/v/','v'),E('/əl/','al')]},
+{w:'discover',ipa:'/dɪˈskʌvə/',zh:'发现',syl:['dis','co','ver'],stress:1,grade:4,ph:[E('/d/','d'),E('/ɪ/','i'),E('/s/','s'),E('/k/','c'),E('/ʌ/','o'),E('/v/','v'),E('/ə/','er')]},
+
+/* ---- G5 五年级：旅行与冒险 / 文化与节日 ---- */
+{w:'knowledge',ipa:'/ˈnɒlɪdʒ/',zh:'知识',syl:['know','ledge'],stress:0,grade:5,ph:[E('/n/','kn','k 不发音'),E('/ɒ/','ow'),E('/l/','l'),E('/ɪ/','e'),E('/dʒ/','dge','短元音后用 dge')]},
+{w:'culture',ipa:'/ˈkʌltʃə/',zh:'文化',syl:['cul','ture'],stress:0,grade:5,ph:[E('/k/','c'),E('/ʌ/','u'),E('/l/','l'),E('/tʃ/','t'),E('/ə/','ure','-ture 读 /tʃə/')]},
+{w:'celebrate',ipa:'/ˈselɪbreɪt/',zh:'庆祝',syl:['ce','le','brate'],stress:0,grade:5,ph:[E('/s/','c'),E('/e/','e'),E('/l/','l'),E('/ɪ/','e'),E('/b/','b'),E('/r/','r'),E('/eɪ/','a'),E('/t/','t'),E('','e','魔法 e 不发音')]},
+{w:'decorate',ipa:'/ˈdekəreɪt/',zh:'装饰',syl:['de','co','rate'],stress:0,grade:5,ph:[E('/d/','d'),E('/e/','e'),E('/k/','c'),E('/ə/','o'),E('/r/','r'),E('/eɪ/','a'),E('/t/','t'),E('','e','魔法 e 不发音')]},
+{w:'geography',ipa:'/dʒɪˈɒɡrəfɪ/',zh:'地理',syl:['ge','og','ra','phy'],stress:1,grade:5,ph:[E('/dʒ/','g'),E('/ɪ/','e'),E('/ɒ/','o'),E('/g/','g'),E('/r/','r'),E('/ə/','a'),E('/f/','ph'),E('/ɪ/','y','词尾 y 读 /ɪ/')]},
+{w:'ambulance',ipa:'/ˈæmbjələns/',zh:'救护车',syl:['am','bu','lance'],stress:0,grade:5,ph:[E('/æ/','a'),E('/m/','m'),E('/b/','b'),E('/juː/','u'),E('/əl/','l'),E('/ə/','a'),E('/n/','n'),E('/s/','c','c 在 e 前读 /s/'),E('','e','不发音')]},
+{w:'passenger',ipa:'/ˈpæsɪndʒə/',zh:'乘客',syl:['pas','sen','ger'],stress:0,grade:5,ph:[E('/p/','p'),E('/æ/','a'),E('/s/','ss'),E('/ɪ/','e'),E('/n/','n'),E('/dʒ/','g','g 在 e 前读 /dʒ/'),E('/ə/','er')]},
+{w:'mountain',ipa:'/ˈmaʊntɪn/',zh:'山',syl:['moun','tain'],stress:0,grade:5,ph:[E('/m/','m'),E('/aʊ/','ou'),E('/n/','n'),E('/t/','t'),E('/ɪ/','ai'),E('/n/','n')]},
+{w:'treasure',ipa:'/ˈtreʒə/',zh:'宝藏',syl:['trea','sure'],stress:0,grade:5,ph:[E('/t/','t'),E('/r/','r'),E('/e/','ea'),E('/ʒ/','s','-sure 读 /ʒə/'),E('/ə/','ure')]},
+
+/* ---- G6 六年级：学术与科技 / 抽象与社会 ---- */
+{w:'technology',ipa:'/tekˈnɒlədʒɪ/',zh:'科技',syl:['tech','no','lo','gy'],stress:1,grade:6,ph:[E('/t/','t'),E('/e/','e'),E('/k/','ch'),E('/n/','n'),E('/ɒ/','o'),E('/l/','l'),E('/ə/','o'),E('/dʒ/','g'),E('/ɪ/','y','词尾 y 读 /ɪ/')]},
+{w:'community',ipa:'/kəˈmjuːnəti/',zh:'社区',syl:['co','mmu','ni','ty'],stress:1,grade:6,ph:[E('/k/','c'),E('/ə/','o'),E('/m/','mm'),E('/juː/','u'),E('/n/','n'),E('/ə/','i'),E('/t/','t'),E('/ɪ/','y','词尾 y 读 /ɪ/')]},
+{w:'dictionary',ipa:'/ˈdɪkʃənəri/',zh:'字典',syl:['dic','tio','na','ry'],stress:0,grade:6,ph:[E('/d/','d'),E('/ɪ/','i'),E('/k/','c'),E('/ʃ/','ti','-tion 读 /ʃən/'),E('/ə/','o'),E('/n/','n'),E('/ə/','a'),E('/r/','r'),E('/ɪ/','y','词尾 y 读 /ɪ/')]},
+{w:'experience',ipa:'/ɪkˈspɪrɪəns/',zh:'经验；经历',syl:['ex','pe','ri','ence'],stress:1,grade:6,ph:[E('/ɪ/','e'),E('/ks/','x','x 一个字母表示 /k/+/s/'),E('/p/','p'),E('/ɪ/','e'),E('/r/','r'),E('/ɪ/','i'),E('/ə/','e'),E('/n/','n'),E('/s/','c','c 在 e 前读 /s/'),E('','e','不发音')]},
+{w:'experiment',ipa:'/ɪkˈsperɪmənt/',zh:'实验',syl:['ex','pe','ri','ment'],stress:1,grade:6,ph:[E('/ɪ/','e'),E('/ks/','x','x 一个字母表示 /k/+/s/'),E('/p/','p'),E('/e/','e'),E('/r/','r'),E('/ɪ/','i'),E('/m/','m'),E('/ə/','e'),E('/n/','n'),E('/t/','t')]},
+{w:'government',ipa:'/ˈɡʌvənmənt/',zh:'政府',syl:['go','vern','ment'],stress:0,grade:6,ph:[E('/g/','g'),E('/ʌ/','o'),E('/v/','v'),E('/ə/','er'),E('/n/','n'),E('/m/','m'),E('/ə/','e'),E('/n/','n'),E('/t/','t')]},
+{w:'instrument',ipa:'/ˈɪnstrəmənt/',zh:'乐器；仪器',syl:['in','stru','ment'],stress:0,grade:6,ph:[E('/ɪ/','i'),E('/n/','n'),E('/s/','s'),E('/t/','t'),E('/r/','r'),E('/uː/','u'),E('/m/','m'),E('/ə/','e'),E('/n/','n'),E('/t/','t')]},
+{w:'satellite',ipa:'/ˈsætəlaɪt/',zh:'卫星',syl:['sa','tel','lite'],stress:0,grade:6,ph:[E('/s/','s'),E('/æ/','a'),E('/t/','t'),E('/ə/','e'),E('/l/','ll'),E('/aɪ/','i'),E('/t/','t'),E('','e','魔法 e 不发音')]}
+];
+
+/* 词汇关卡：年级 × 音节层级，主题与说明（词量运行时统计，不写死） */
+const VOCAB_LEVELS = [
+  {g:1,tier:1,theme:'身边的事物',desc:'最先会读会写的单音节词：动物、文具、颜色。'},
+  {g:1,tier:2,theme:'家人与情绪',desc:'两个音节的日常词，注意重音都在第一个音节。'},
+  {g:2,tier:1,theme:'食物与玩耍',desc:'含辅音连缀的单音节词（cl-/gl-/pl-/sp-/sn-）。'},
+  {g:2,tier:2,theme:'学校与动物',desc:'双音节词，注意 -er/-ow/-en 结尾的弱读。'},
+  {g:2,tier:3,theme:'三个音节起步',desc:'开始接触三音节词与"主重音在第几个音节"。'},
+  {g:3,tier:1,theme:'时间与天气',desc:'单音节词，但拼写变长（igh/oa/ai）。'},
+  {g:3,tier:2,theme:'家居与场所',desc:'双音节场所与物品名词。'},
+  {g:3,tier:3,theme:'自然与科学',desc:'三音节词，含 -tion / -cle / -ture 等组合。'},
+  {g:4,tier:1,theme:'城市与交通',desc:'单音节抽象与场所词。'},
+  {g:4,tier:2,theme:'旅行与探险',desc:'双音节词，重音模式开始出现"第二音节重读"。'},
+  {g:4,tier:3,theme:'描述与感受',desc:'三音节形容词，注意重音位置改变词性的规律。'},
+  {g:5,tier:1,theme:'动作与变化',desc:'单音节动词与派生词。'},
+  {g:5,tier:2,theme:'文化与节日',desc:'双音节文化类词汇。'},
+  {g:5,tier:3,theme:'学科与探索',desc:'三音节以上学科词汇，重音多在倒数第二音节。'},
+  {g:6,tier:1,theme:'学术基础词',desc:'单音节学术高频词。'},
+  {g:6,tier:2,theme:'社会与关系',desc:'双音节抽象名词。'},
+  {g:6,tier:3,theme:'科技与未来',desc:'多音节学术词，次重音+主重音同时出现。'}
+];
+
+/* 补齐各年级缺词的音节层（G3/G4/G5/G6 单音节、G6 双音节） */
+const VOCAB_WORDS_EXTRA = [
+{w:'cloud',ipa:'/klaʊd/',zh:'云',syl:['cloud'],stress:0,grade:3,ph:[E('/k/','c'),E('/l/','l'),E('/aʊ/','ou'),E('/d/','d')]},
+{w:'storm',ipa:'/stɔːm/',zh:'暴风雨',syl:['storm'],stress:0,grade:3,ph:[E('/s/','s'),E('/t/','t'),E('/ɔː/','or'),E('/m/','m')]},
+{w:'beach',ipa:'/biːtʃ/',zh:'海滩',syl:['beach'],stress:0,grade:3,ph:[E('/b/','b'),E('/iː/','ea'),E('/tʃ/','ch')]},
+{w:'month',ipa:'/mʌnθ/',zh:'月；月份',syl:['month'],stress:0,grade:3,ph:[E('/m/','m'),E('/ʌ/','o'),E('/n/','n'),E('/θ/','th')]},
+{w:'space',ipa:'/speɪs/',zh:'太空；空间',syl:['space'],stress:0,grade:4,ph:[E('/s/','s'),E('/p/','p'),E('/eɪ/','a'),E('/s/','c','c 在 e 前读 /s/'),E('','e','魔法 e 不发音')]},
+{w:'north',ipa:'/nɔːθ/',zh:'北方',syl:['north'],stress:0,grade:4,ph:[E('/n/','n'),E('/ɔː/','or'),E('/θ/','th')]},
+{w:'south',ipa:'/saʊθ/',zh:'南方',syl:['south'],stress:0,grade:4,ph:[E('/s/','s'),E('/aʊ/','ou'),E('/θ/','th')]},
+{w:'tour',ipa:'/tʊə/',zh:'旅行；巡回',syl:['tour'],stress:0,grade:5,ph:[E('/t/','t'),E('/ʊə/','our')]},
+{w:'prize',ipa:'/praɪz/',zh:'奖品',syl:['prize'],stress:0,grade:5,ph:[E('/p/','p'),E('/r/','r'),E('/aɪ/','i'),E('/z/','z'),E('','e','魔法 e 不发音')]},
+{w:'score',ipa:'/skɔː/',zh:'分数',syl:['score'],stress:0,grade:5,ph:[E('/s/','s'),E('/k/','c'),E('/ɔː/','ore')]},
+{w:'source',ipa:'/sɔːs/',zh:'来源',syl:['source'],stress:0,grade:6,ph:[E('/s/','s'),E('/ɔː/','our'),E('/s/','c','c 在 e 前读 /s/'),E('','e','不发音')]},
+{w:'phase',ipa:'/feɪz/',zh:'阶段',syl:['phase'],stress:0,grade:6,ph:[E('/f/','ph'),E('/eɪ/','a'),E('/z/','s'),E('','e','魔法 e 不发音')]},
+{w:'global',ipa:'/ˈɡləʊbəl/',zh:'全球的',syl:['glo','bal'],stress:0,grade:6,ph:[E('/g/','g'),E('/l/','l'),E('/əʊ/','o'),E('/b/','b'),E('/əl/','al')]},
+{w:'system',ipa:'/ˈsɪstəm/',zh:'系统',syl:['sys','tem'],stress:0,grade:6,ph:[E('/s/','s'),E('/ɪ/','y'),E('/s/','s'),E('/t/','t'),E('/ə/','e'),E('/m/','m')]},
+{w:'method',ipa:'/ˈmeθəd/',zh:'方法',syl:['me','thod'],stress:0,grade:6,ph:[E('/m/','m'),E('/e/','e'),E('/θ/','th'),E('/ə/','o'),E('/d/','d')]}
+];
+VOCAB_WORDS.push.apply(VOCAB_WORDS, VOCAB_WORDS_EXTRA);
+
+/* 多字母组合反查（一个组合对应多个音 / 跨音素，单音标表放不下的） */
+const SPELL_GROUPS = [
+ {sp:'tion',ipa:'/ʃən/',note:'名词后缀，读 /ʃən/',pos:'词尾',freq:1,
+  words:[{w:'station',ipa:'/ˈsteɪʃən/',zh:'车站'},{w:'nation',ipa:'/ˈneɪʃən/',zh:'国家'},{w:'information',ipa:'/ˌɪnfəˈmeɪʃən/',zh:'信息'}]},
+ {sp:'sion',ipa:'/ʃən/ 或 /ʒən/',note:'辅音后读 /ʃən/，元音后读 /ʒən/',pos:'词尾',freq:2,
+  words:[{w:'mission',ipa:'/ˈmɪʃən/',zh:'任务'},{w:'vision',ipa:'/ˈvɪʒən/',zh:'视力'}]},
+ {sp:'ture',ipa:'/tʃə/',note:'-ture 读 /tʃə/',pos:'词尾',freq:2,
+  words:[{w:'future',ipa:'/ˈfjuːtʃə/',zh:'未来'},{w:'picture',ipa:'/ˈpɪktʃə/',zh:'图画'}]},
+ {sp:'sure',ipa:'/ʒə/',note:'-sure 读 /ʒə/',pos:'词尾',freq:3,
+  words:[{w:'pleasure',ipa:'/ˈpleʒə/',zh:'愉快'},{w:'measure',ipa:'/ˈmeʒə/',zh:'测量'}]},
+ {sp:'ough',ipa:'6 种读音',note:'英语最不规则的组合：bought/rough/though/through/cough/plough',pos:'词中/词尾',freq:3,
+  words:[{w:'bought',ipa:'/bɔːt/',zh:'买（过去式）'},{w:'rough',ipa:'/rʌf/',zh:'粗糙的'},{w:'through',ipa:'/θruː/',zh:'穿过'}]},
+ {sp:'igh',ipa:'/aɪ/',note:'igh 整体读 /aɪ/',pos:'词中/词尾',freq:2,
+  words:[{w:'light',ipa:'/laɪt/',zh:'光'},{w:'night',ipa:'/naɪt/',zh:'夜晚'},{w:'high',ipa:'/haɪ/',zh:'高的'}]},
+ {sp:'air',ipa:'/eə/',note:'air 读 /eə/',pos:'词中/词尾',freq:2,
+  words:[{w:'hair',ipa:'/heə/',zh:'头发'},{w:'chair',ipa:'/tʃeə/',zh:'椅子'}]},
+ {sp:'ear',ipa:'3 种读音',note:'ear 可读 /ɪə/(near) /eə/(bear) /ɜː/(learn)',pos:'词中/词尾',freq:2,
+  words:[{w:'near',ipa:'/nɪə/',zh:'靠近'},{w:'bear',ipa:'/beə/',zh:'熊'},{w:'learn',ipa:'/lɜːn/',zh:'学习'}]},
+ {sp:'our',ipa:'3 种读音',note:'our 可读 /aʊə/(hour) /ɔː/(four) /ɜː/(journey)',pos:'词中/词尾',freq:3,
+  words:[{w:'hour',ipa:'/ˈaʊə/',zh:'小时'},{w:'four',ipa:'/fɔː/',zh:'四'},{w:'journey',ipa:'/ˈdʒɜːni/',zh:'旅程'}]}
+];
+
+/* =========================================================================
+   索引层：启动时预建
    ========================================================================= */
 const pkey = ipa => String(ipa).replace(/\//g, '');
 const BY_IPA = {};
@@ -1214,19 +1406,59 @@ const BY_DIFF = {};
 LEVELS.forEach(l => { BY_DIFF[l.lv] = (l.ipas || []).map(i => BY_IPA[pkey(i)]).filter(Boolean); });
 const byGroup = g => PHONEMES.filter(p => p.vtype === g);
 const query = f => PHONEMES.filter(f);
-
-/* 每个音标的⭐最高频写法 */
 const starOf = p => { const x = (p.spellings || []).find(s => s.star); return x ? x.s : (p.spellings[0] || {}).s; };
-
-/* 反查：某拼写可能读哪些音（一拼多音） */
 const soundsOf = sp => (BY_SPELL[sp] || []).map(p => p.ipa);
 
+/* ---------- 词汇闯关：年级 / 音节层归一化 ---------- */
+const tierOf = w => Math.min(((w.syl || []).length) || 1, 3);
+const TIER_NAME = { 1: '单音节', 2: '双音节', 3: '多音节' };
+
+function normWords() {
+  [].concat(DRILL_WORDS, VOCAB_WORDS).forEach(w => { w.tier = tierOf(w); });
+  DRILL_WORDS.forEach(w => { if (GRADE_MAP[w.w]) w.grade = GRADE_MAP[w.w]; });
+}
+normWords();
+
+const ALL_WORDS = () => {
+  const seen = {}, out = [];
+  [].concat(DRILL_WORDS, VOCAB_WORDS).forEach(w => {
+    if (seen[w.w]) return; seen[w.w] = 1; out.push(w);
+  });
+  return out;
+};
+const vocabWords = (g, t) => ALL_WORDS().filter(w => w.grade === g && w.tier === t);
+/* 词汇关卡 id 形如 V3-2（3 年级 · 双音节） */
+const vid = (g, t) => 'V' + g + '-' + t;
+function parseVid(id) {
+  const m = /^V(\d)-(\d)$/.exec(id || '');
+  return m ? { g: +m[1], t: +m[2] } : null;
+}
+/* 音标练习关卡 id 形如 PH:/æ/ */
+const phid = ipa => 'PH:' + ipa;
+function wordsWithPhoneme(ipa) {
+  return ALL_WORDS().filter(w => (w.ph || []).some(x => x.ipa === ipa));
+}
+/* 统一取关：P* 音标关 / V*-* 词汇关 / PH:* 音标练习关 */
+function levelWords(id) {
+  const v = parseVid(id);
+  if (v) return vocabWords(v.g, v.t);
+  if (id && id.indexOf('PH:') === 0) return wordsWithPhoneme(id.slice(3));
+  return DRILL_WORDS.filter(w => w.lv === id);
+}
+function levelName(id) {
+  const v = parseVid(id);
+  if (v) return 'G' + v.g + ' · ' + TIER_NAME[v.t];
+  if (id && id.indexOf('PH:') === 0) return '音标 ' + id.slice(3);
+  const l = LEVELS.find(x => x.id === id);
+  return l ? l.name : '练习';
+}
+function levelBack(id) { return id && id.indexOf('PH:') === 0 ? 'lib' : 'level'; }
+
 /* =========================================================================
-   数据校验（开发期自检，控制台报错）
+   数据校验
    ========================================================================= */
 function validateData() {
-  const errs = [];
-  const seen = {};
+  const errs = [], seen = {};
   PHONEMES.forEach(p => {
     if (seen[pkey(p.ipa)]) errs.push('音标重复: ' + p.ipa);
     seen[pkey(p.ipa)] = 1;
@@ -1238,32 +1470,92 @@ function validateData() {
   });
   if (PHONEMES.length !== 48) errs.push('音标总数应为 48，当前 ' + PHONEMES.length);
 
-  DRILL_WORDS.forEach(d => {
+  [].concat(DRILL_WORDS, VOCAB_WORDS).forEach(d => {
     const joined = (d.ph || []).map(x => x.sp).join('');
-    if (joined !== d.w) errs.push('练习词 ' + d.w + ' 的音素拼写拼接为 "' + joined + '"，不等于单词');
+    if (joined !== d.w) errs.push('【' + d.w + '】音素拼写拼接为 "' + joined + '"，不等于单词');
     if (d.syl && d.stress >= d.syl.length) errs.push(d.w + ' 主重音下标越界');
     if (d.syl && d.syl.length > 1 && d.ipa.indexOf('ˈ') < 0) errs.push(d.w + ' 多音节但音标缺 ˈ');
     if (d.soft != null && d.syl && d.soft >= d.syl.length) errs.push(d.w + ' 次重音下标越界');
     (d.ph || []).forEach(x => {
-      if (x.silent) return;
-      if (COMBINED[x.ipa]) return;                       // 组合音白名单
-      if (!BY_IPA[pkey(x.ipa)]) errs.push(d.w + ' 用到未登记音素 ' + x.ipa);
+      if (x.silent || COMBINED[x.ipa]) return;
+      if (!BY_IPA[pkey(x.ipa)]) errs.push('【' + d.w + '】用到未登记音素 ' + x.ipa);
     });
   });
 
-  LEVELS.forEach(l => (l.ipas || []).forEach(i => { if (!BY_IPA[pkey(i)]) errs.push('关卡 ' + l.id + ' 引用了不存在的音标 ' + i); }));
+  LEVELS.forEach(l => (l.ipas || []).forEach(i => { if (!BY_IPA[pkey(i)]) errs.push('音标关 ' + l.id + ' 引用了不存在的音标 ' + i); }));
+
+  /* 词汇关：同年级内不重复、层级与音节数一致 */
+  const dup = {};
+  ALL_WORDS().forEach(w => {
+    if (w.grade == null) return;
+    const k = w.grade + '-' + w.tier + '-' + w.w;
+    if (dup[k]) errs.push('词汇重复：' + w.w + ' 在 G' + w.grade + '·' + TIER_NAME[w.tier] + ' 出现多次');
+    dup[k] = 1;
+  });
+  VOCAB_LEVELS.forEach(l => {
+    const n = vocabWords(l.g, l.tier).length;
+    if (!n) errs.push('词汇关 G' + l.g + '·' + TIER_NAME[l.tier] + ' 没有任何词');
+  });
   return errs;
 }
 const VERRS = validateData();
 if (VERRS.length) console.warn('[数据校验] ' + VERRS.length + ' 处问题:\n' + VERRS.join('\n'));
 
 /* =========================================================================
-   音标渲染：主重音 ˈ / 次重音 ˌ / 长音 ː
+   按拼写反查：输入字母组合 → 返回全部读音
+   ========================================================================= */
+const FREQ_LABEL = f => (f === 1 ? '⭐ 最高频' : f <= 3 ? '常见' : '较少见');
+function posOf(word, sp) {
+  if (!word || !sp) return '';
+  const i = word.toLowerCase().indexOf(sp.toLowerCase());
+  if (i < 0) return '';
+  if (i === 0) return '词首';
+  if (i + sp.length === word.length) return '词尾';
+  return '词中';
+}
+function searchSpelling(qRaw) {
+  const q = (qRaw || '').trim().toLowerCase();
+  if (!q) return [];
+  const exact = [], contain = [];
+  PHONEMES.forEach(p => {
+    (p.spellings || []).forEach((s, idx) => {
+      const sp = s.s.toLowerCase();
+      const isExact = sp === q;
+      /* 包含匹配需拼写长度 >= 2，避免输入 zzzz 时被单字母 z 命中 */
+      const isContain = !isExact && s.s.length >= 2 && (q.indexOf(sp) >= 0 || sp.indexOf(q) >= 0);
+      if (!isExact && !isContain) return;
+      const ws = (p.words || []).filter(w => w.sp === s.s);
+      const rep = ws[0] || p.words[0];
+      (isExact ? exact : contain).push({
+        kind: 'ph', ipa: p.ipa, name: p.name, sp: s.s, note: s.note || '',
+        freq: s.star ? 1 : Math.min(idx + 1, 5),
+        match: isExact ? 'exact' : 'contain',
+        word: rep, pos: posOf(rep && rep.w, s.s), key: pkey(p.ipa)
+      });
+    });
+  });
+  (SPELL_GROUPS || []).forEach(g => {
+    const sp = g.sp.toLowerCase();
+    const isExact = sp === q;
+    const isContain = !isExact && g.sp.length >= 2 && (q.indexOf(sp) >= 0 || sp.indexOf(q) >= 0);
+    if (!isExact && !isContain) return;
+    (isExact ? exact : contain).push({
+      kind: 'group', ipa: g.ipa, name: g.note || '', sp: g.sp, note: g.note || '',
+      freq: g.freq || 3, match: isExact ? 'exact' : 'contain',
+      word: (g.words || [])[0], pos: g.pos || '', key: null
+    });
+  });
+  exact.sort((a, b) => a.freq - b.freq);
+  contain.sort((a, b) => a.freq - b.freq);
+  return exact.concat(contain);
+}
+
+/* =========================================================================
+   音标渲染
    ========================================================================= */
 function ipaHtml(ipa, cls) {
-  const s = String(ipa);
   let out = '';
-  for (const ch of s) {
+  for (const ch of String(ipa)) {
     if (ch === '/') out += '<span class="ipa-sl">/</span>';
     else if (ch === 'ˈ') out += '<span class="st1" title="主重音">ˈ</span>';
     else if (ch === 'ˌ') out += '<span class="st2" title="次重音">ˌ</span>';
@@ -1278,23 +1570,20 @@ function ipaHtml(ipa, cls) {
    ========================================================================= */
 const S = {
   view: 'home', viewP: null,
-  accent: LS.getItem('pq2_accent') || 'UK',   // UK | US
+  accent: LS.getItem('pq2_accent') || 'UK',
   sound: LS.getItem('pq2_sound') !== '0',
   rate: 0.85,
-  libFilter: 'all',      // all | mono | diph | consonant
-  direction: 'rev',      // rev 反向(音→形，默认) | fwd 正向(形→音)
+  libFilter: 'all',
+  libQ: '',
+  lookupQ: '',
   excTab: 'ough',
   prog: JSON.parse(LS.getItem('pq2_prog') || '{}'),
-  wrong: JSON.parse(LS.getItem('pq2_wrong') || '[]'),
-  lv: JSON.parse(LS.getItem('pq2_lv') || '{}')
+  wrong: JSON.parse(LS.getItem('pq2_wrong') || '[]')
 };
-function saveProg() {
-  LS.setItem('pq2_prog', JSON.stringify(S.prog));
-  LS.setItem('pq2_lv', JSON.stringify(S.lv));
-}
+function saveProg() { LS.setItem('pq2_prog', JSON.stringify(S.prog)); }
 
 /* =========================================================================
-   发音：UK / US 切换
+   发音 UK / US
    ========================================================================= */
 let voices = [];
 function loadVoices() { try { voices = speechSynthesis.getVoices() || []; } catch (e) { voices = []; } }
@@ -1302,8 +1591,7 @@ if (window.speechSynthesis) { loadVoices(); speechSynthesis.onvoiceschanged = lo
 function pickVoice(accent) {
   if (!voices.length) loadVoices();
   const want = accent === 'US' ? /en[-_]US/i : /en[-_]GB/i;
-  const back = accent === 'US' ? /^en/i : /^en/i;
-  return voices.find(v => want.test(v.lang)) || voices.find(v => back.test(v.lang)) || null;
+  return voices.find(v => want.test(v.lang)) || voices.find(v => /^en/i.test(v.lang)) || null;
 }
 function speak(text, opt) {
   opt = opt || {};
@@ -1320,7 +1608,7 @@ function speak(text, opt) {
 }
 
 /* =========================================================================
-   路由 / 渲染
+   路由
    ========================================================================= */
 function go(v, p) { S.view = v; S.viewP = p; render(); window.scrollTo(0, 0); }
 function render() {
@@ -1337,15 +1625,15 @@ document.addEventListener('click', e => {
   const el = e.target.closest('[data-act]');
   if (!el) return;
   const a = el.dataset.act;
-  if (ACT[a]) { ACT[a](el.dataset, el); }
+  if (ACT[a]) ACT[a](el.dataset, el);
 });
 
 ACT.home = () => go('home');
 ACT.lib = d => { if (d.f) S.libFilter = d.f; go('lib'); };
 ACT.ph = d => go('ph', d.k);
-ACT.dir = d => { S.direction = d.d; render(); };
 ACT.level = d => go('level', d.id);
 ACT.startDrill = d => startDrill(d.id);
+ACT.lookup = () => go('lookup');
 ACT.exc = d => { if (d.t) S.excTab = d.t; go('exc'); };
 ACT.review = () => go('review');
 ACT.shadow = () => go('shadow');
@@ -1356,30 +1644,58 @@ ACT.speak = d => speak(d.text);
 ACT.clearWrong = () => { S.wrong = []; LS.setItem('pq2_wrong', '[]'); render(); };
 
 /* =========================================================================
-   首页：5 组关卡路径 + 音标库入口
+   首页：两条闯关路径
    ========================================================================= */
 VIEWS.home = () => {
-  const done = Object.keys(S.prog).filter(k => S.prog[k].best >= 0.8).length;
-  const tot = DRILL_WORDS.length;
-  const pct = tot ? Math.round(done / tot * 100) : 0;
+  const all = ALL_WORDS();
+  const done = all.filter(w => S.prog[w.w] && S.prog[w.w].best >= 0.8).length;
+  const pct = Math.round(done / all.length * 100);
+  const vocabGroups = [1, 2, 3, 4, 5, 6].map(g => {
+    const tiers = VOCAB_LEVELS.filter(l => l.g === g);
+    const n = tiers.reduce((a, l) => a + vocabWords(l.g, l.tier).length, 0);
+    return { g, n, tiers };
+  });
   return `
   <div class="hero">
     <h1>英式 48 音标 · 听音拼写闯关</h1>
-    <p class="lead">不再"看字母猜读音"。这里是<b>反过来练</b>：<b>先听到音 → 拆成音素 → 选出拼写 → 核对</b>，
-       看见一个词就能写出来。共 <b>48 个音标</b>（20 元音 + 28 辅音）、<b>${DRILL_WORDS.length}</b> 个练习词。</p>
+    <p class="lead">反过来练：<b>先听到音 → 拆成音素 → 选出拼写 → 核对</b>。
+       共 <b>48 个音标</b>（20 元音 + 28 辅音）、<b>${all.length}</b> 个核心词汇，覆盖小学 G1–G6。</p>
     <div class="bar big"><i style="width:${pct}%"></i></div>
-    <div class="hero-foot"><span>已掌握 ${done}/${tot} 词</span><span>${pct}%</span></div>
+    <div class="hero-foot"><span>已掌握 ${done}/${all.length} 词</span><span>${pct}%</span></div>
   </div>
 
   <div class="btn-row2">
     <button class="btn primary" data-act="lib">🔍 48 音标库</button>
-    <button class="btn ghost" data-act="exc">⚠️ 例外与陷阱</button>
+    <button class="btn ghost" data-act="lookup">🔎 按拼写反查</button>
   </div>
+  <div class="btn-row2"><button class="btn ghost" data-act="exc">⚠️ 例外与陷阱</button></div>
 
-  <div class="sec-title"><h3>🎮 关卡路径（由易到难）</h3><span>${LEVELS.length} 组</span></div>
+  <div class="sec-title"><h3>📚 词汇闯关（G1–G6 · 按音节递进）</h3><span>${all.filter(w => w.grade != null).length} 词</span></div>
+  ${vocabGroups.map(vg => `
+    <div class="grade-block">
+      <div class="grade-h"><b>G${vg.g} 年级</b><span>${vg.n} 词</span></div>
+      <div class="lvlist">
+        ${vg.tiers.map(l => {
+          const ws = vocabWords(l.g, l.tier);
+          if (!ws.length) return '';
+          const dn = ws.filter(w => S.prog[w.w] && S.prog[w.w].best >= .8).length;
+          const p = Math.round(dn / ws.length * 100);
+          return `<div class="lvrow ${p === 100 ? 'done' : ''}">
+            <div class="lv-main">
+              <div class="lv-top"><b>${TIER_NAME[l.tier]}</b><span class="lv-n">${ws.length} 词</span></div>
+              <div class="lv-sub">🎯 ${esc(l.theme)} · ${esc(l.desc)}</div>
+              <div class="bar"><i style="width:${p}%"></i></div>
+            </div>
+            <button class="mini-btn" data-act="startDrill" data-id="${vid(l.g, l.tier)}">${p ? '再练' : '开始'}</button>
+          </div>`;
+        }).join('')}
+      </div>
+    </div>`).join('')}
+
+  <div class="sec-title"><h3>🎯 音标闯关（按发音规律）</h3><span>${LEVELS.length} 组</span></div>
   <div class="lvlist">
     ${LEVELS.map(l => {
-      const ws = DRILL_WORDS.filter(w => w.lv === l.id);
+      const ws = levelWords(l.id);
       const dn = ws.filter(w => S.prog[w.w] && S.prog[w.w].best >= .8).length;
       const p = ws.length ? Math.round(dn / ws.length * 100) : 0;
       return `<div class="lvrow ${p === 100 && ws.length ? 'done' : ''}">
@@ -1387,7 +1703,6 @@ VIEWS.home = () => {
           <div class="lv-top"><b>${l.emoji} ${esc(l.name)}</b><span class="lv-n">${ws.length} 词</span></div>
           <div class="lv-sub">${esc(l.why)}</div>
           <div class="bar"><i style="width:${p}%"></i></div>
-          <div class="lv-sub" style="margin-top:4px">掌握 ${dn}/${ws.length} · ${p}%</div>
         </div>
         <button class="mini-btn" data-act="startDrill" data-id="${l.id}">${p ? '再练' : '开始'}</button>
       </div>`;
@@ -1395,136 +1710,205 @@ VIEWS.home = () => {
   </div>
 
   <div class="tip ok" style="margin-top:14px">
-    <b>怎么玩：</b>每题 4 步 —— ① 听音（只给音标不给词）→ ② 拆音素（按顺序点音）→
-    ③ 选拼写（每个音选对应字母组合）→ ④ 核对（看完整音标 + 拼写拆解 + 词义）。
-    右上角 🇬🇧/🇺🇸 可切换英音美音。
+    <b>怎么玩：</b>每题 4 步 —— ① 听音（只给音标不给词）→ ② 拆音素 → ③ 选拼写 → ④ 核对（音标 + 拼写拆解 + 词义）。
   </div>`;
 };
 
 /* =========================================================================
-   音标库：48 个音标网格
+   音标库：48 个音标全量展开（无需二次点击）
    ========================================================================= */
+function phCardFull(p) {
+  const n = wordsWithPhoneme(p.ipa).length;
+  return `<div class="phcard">
+    <div class="phcard-h">
+      <span class="ph-ipa">${ipaHtml(p.ipa)}</span>
+      <span class="ph-name"><b>${esc(p.name)}</b>${p.pair ? `<i>成对 ${esc(p.pair)}</i>` : ''}</span>
+      <button class="mini-btn ghost" data-act="speak" data-text="${esc((p.words[0] || {}).w || '')}">🔊</button>
+      ${n ? `<button class="mini-btn" data-act="startDrill" data-id="${esc(phid(p.ipa))}">▶ 练习 ${n} 词</button>`
+          : '<span class="ph-none">暂无练习词</span>'}
+      <button class="mini-btn ghost" data-act="ph" data-k="${esc(pkey(p.ipa))}">详情</button>
+    </div>
+    <div class="phcard-sps">
+      ${p.spellings.map(s => `<span class="sptag ${s.star ? 'star' : ''}">${s.star ? '⭐' : ''}${esc(s.s)}</span>`).join('')}
+    </div>
+    <div class="phcard-w">
+      ${p.words.map(w => `<button class="wchip" data-act="speak" data-text="${esc(w.w)}">
+        <span>${esc(w.w)}</span><small class="ipa">${ipaHtml(w.ipa)}</small>
+        <span class="cmb">${esc(w.sp)}</span><small class="zh">${esc(w.zh)}</small></button>`).join('')}
+    </div>
+    ${p.posRule ? `<div class="phcard-x"><b>📍 ${esc(p.posRule.title)}</b>${esc(p.posRule.body)}</div>` : ''}
+    ${(p.exc || []).length ? `<div class="phcard-x warn">⚠️ ${p.exc.map(esc).join('；')}</div>` : ''}
+  </div>`;
+}
+
 VIEWS.lib = () => {
   const F = [['all', '全部 48'], ['mono', '12 单元音'], ['diph', '8 双元音'], ['consonant', '28 辅音']];
-  const list = S.libFilter === 'all' ? PHONEMES
-    : S.libFilter === 'consonant' ? PHONEMES.filter(p => p.cls === 'consonant')
-    : PHONEMES.filter(p => p.vtype === S.libFilter);
-  const grp = { mono: [], diph: [], consonant: [] };
-  list.forEach(p => grp[p.cls === 'vowel' ? p.vtype : 'consonant'].push(p));
-  const block = (title, arr, sub) => arr.length ? `
-    <div class="sec-title"><h3>${title}</h3><span>${arr.length} 个${sub ? ' · ' + sub : ''}</span></div>
-    <div class="pgrid">
-      ${arr.map(p => `<button class="pc" data-act="ph" data-k="${esc(pkey(p.ipa))}">
-        <div class="s">${ipaHtml(p.ipa)}</div>
-        <div class="l">⭐${esc(starOf(p))} · ${esc((p.words[0] || {}).zh || '')}</div></button>`).join('')}
-    </div>` : '';
+  let list = PHONEMES;
+  if (S.libFilter === 'consonant') list = PHONEMES.filter(p => p.cls === 'consonant');
+  else if (S.libFilter === 'mono' || S.libFilter === 'diph') list = PHONEMES.filter(p => p.vtype === S.libFilter);
+  const groups = [
+    ['12 单元音', list.filter(p => p.vtype === 'mono')],
+    ['8 双元音', list.filter(p => p.vtype === 'diph')],
+    ['28 辅音', list.filter(p => p.cls === 'consonant')]
+  ];
   return `
   <div class="game-head">
     <button class="back" data-act="home">←</button>
-    <div class="grow"><b>🔍 48 音标库</b><div style="font-size:12px;color:var(--ink2)">点任意音标看"音 → 拼写 → 例词"</div></div>
+    <div class="grow"><b>🔍 48 音标库</b><div style="font-size:12px;color:var(--ink2)">全部展开：音标 → ⭐高频拼写 → 例词</div></div>
   </div>
   <div class="tabs">
     ${F.map(f => `<button class="tab ${S.libFilter === f[0] ? 'on' : ''}" data-act="lib" data-f="${f[0]}">${f[1]}</button>`).join('')}
   </div>
-  ${block('12 单元音', grp.mono, '长短成对')}
-  ${block('8 双元音', grp.diph)}
-  ${block('28 辅音', grp.consonant, '清浊成对')}
+  ${groups.filter(g => g[1].length).map(g => `
+    <div class="sec-title"><h3>${g[0]}</h3><span>${g[1].length} 个</span></div>
+    ${g[1].map(phCardFull).join('')}`).join('')}
   <div class="tip" style="margin-top:14px">
-    <b>辅音连缀不是音素：</b>black 的 /bl/、star 的 /st/ 是<b>两个音素拼在一起</b>，不是新音。
-    练习"拆音素"时要拆成 /b/ + /l/，不是一个整体。
+    <b>辅音连缀不是音素：</b>black 的 /bl/、star 的 /st/ 是<b>两个音素拼在一起</b>，练习"拆音素"时要拆开。
   </div>`;
 };
 
 /* =========================================================================
-   音标详情：反向（默认）/ 正向 双视图
+   音标详情（反向：音 → 形）
    ========================================================================= */
 VIEWS.ph = k => {
   const p = BY_IPA[k];
-  if (!p) return go('lib'), '';
-  const rev = S.direction === 'rev';
-  const star = starOf(p);
+  if (!p) { go('lib'); return ''; }
   return `
   <div class="game-head">
     <button class="back" data-act="lib">←</button>
     <div class="grow"><b>${ipaHtml(p.ipa)} ${esc(p.name)}</b>
-      <div style="font-size:12px;color:var(--ink2)">⭐ 最高频写法：${esc(star)}</div></div>
+      <div style="font-size:12px;color:var(--ink2)">⭐ 最高频写法：${esc(starOf(p))}</div></div>
     <button class="mini-btn ghost" data-act="speak" data-text="${esc((p.words[0] || {}).w || '')}">🔊</button>
   </div>
 
-  <div class="tabs">
-    <button class="tab ${rev ? 'on' : ''}" data-act="dir" data-d="rev">🔁 反向：音 → 形</button>
-    <button class="tab ${!rev ? 'on' : ''}" data-act="dir" data-d="fwd">➡️ 正向：形 → 音</button>
+  <div class="tip ok" style="margin-top:0">
+    <b>反向记单词：</b>先记住这个<b>音</b>，再记它<b>最常怎么写</b>（⭐），最后落到<b>例词</b>上。
+  </div>
+  <div class="ph-big">${ipaHtml(p.ipa)}</div>
+
+  <div class="sec-title"><h3>✍️ 常见拼写</h3><span>⭐ = 最高频</span></div>
+  <div class="splist">
+    ${p.spellings.map(s => `<div class="sp ${s.star ? 'star' : ''}">
+      <span class="sp-t">${s.star ? '⭐ ' : ''}${esc(s.s)}</span>
+      <span class="sp-n">${esc(s.note || '')}</span></div>`).join('')}
   </div>
 
-  ${rev ? `
-    <div class="tip ok" style="margin-top:0">
-      <b>反向记单词的路径：</b>先记住这个<b>音</b>长什么样，再记住它<b>最常怎么写</b>（⭐），最后落到<b>例词</b>上。
-    </div>
-    <div class="ph-big">${ipaHtml(p.ipa)}</div>
-    <div class="sec-title"><h3>✍️ 常见拼写</h3><span>⭐ = 最高频</span></div>
-    <div class="splist">
-      ${p.spellings.map(s => `
-        <div class="sp ${s.star ? 'star' : ''}">
-          <span class="sp-t">${s.star ? '⭐ ' : ''}${esc(s.s)}</span>
-          <span class="sp-n">${esc(s.note || '')}</span>
-        </div>`).join('')}
-    </div>
-    <div class="sec-title"><h3>📖 例词（点击听发音）</h3><span>${p.words.length} 个</span></div>
-    <div class="wlist" style="justify-content:flex-start">
-      ${p.words.map(w => `<button class="wchip" data-act="speak" data-text="${esc(w.w)}">
-        <span>${esc(w.w)}</span><small class="ipa">${ipaHtml(w.ipa)}</small>
-        <span class="cmb">${esc(w.sp)}</span>
-        <small class="zh">${esc(w.zh)}</small></button>`).join('')}
-    </div>`
-  : `
-    <div class="tip" style="margin-top:0">
-      <b>正向规则（看词读音时用）：</b>看到下面这些<b>字母组合</b>，就读 <b>${ipaHtml(p.ipa)}</b>。
-    </div>
-    <div class="rlist">
-      ${p.spellings.map(s => `
-        <div class="rrow ${s.star ? 'star' : ''}">
-          <span class="rsp">${s.star ? '⭐ ' : ''}${esc(s.s)}</span>
-          <span class="ripa">${ipaHtml(p.ipa)}</span>
-          <span class="rn">${esc(s.note || '')}</span>
-        </div>`).join('')}
-    </div>
-    ${p.say ? `<div class="card" style="margin-top:12px"><div class="qtype">🗣 怎么发</div><p style="margin:6px 0 0;font-size:13px">${esc(p.say)}</p></div>` : ''}`}
+  <div class="sec-title"><h3>📖 例词（点击听发音）</h3><span>${p.words.length} 个</span></div>
+  <div class="wlist" style="justify-content:flex-start">
+    ${p.words.map(w => `<button class="wchip" data-act="speak" data-text="${esc(w.w)}">
+      <span>${esc(w.w)}</span><small class="ipa">${ipaHtml(w.ipa)}</small>
+      <span class="cmb">${esc(w.sp)}</span><small class="zh">${esc(w.zh)}</small></button>`).join('')}
+  </div>
 
+  ${p.say ? `<div class="card" style="margin-top:12px"><div class="qtype">🗣 怎么发</div><p style="margin:6px 0 0;font-size:13px">${esc(p.say)}</p></div>` : ''}
   ${p.vs ? `<div class="tip" style="margin-top:12px"><b>易混 / 对比：</b>${esc(p.vs)}</div>` : ''}
-  ${p.posRule ? `<div class="card pos" style="margin-top:12px">
-      <div class="qtype">📍 位置规则</div>
-      <b>${esc(p.posRule.title)}</b>
-      <p style="margin:6px 0 0;font-size:13px">${esc(p.posRule.body)}</p></div>` : ''}
-  ${(p.exc || []).length ? `<div class="tip warn" style="margin-top:12px"><b>例外：</b>${p.exc.map(x => esc(x)).join('；')}</div>` : ''}
+  ${p.posRule ? `<div class="card pos" style="margin-top:12px"><div class="qtype">📍 位置规则</div>
+      <b>${esc(p.posRule.title)}</b><p style="margin:6px 0 0;font-size:13px">${esc(p.posRule.body)}</p></div>` : ''}
+  ${(p.exc || []).length ? `<div class="tip warn" style="margin-top:12px"><b>例外：</b>${p.exc.map(esc).join('；')}</div>` : ''}
   ${p.pair ? `<div class="btn-row2"><button class="btn ghost" data-act="ph" data-k="${esc(pkey(p.pair))}">⚖️ 看成对的 ${esc(p.pair)}</button></div>` : ''}`;
 };
 
 /* =========================================================================
-   关卡组详情
+   按拼写反查
    ========================================================================= */
-VIEWS.level = id => {
-  const l = LEVELS.find(x => x.id === id);
-  if (!l) return go('home'), '';
-  const ws = DRILL_WORDS.filter(w => w.lv === id);
+VIEWS.lookup = () => {
+  const q = S.lookupQ;
+  const res = searchSpelling(q);
+  const body = !q.trim()
+    ? `<div class="empty">🔎 输入字母或字母组合试试<br><small style="color:var(--ink2)">例如 ough、ea、tion、ough、igh、ear</small></div>`
+    : !res.length
+    ? `<div class="empty">😕 没有找到拼写 <b>${esc(q)}</b><br>
+        <small style="color:var(--ink2)">试试更短的片段（如 ea、ough 的一部分），或查拼写反查最全的组合：tion / sion / ture / igh / ough</small></div>`
+    : res.map(r => `
+      <div class="lk-row ${r.match === 'exact' ? '' : 'fuzzy'}">
+        <div class="lk-top">
+          <span class="lk-sp">${esc(r.sp)}</span>
+          <span class="lk-ipa">${r.kind === 'group' ? esc(r.ipa) : ipaHtml(r.ipa)}</span>
+          <span class="lk-freq f${r.freq}">${FREQ_LABEL(r.freq)}</span>
+          ${r.pos ? `<span class="lk-pos">${esc(r.pos)}</span>` : ''}
+          ${r.match === 'contain' ? '<span class="lk-pos">包含匹配</span>' : ''}
+        </div>
+        <div class="lk-note">${esc(r.note || r.name || '')}</div>
+        ${r.word ? `<div class="lk-words">
+          ${r.kind === 'group'
+            ? (r.wordsOf || []).concat([r.word]).filter(Boolean).map(w =>
+                `<button class="wchip" data-act="speak" data-text="${esc(w.w)}">
+                  <span>${esc(w.w)}</span><small class="ipa">${ipaHtml(w.ipa)}</small>
+                  <small class="zh">${esc(w.zh)}</small></button>`).join('')
+            : `<button class="wchip" data-act="speak" data-text="${esc(r.word.w)}">
+                  <span>${esc(r.word.w)}</span><small class="ipa">${ipaHtml(r.word.ipa)}</small>
+                  <span class="cmb">${esc(r.word.sp)}</span><small class="zh">${esc(r.word.zh)}</small></button>`}
+        </div>` : ''}
+        ${r.key ? `<button class="lk-go" data-act="ph" data-k="${esc(r.key)}">看 ${esc(r.ipa)} 的完整规则 →</button>` : ''}
+      </div>`).join('');
   return `
   <div class="game-head">
     <button class="back" data-act="home">←</button>
-    <div class="grow"><b>${l.emoji} ${esc(l.name)}</b><div style="font-size:12px;color:var(--ink2)">${ws.length} 个练习词</div></div>
+    <div class="grow"><b>🔎 按拼写反查</b><div style="font-size:12px;color:var(--ink2)">看到一个字母组合，查它可能有几种读音</div></div>
   </div>
-  <div class="tip ok" style="margin-top:0"><b>为什么放在这一关：</b>${esc(l.why)}</div>
-  <div class="sec-title"><h3>本关音标</h3><span>${l.ipas.length} 个</span></div>
-  <div class="pgrid">
-    ${l.ipas.map(i => { const p = BY_IPA[pkey(i)]; if (!p) return '';
-      return `<button class="pc" data-act="ph" data-k="${esc(pkey(p.ipa))}">
-        <div class="s">${ipaHtml(p.ipa)}</div><div class="l">⭐${esc(starOf(p))}</div></button>`; }).join('')}
+  <div class="searchbar">
+    <input id="lk-input" type="search" placeholder="输入拼写，如 ough / ea / tion / igh"
+           value="${esc(q)}" autocomplete="off">
+    <button class="mini-btn" data-act="lkGo">查询</button>
+    ${q ? '<button class="mini-btn ghost" data-act="lkClear">清空</button>' : ''}
   </div>
+  ${q.trim() ? `<div class="lk-count">共 ${res.length} 种读音 · 按常见度排序</div>` : ''}
+  ${body}
+  <div class="tip" style="margin-top:12px">
+    <b>为什么要反查：</b>正向是"看到词读音"，反查是"看到拼写想知道有几种读法"。
+    遇到 <b>ough</b>、<b>ear</b>、<b>our</b> 这类一个拼写多种读音的组合，用这里一次看全。
+  </div>`;
+};
+ACT.lkGo = () => {
+  const el = document.getElementById('lk-input');
+  S.lookupQ = el ? el.value : '';
+  render();
+  const e2 = document.getElementById('lk-input');
+  if (e2) { e2.focus(); const v = e2.value; e2.value = ''; e2.value = v; }
+};
+ACT.lkClear = () => { S.lookupQ = ''; render(); };
+ACT.lkKey = d => { S.lookupQ = d.q; render(); };
+
+/* =========================================================================
+   关卡详情（音标关 P* / 词汇关 V*-*）
+   ========================================================================= */
+VIEWS.level = id => {
+  const v = parseVid(id);
+  const ws = levelWords(id);
+  let head = '', tip = '', phChips = '';
+
+  if (v) {
+    const l = VOCAB_LEVELS.find(x => x.g === v.g && x.tier === v.t);
+    head = `<b>G${v.g} 年级 · ${TIER_NAME[v.t]}</b>
+      <div style="font-size:12px;color:var(--ink2)">${ws.length} 词 · ${l ? esc(l.theme) : ''}</div>`;
+    tip = l ? `<div class="tip ok" style="margin-top:0"><b>${esc(l.theme)}：</b>${esc(l.desc)}</div>` : '';
+  } else {
+    const l = LEVELS.find(x => x.id === id);
+    if (!l) { go('home'); return ''; }
+    head = `<b>${l.emoji} ${esc(l.name)}</b><div style="font-size:12px;color:var(--ink2)">${ws.length} 个练习词</div>`;
+    tip = `<div class="tip ok" style="margin-top:0"><b>为什么放在这一关：</b>${esc(l.why)}</div>`;
+    phChips = `<div class="sec-title"><h3>本关音标</h3><span>${l.ipas.length} 个</span></div>
+      <div class="pgrid">
+        ${l.ipas.map(i => { const p = BY_IPA[pkey(i)]; if (!p) return '';
+          return `<button class="pc" data-act="ph" data-k="${esc(pkey(p.ipa))}">
+            <div class="s">${ipaHtml(p.ipa)}</div><div class="l">⭐${esc(starOf(p))}</div></button>`; }).join('')}
+      </div>`;
+  }
+
+  return `
+  <div class="game-head">
+    <button class="back" data-act="home">←</button>
+    <div class="grow">${head}</div>
+  </div>
+  ${tip}
+  ${phChips}
   <div class="sec-title"><h3>练习词</h3><span>${ws.length} 个</span></div>
   <div class="wlist" style="justify-content:flex-start">
     ${ws.map(w => `<button class="wchip" data-act="speak" data-text="${esc(w.w)}">
       <span>${esc(w.w)}</span><small class="ipa">${ipaHtml(w.ipa)}</small>
-      <small class="zh">${esc(w.zh)}</small></button>`).join('')}
+      <small class="zh">${esc(w.zh)}${(w.syl || []).length > 1 ? ' · ' + w.syl.join('-') : ''}</small></button>`).join('')}
   </div>
-  <div class="btn-row2"><button class="btn primary" data-act="startDrill" data-id="${l.id}">▶️ 开始闯关（${ws.length} 题）</button></div>`;
+  <div class="btn-row2"><button class="btn primary" data-act="startDrill" data-id="${esc(id)}">▶️ 开始闯关（${ws.length} 题）</button></div>`;
 };
 
 /* =========================================================================
@@ -1567,7 +1951,7 @@ VIEWS.exc = () => {
 let D = null;
 
 function startDrill(levelId) {
-  const ws = shuffle(DRILL_WORDS.filter(w => w.lv === levelId));
+  const ws = shuffle(levelWords(levelId));
   if (!ws.length) { toast('这一关还没有练习词'); return; }
   D = { lv: levelId, ws, i: 0, step: 0, seq: [], tapped: [], cur: 0, picks: [], fb: null, results: [] };
   prepQ();
@@ -1636,7 +2020,7 @@ VIEWS.drill = () => {
   <div class="game-head">
     <button class="back" data-act="dQuit">←</button>
     <div class="grow"><b>${stepName}</b>
-      <div style="font-size:12px;color:var(--ink2)">第 ${D.i + 1}/${n} 题 · ${esc(w.zh ? '词义见最后一步' : '')}</div></div>
+      <div style="font-size:12px;color:var(--ink2)">${esc(levelName(D.lv))} · 第 ${D.i + 1}/${n} 题</div></div>
     <span class="qtype">${D.step + 1}/4</span>
   </div>
   <div class="steps">
@@ -1737,7 +2121,11 @@ VIEWS.drill = () => {
 
 /* ---------------- 动作 ---------------- */
 ACT.dPlay = () => { const w = curWord(); speak(w.w); };
-ACT.dQuit = () => { const id = D.lv; D = null; go('level', id); };
+ACT.dQuit = () => {
+  const id = D.lv, back = levelBack(id);
+  D = null;
+  go(back, back === 'lib' ? null : id);
+};
 ACT.dGoSeg = () => { D.step = 1; D.fb = null; render(); };
 ACT.dResetSeg = () => { D.tapped = []; D.fb = null; render(); };
 
@@ -1784,12 +2172,13 @@ ACT.dNext = () => {
     const lv = D.lv, r = D.results;
     const avg = Math.round(r.reduce((a, b) => a + b.ratio, 0) / r.length * 100);
     const weak = r.filter(x => x.ratio < 1);
+    const back = levelBack(lv);
     D = null;
-    modal('🏁 本关完成', '第 ' + LEVELS.find(l => l.id === lv).name + ' 关',
+    modal('🏁 本关完成', levelName(lv),
       `<p>正确率 <b>${avg}%</b> · 共 ${r.length} 题${weak.length ? '，其中 <b>' + weak.length + '</b> 题有错，已进错题本' : '，全对 🎉'}。</p>
        ${weak.length ? '<p>错题：' + weak.map(x => esc(x.w)).join('、') + '</p>' : ''}
        <p>建议：明天再练一次本关，间隔复习才会变长期记忆。</p>`);
-    go('level', lv);
+    go(back, back === 'lib' ? null : lv);
     return;
   }
   D.i++; prepQ(); render();
