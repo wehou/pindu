@@ -806,7 +806,7 @@ const PHONEMES = [
 /* ---------------- 12 单元音 ---------------- */
 {ipa:'/iː/',cls:'vowel',vtype:'mono',len:'long',name:'长元音 /iː/',
  spellings:[{s:'ee',star:1,note:'最高频，多在词中/词尾'},{s:'ea',note:'tea / sea / meat'},{s:'e',note:'开音节 he / she / we / be'},{s:'ie',note:'field / believe（⚠️ friend 读 /e/）'},{s:'ei',note:'receive / ceiling'},{s:'i',note:'machine / police'}],
- words:[{w:'see',ipa:'/siː/',sp:'ee',zh:'看见'},{w:'tea',ipa:'/tiː/',sp:'ea',zh:'茶'},{w:'these',ipa:'/ðiːz/',sp:'e',zh:'这些'},{w:'field',ipa:'/fiːld/',sp:'ie',zh:'田野'},{w:'green',ipa:'/ɡriːn/',sp:'ee',zh:'绿色的'}],
+ words:[{w:'see',ipa:'/siː/',sp:'ee',zh:'看见'},{w:'tea',ipa:'/tiː/',sp:'ea',zh:'茶'},{w:'these',ipa:'/ðiːz/',sp:'e',zh:'这些'},{w:'field',ipa:'/fiːld/',sp:'ie',zh:'田野'},{w:'green',ipa:'/ɡriːn/',sp:'ee',zh:'绿色的'},{w:'ceiling',ipa:'/ˈsiːlɪŋ/',sp:'ei',zh:'天花板'},{w:'machine',ipa:'/məˈʃiːn/',sp:'i',zh:'机器'}],
  mouth:{open:.12,round:.10,spread:.85,place:'前'},
  say:'嘴角向两侧展开，舌位最高，声音拉长（带 ː）',
  vs:'⚠️ 与 /ɪ/ 只差长短与舌位：sheep /ʃiːp/ vs ship /ʃɪp/',
@@ -814,7 +814,7 @@ const PHONEMES = [
 
 {ipa:'/ɪ/',cls:'vowel',vtype:'mono',len:'short',name:'短元音 /ɪ/',
  spellings:[{s:'i',star:1,note:'闭音节最高频 sit / big / fish'},{s:'y',note:'happy / city（词尾非重读）'},{s:'e',note:'pretty / English'},{s:'u',note:'busy / business'},{s:'ui',note:'build / guitar'}],
- words:[{w:'sit',ipa:'/sɪt/',sp:'i',zh:'坐'},{w:'happy',ipa:'/ˈhæpi/',sp:'y',zh:'快乐的'},{w:'busy',ipa:'/ˈbɪzi/',sp:'u',zh:'忙碌的'},{w:'build',ipa:'/bɪld/',sp:'ui',zh:'建造'}],
+ words:[{w:'sit',ipa:'/sɪt/',sp:'i',zh:'坐'},{w:'happy',ipa:'/ˈhæpi/',sp:'y',zh:'快乐的'},{w:'busy',ipa:'/ˈbɪzi/',sp:'u',zh:'忙碌的'},{w:'build',ipa:'/bɪld/',sp:'ui',zh:'建造'},{w:'pretty',ipa:'/ˈprɪti/',sp:'e',zh:'漂亮的'}],
  mouth:{open:.20,round:.10,spread:.60,place:'前'},
  say:'短促，舌位比 /iː/ 略低略后，不要拖长',
  vs:'⚠️ 中文没有这个音，别读成"衣"；ship vs sheep',
@@ -838,7 +838,7 @@ const PHONEMES = [
 
 {ipa:'/ɑː/',cls:'vowel',vtype:'mono',len:'long',name:'长元音 /ɑː/',
  spellings:[{s:'ar',star:1,note:'最高频 car / park / hard'},{s:'a',note:'father / banana（重读）'},{s:'al',note:'half / calm（l 不发音）'},{s:'ear',note:'heart / hearth'},{s:'au',note:'aunt / laugh（美音偏 /æ/）'}],
- words:[{w:'car',ipa:'/kɑː/',sp:'ar',zh:'汽车'},{w:'father',ipa:'/ˈfɑːðə/',sp:'a',zh:'父亲'},{w:'half',ipa:'/hɑːf/',sp:'al',zh:'一半'},{w:'heart',ipa:'/hɑːt/',sp:'ear',zh:'心'}],
+ words:[{w:'car',ipa:'/kɑː/',sp:'ar',zh:'汽车'},{w:'father',ipa:'/ˈfɑːðə/',sp:'a',zh:'父亲'},{w:'half',ipa:'/hɑːf/',sp:'al',zh:'一半'},{w:'heart',ipa:'/hɑːt/',sp:'ear',zh:'心'},{w:'aunt',ipa:'/ɑːnt/',sp:'au',zh:'姑妈'}],
  mouth:{open:.80,round:.05,spread:.30,place:'后'},
  say:'嘴张大，舌后缩，长音',
  vs:'⚠️ ar 在 w 后读 /ɔː/：warm /wɔːm/、war /wɔː/',
@@ -846,7 +846,7 @@ const PHONEMES = [
 
 {ipa:'/ɒ/',cls:'vowel',vtype:'mono',len:'short',name:'短元音 /ɒ/',
  spellings:[{s:'o',star:1,note:'闭音节 dog / box / hot'},{s:'a',note:'want / wash / what（w 后）'},{s:'au',note:'because / sausage'}],
- words:[{w:'dog',ipa:'/dɒɡ/',sp:'o',zh:'狗'},{w:'box',ipa:'/bɒks/',sp:'o',zh:'盒子'},{w:'want',ipa:'/wɒnt/',sp:'a',zh:'想要'},{w:'wash',ipa:'/wɒʃ/',sp:'a',zh:'洗'}],
+ words:[{w:'dog',ipa:'/dɒɡ/',sp:'o',zh:'狗'},{w:'box',ipa:'/bɒks/',sp:'o',zh:'盒子'},{w:'want',ipa:'/wɒnt/',sp:'a',zh:'想要'},{w:'wash',ipa:'/wɒʃ/',sp:'a',zh:'洗'},{w:'because',ipa:'/bɪˈkɒz/',sp:'au',zh:'因为'}],
  mouth:{open:.70,round:.55,spread:.15,place:'后'},
  say:'嘴张圆，唇微收，短促',
  vs:'⚠️ 美音常读成 /ɑː/ 或 /ɔː/；英音是短而圆的 /ɒ/',
@@ -854,7 +854,7 @@ const PHONEMES = [
 
 {ipa:'/ɔː/',cls:'vowel',vtype:'mono',len:'long',name:'长元音 /ɔː/',
  spellings:[{s:'or',star:1,note:'最高频 for / sport / morning'},{s:'ore',note:'more / before'},{s:'aw',note:'saw / law / draw'},{s:'au',note:'because / autumn'},{s:'al',note:'talk / walk / ball'},{s:'ough',note:'bought / thought → /ɔː/（ough 六读之一）'},{s:'oor',note:'door / floor'},{s:'oar',note:'board / blackboard'}],
- words:[{w:'for',ipa:'/fɔː/',sp:'or',zh:'为了'},{w:'saw',ipa:'/sɔː/',sp:'aw',zh:'看见（过去式）'},{w:'talk',ipa:'/tɔːk/',sp:'al',zh:'说话'},{w:'bought',ipa:'/bɔːt/',sp:'ough',zh:'买（过去式）'},{w:'door',ipa:'/dɔː/',sp:'oor',zh:'门'}],
+ words:[{w:'for',ipa:'/fɔː/',sp:'or',zh:'为了'},{w:'saw',ipa:'/sɔː/',sp:'aw',zh:'看见（过去式）'},{w:'talk',ipa:'/tɔːk/',sp:'al',zh:'说话'},{w:'bought',ipa:'/bɔːt/',sp:'ough',zh:'买（过去式）'},{w:'door',ipa:'/dɔː/',sp:'oor',zh:'门'},{w:'more',ipa:'/mɔː/',sp:'ore',zh:'更多'},{w:'autumn',ipa:'/ˈɔːtəm/',sp:'au',zh:'秋天'},{w:'board',ipa:'/bɔːd/',sp:'oar',zh:'木板'}],
  mouth:{open:.55,round:.75,spread:.10,place:'后'},
  say:'唇收圆前突，长音',
  vs:'⚠️ 短 /ɒ/ vs 长 /ɔː/：cot /kɒt/ vs caught /kɔːt/',
@@ -870,7 +870,7 @@ const PHONEMES = [
 
 {ipa:'/uː/',cls:'vowel',vtype:'mono',len:'long',name:'长元音 /uː/',
  spellings:[{s:'oo',star:1,note:'最高频 food / moon / school'},{s:'u',note:'rule / June（开音节）'},{s:'ue',note:'blue / true'},{s:'ou',note:'soup / group'},{s:'ew',note:'crew / flew（⚠️ new 读 /njuː/）'},{s:'o',note:'do / to / who'}],
- words:[{w:'food',ipa:'/fuːd/',sp:'oo',zh:'食物'},{w:'blue',ipa:'/bluː/',sp:'ue',zh:'蓝色的'},{w:'moon',ipa:'/muːn/',sp:'oo',zh:'月亮'},{w:'soup',ipa:'/suːp/',sp:'ou',zh:'汤'}],
+ words:[{w:'food',ipa:'/fuːd/',sp:'oo',zh:'食物'},{w:'blue',ipa:'/bluː/',sp:'ue',zh:'蓝色的'},{w:'moon',ipa:'/muːn/',sp:'oo',zh:'月亮'},{w:'soup',ipa:'/suːp/',sp:'ou',zh:'汤'},{w:'rule',ipa:'/ruːl/',sp:'u',zh:'规则'},{w:'flew',ipa:'/fluː/',sp:'ew',zh:'飞（过去式）'},{w:'who',ipa:'/huː/',sp:'o',zh:'谁'}],
  mouth:{open:.15,round:.90,spread:.05,place:'后'},
  say:'唇收得又小又圆，向前突出，长音',
  vs:'⚠️ 短 /ʊ/ vs 长 /uː/：pull /pʊl/ vs pool /puːl/',
@@ -878,7 +878,7 @@ const PHONEMES = [
 
 {ipa:'/ʌ/',cls:'vowel',vtype:'mono',len:'short',name:'短元音 /ʌ/',
  spellings:[{s:'u',star:1,note:'闭音节 cup / sun / bus'},{s:'o',note:'love / come / money / mother'},{s:'ou',note:'young / touch / country'},{s:'oo',note:'blood / flood'}],
- words:[{w:'cup',ipa:'/kʌp/',sp:'u',zh:'杯子'},{w:'love',ipa:'/lʌv/',sp:'o',zh:'爱'},{w:'come',ipa:'/kʌm/',sp:'o',zh:'来'},{w:'young',ipa:'/jʌŋ/',sp:'ou',zh:'年轻的'}],
+ words:[{w:'cup',ipa:'/kʌp/',sp:'u',zh:'杯子'},{w:'love',ipa:'/lʌv/',sp:'o',zh:'爱'},{w:'come',ipa:'/kʌm/',sp:'o',zh:'来'},{w:'young',ipa:'/jʌŋ/',sp:'ou',zh:'年轻的'},{w:'blood',ipa:'/blʌd/',sp:'oo',zh:'血'}],
  mouth:{open:.50,round:.10,spread:.35,place:'中'},
  say:'嘴自然张开，短促有力，不圆唇',
  vs:'⚠️ o 在这里读 /ʌ/ 是最大陷阱：come / love / money',
@@ -886,7 +886,7 @@ const PHONEMES = [
 
 {ipa:'/ɜː/',cls:'vowel',vtype:'mono',len:'long',name:'长元音 /ɜː/',
  spellings:[{s:'er',star:1,note:'重读时 her / person'},{s:'ir',note:'bird / girl / first'},{s:'ur',note:'turn / nurse / Thursday'},{s:'ear',note:'learn / earth / early'},{s:'or',note:'work / world / word（w 后）'},{s:'our',note:'journey / courtesy'}],
- words:[{w:'her',ipa:'/hɜː/',sp:'er',zh:'她的'},{w:'bird',ipa:'/bɜːd/',sp:'ir',zh:'鸟'},{w:'turn',ipa:'/tɜːn/',sp:'ur',zh:'转'},{w:'work',ipa:'/wɜːk/',sp:'or',zh:'工作'},{w:'learn',ipa:'/lɜːn/',sp:'ear',zh:'学习'}],
+ words:[{w:'her',ipa:'/hɜː/',sp:'er',zh:'她的'},{w:'bird',ipa:'/bɜːd/',sp:'ir',zh:'鸟'},{w:'turn',ipa:'/tɜːn/',sp:'ur',zh:'转'},{w:'work',ipa:'/wɜːk/',sp:'or',zh:'工作'},{w:'learn',ipa:'/lɜːn/',sp:'ear',zh:'学习'},{w:'journey',ipa:'/ˈdʒɜːni/',sp:'our',zh:'旅行'}],
  mouth:{open:.38,round:.15,spread:.35,place:'中'},
  say:'舌放平居中，唇不圆不扁，长音（英音不卷舌）',
  vs:'⚠️ 英音不卷舌；美音才带 r 尾。er/ir/ur 重读都读它',
@@ -894,7 +894,7 @@ const PHONEMES = [
 
 {ipa:'/ə/',cls:'vowel',vtype:'mono',len:'short',name:'短元音 /ə/（schwa 弱读）',
  spellings:[{s:'a',star:1,note:'about / banana / sofa'},{s:'er',note:'teacher / water（非重读）'},{s:'o',note:'today / polite'},{s:'u',note:'supply / autumn'},{s:'e',note:'open / silent'}],
- words:[{w:'about',ipa:'/əˈbaʊt/',sp:'a',zh:'关于'},{w:'teacher',ipa:'/ˈtiːtʃə/',sp:'er',zh:'老师'},{w:'sofa',ipa:'/ˈsəʊfə/',sp:'a',zh:'沙发'},{w:'banana',ipa:'/bəˈnɑːnə/',sp:'a',zh:'香蕉'}],
+ words:[{w:'about',ipa:'/əˈbaʊt/',sp:'a',zh:'关于'},{w:'teacher',ipa:'/ˈtiːtʃə/',sp:'er',zh:'老师'},{w:'sofa',ipa:'/ˈsəʊfə/',sp:'a',zh:'沙发'},{w:'banana',ipa:'/bəˈnɑːnə/',sp:'a',zh:'香蕉'},{w:'today',ipa:'/təˈdeɪ/',sp:'o',zh:'今天'},{w:'supply',ipa:'/səˈplaɪ/',sp:'u',zh:'供应'},{w:'silent',ipa:'/ˈsaɪlənt/',sp:'e',zh:'沉默的'}],
  mouth:{open:.30,round:.10,spread:.30,place:'中'},
  say:'最放松的音，一带而过；永远出现在非重读音节',
  vs:'⭐ 英语出现频率最高的元音；任何元音字母弱读都可能变成它',
@@ -912,7 +912,7 @@ const PHONEMES = [
 
 {ipa:'/aɪ/',cls:'vowel',vtype:'diph',name:'双元音 /aɪ/',
  spellings:[{s:'i_e',star:1,note:'魔法 e：bike / time / nine'},{s:'igh',note:'light / night / high'},{s:'y',note:'sky / my / try（词尾）'},{s:'ie',note:'tie / pie / die'},{s:'i',note:'wild / child / find（ld/nd 前）'}],
- words:[{w:'bike',ipa:'/baɪk/',sp:'i_e',zh:'自行车'},{w:'light',ipa:'/laɪt/',sp:'igh',zh:'光'},{w:'sky',ipa:'/skaɪ/',sp:'y',zh:'天空'},{w:'time',ipa:'/taɪm/',sp:'i_e',zh:'时间'},{w:'night',ipa:'/naɪt/',sp:'igh',zh:'夜晚'}],
+ words:[{w:'bike',ipa:'/baɪk/',sp:'i_e',zh:'自行车'},{w:'light',ipa:'/laɪt/',sp:'igh',zh:'光'},{w:'sky',ipa:'/skaɪ/',sp:'y',zh:'天空'},{w:'time',ipa:'/taɪm/',sp:'i_e',zh:'时间'},{w:'night',ipa:'/naɪt/',sp:'igh',zh:'夜晚'},{w:'tie',ipa:'/taɪ/',sp:'ie',zh:'领带'},{w:'find',ipa:'/faɪnd/',sp:'i',zh:'找到'}],
  mouth:{open:.70,round:.05,spread:.40,place:'中'},
  say:'从 /a/ 大开口滑向 /ɪ/',
  vs:'⚠️ igh / i_e / y 三种写法都要认识',
@@ -929,7 +929,7 @@ const PHONEMES = [
 
 {ipa:'/əʊ/',cls:'vowel',vtype:'diph',name:'双元音 /əʊ/',
  spellings:[{s:'o_e',star:1,note:'魔法 e：home / nose / those'},{s:'oa',note:'boat / coat / road'},{s:'ow',note:'snow / window / know'},{s:'o',note:'go / no / so（开音节）'},{s:'oe',note:'toe / foe'}],
- words:[{w:'home',ipa:'/həʊm/',sp:'o_e',zh:'家'},{w:'boat',ipa:'/bəʊt/',sp:'oa',zh:'船'},{w:'snow',ipa:'/snəʊ/',sp:'ow',zh:'雪'},{w:'go',ipa:'/ɡəʊ/',sp:'o',zh:'去'},{w:'nose',ipa:'/nəʊz/',sp:'o_e',zh:'鼻子'}],
+ words:[{w:'home',ipa:'/həʊm/',sp:'o_e',zh:'家'},{w:'boat',ipa:'/bəʊt/',sp:'oa',zh:'船'},{w:'snow',ipa:'/snəʊ/',sp:'ow',zh:'雪'},{w:'go',ipa:'/ɡəʊ/',sp:'o',zh:'去'},{w:'nose',ipa:'/nəʊz/',sp:'o_e',zh:'鼻子'},{w:'toe',ipa:'/təʊ/',sp:'oe',zh:'脚趾'}],
  mouth:{open:.42,round:.55,spread:.15,place:'中'},
  say:'从 /ə/ 滑向 /ʊ/，唇渐收圆',
  vs:'⚠️ ow 有两个读音：snow /snəʊ/ vs cow /kaʊ/',
@@ -945,7 +945,7 @@ const PHONEMES = [
 
 {ipa:'/ɪə/',cls:'vowel',vtype:'diph',name:'双元音 /ɪə/',
  spellings:[{s:'ear',star:1,note:'ear / near / hear / dear'},{s:'ere',note:'here / mere'},{s:'eer',note:'deer / beer / cheer'},{s:'ier',note:'cashier'}],
- words:[{w:'ear',ipa:'/ɪə/',sp:'ear',zh:'耳朵'},{w:'here',ipa:'/hɪə/',sp:'ere',zh:'这里'},{w:'deer',ipa:'/dɪə/',sp:'eer',zh:'鹿'},{w:'near',ipa:'/nɪə/',sp:'ear',zh:'靠近'}],
+ words:[{w:'ear',ipa:'/ɪə/',sp:'ear',zh:'耳朵'},{w:'here',ipa:'/hɪə/',sp:'ere',zh:'这里'},{w:'deer',ipa:'/dɪə/',sp:'eer',zh:'鹿'},{w:'near',ipa:'/nɪə/',sp:'ear',zh:'靠近'},{w:'cashier',ipa:'/kæˈʃɪə/',sp:'ier',zh:'收银员'}],
  mouth:{open:.30,round:.15,spread:.45,place:'前'},
  say:'从 /ɪ/ 滑向 /ə/，英音不卷舌',
  vs:'⚠️ ear 也可能读 /eə/（bear）或 /ɜː/（learn）',
@@ -953,7 +953,7 @@ const PHONEMES = [
 
 {ipa:'/eə/',cls:'vowel',vtype:'diph',name:'双元音 /eə/',
  spellings:[{s:'are',star:1,note:'care / share / square'},{s:'air',note:'hair / chair / airport'},{s:'ear',note:'bear / pear / wear'},{s:'ere',note:'there / where'}],
- words:[{w:'hair',ipa:'/heə/',sp:'air',zh:'头发'},{w:'bear',ipa:'/beə/',sp:'ear',zh:'熊'},{w:'chair',ipa:'/tʃeə/',sp:'air',zh:'椅子'},{w:'there',ipa:'/ðeə/',sp:'ere',zh:'那里'}],
+ words:[{w:'hair',ipa:'/heə/',sp:'air',zh:'头发'},{w:'bear',ipa:'/beə/',sp:'ear',zh:'熊'},{w:'chair',ipa:'/tʃeə/',sp:'air',zh:'椅子'},{w:'there',ipa:'/ðeə/',sp:'ere',zh:'那里'},{w:'care',ipa:'/keə/',sp:'are',zh:'关心'}],
  mouth:{open:.45,round:.10,spread:.45,place:'前'},
  say:'从 /e/ 滑向 /ə/',
  vs:'⚠️ 与 /ɪə/ 最小对立：here /hɪə/ vs hair /heə/',
@@ -984,7 +984,7 @@ const PHONEMES = [
 
 {ipa:'/t/',cls:'consonant',voiced:false,pair:'/d/',name:'清辅音 /t/',
  spellings:[{s:'t',star:1,note:'唯一高频写法'},{s:'tt',note:'letter / butter'},{s:'ed',note:'worked / helped（清辅音后读 /t/）'}],
- words:[{w:'tea',ipa:'/tiː/',sp:'t',zh:'茶'},{w:'cat',ipa:'/kæt/',sp:'t',zh:'猫'},{w:'table',ipa:'/ˈteɪbəl/',sp:'t',zh:'桌子'},{w:'worked',ipa:'/wɜːkt/',sp:'ed',zh:'工作（过去式）'}],
+ words:[{w:'tea',ipa:'/tiː/',sp:'t',zh:'茶'},{w:'cat',ipa:'/kæt/',sp:'t',zh:'猫'},{w:'table',ipa:'/ˈteɪbəl/',sp:'t',zh:'桌子'},{w:'worked',ipa:'/wɜːkt/',sp:'ed',zh:'工作（过去式）'},{w:'letter',ipa:'/ˈletə/',sp:'tt',zh:'信'}],
  say:'舌尖抵上齿龈后放开，送气强',
  vs:'⚠️ -ed 在清辅音后读 /t/，浊辅音后读 /d/，t/d 后读 /ɪd/',
  posRule:null,exc:['listen /ˈlɪsən/ 里 t 不发音']},
@@ -998,7 +998,7 @@ const PHONEMES = [
 
 {ipa:'/k/',cls:'consonant',voiced:false,pair:'/g/',name:'清辅音 /k/',
  spellings:[{s:'c',star:1,note:'a o u 前读 /k/：cat / cold / cup'},{s:'k',note:'key / kite / week'},{s:'ck',note:'词尾短元音后：back / black / duck'},{s:'ch',note:'school / chemistry（少数）'},{s:'q',note:'queen / quick（qu → /kw/）'}],
- words:[{w:'cat',ipa:'/kæt/',sp:'c',zh:'猫'},{w:'key',ipa:'/kiː/',sp:'k',zh:'钥匙'},{w:'back',ipa:'/bæk/',sp:'ck',zh:'后面'},{w:'school',ipa:'/skuːl/',sp:'ch',zh:'学校'}],
+ words:[{w:'cat',ipa:'/kæt/',sp:'c',zh:'猫'},{w:'key',ipa:'/kiː/',sp:'k',zh:'钥匙'},{w:'back',ipa:'/bæk/',sp:'ck',zh:'后面'},{w:'school',ipa:'/skuːl/',sp:'ch',zh:'学校'},{w:'queen',ipa:'/kwiːn/',sp:'q',zh:'女王'}],
  say:'舌后部抵软腭后放开，送气强',
  vs:'⚠️ c 在 e i y 前读 /s/：city /ˈsɪti/、nice /naɪs/',
  posRule:{title:'c 在 a o u 前读 /k/ · 在 e i y 前读 /s/',body:'cat cold cup → /k/（硬 c）；city nice cycle → /s/（软 c）。口诀：a o u 用硬，e i y 用软。'},
@@ -1006,7 +1006,7 @@ const PHONEMES = [
 
 {ipa:'/g/',cls:'consonant',voiced:true,pair:'/k/',name:'浊辅音 /g/',
  spellings:[{s:'g',star:1,note:'a o u 前读 /g/：go / girl / big'},{s:'gg',note:'egg / bigger'},{s:'gu',note:'guess / guest / guitar'},{s:'gh',note:'ghost / ghastly'}],
- words:[{w:'go',ipa:'/ɡəʊ/',sp:'g',zh:'去'},{w:'girl',ipa:'/ɡɜːl/',sp:'g',zh:'女孩'},{w:'egg',ipa:'/eɡ/',sp:'gg',zh:'鸡蛋'},{w:'guess',ipa:'/ɡes/',sp:'gu',zh:'猜'}],
+ words:[{w:'go',ipa:'/ɡəʊ/',sp:'g',zh:'去'},{w:'girl',ipa:'/ɡɜːl/',sp:'g',zh:'女孩'},{w:'egg',ipa:'/eɡ/',sp:'gg',zh:'鸡蛋'},{w:'guess',ipa:'/ɡes/',sp:'gu',zh:'猜'},{w:'ghost',ipa:'/ɡəʊst/',sp:'gh',zh:'幽灵'}],
  say:'舌后部抵软腭后放开，声带振动',
  vs:'⚠️ g 在 e i y 前常读 /dʒ/（软 g）：giant /ˈdʒaɪənt/、gym /dʒɪm/',
  posRule:{title:'g 在 a o u 前读 /g/ · 在 e i y 前多读 /dʒ/',body:'go girl gun → /g/（硬 g）；gem giant gym → /dʒ/（软 g）。⚠️ 例外多：get /ɡet/、give /ɡɪv/ 仍是硬 g。'},
@@ -1028,7 +1028,7 @@ const PHONEMES = [
 
 {ipa:'/s/',cls:'consonant',voiced:false,pair:'/z/',name:'清辅音 /s/',
  spellings:[{s:'s',star:1,note:'sun / bus / see'},{s:'c',note:'e i y 前：city / nice / face'},{s:'ss',note:'class / glass / miss'},{s:'ce',note:'face / nice / ice'},{s:'sc',note:'science / scene'}],
- words:[{w:'sun',ipa:'/sʌn/',sp:'s',zh:'太阳'},{w:'city',ipa:'/ˈsɪti/',sp:'c',zh:'城市'},{w:'bus',ipa:'/bʌs/',sp:'s',zh:'公共汽车'},{w:'face',ipa:'/feɪs/',sp:'ce',zh:'脸'}],
+ words:[{w:'sun',ipa:'/sʌn/',sp:'s',zh:'太阳'},{w:'city',ipa:'/ˈsɪti/',sp:'c',zh:'城市'},{w:'bus',ipa:'/bʌs/',sp:'s',zh:'公共汽车'},{w:'face',ipa:'/feɪs/',sp:'ce',zh:'脸'},{w:'class',ipa:'/klɑːs/',sp:'ss',zh:'班级'},{w:'science',ipa:'/ˈsaɪəns/',sp:'sc',zh:'科学'}],
  say:'舌尖靠近上齿龈，气流从窄缝挤出，嘶声',
  vs:'⚠️ 词尾 -s 三种读音：清辅音后 /s/、浊辅音后 /z/、s/z/ʃ/ʒ/tʃ/dʒ 后 /ɪz/',
  posRule:{title:'c 在 e i y 前读 /s/',body:'city nice face cycle → /s/；cat cold cup → /k/。'},
@@ -1036,7 +1036,7 @@ const PHONEMES = [
 
 {ipa:'/z/',cls:'consonant',voiced:true,pair:'/s/',name:'浊辅音 /z/',
  spellings:[{s:'z',star:1,note:'zoo / zebra / zero'},{s:'s',note:'is / his / these / nose'},{s:'zz',note:'buzz / jazz'},{s:'se',note:'nose / those / because'}],
- words:[{w:'zoo',ipa:'/zuː/',sp:'z',zh:'动物园'},{w:'is',ipa:'/ɪz/',sp:'s',zh:'是'},{w:'nose',ipa:'/nəʊz/',sp:'se',zh:'鼻子'},{w:'those',ipa:'/ðəʊz/',sp:'se',zh:'那些'}],
+ words:[{w:'zoo',ipa:'/zuː/',sp:'z',zh:'动物园'},{w:'is',ipa:'/ɪz/',sp:'s',zh:'是'},{w:'nose',ipa:'/nəʊz/',sp:'se',zh:'鼻子'},{w:'those',ipa:'/ðəʊz/',sp:'se',zh:'那些'},{w:'buzz',ipa:'/bʌz/',sp:'zz',zh:'嗡嗡声'}],
  say:'舌尖靠近上齿龈，声带振动（/s/ 的浊版）',
  vs:'⚠️ 词尾 -s 在浊音后读 /z/：dogs /dɒɡz/、cats /kæts/ 读 /s/',
  posRule:null,exc:[]},
@@ -1057,14 +1057,14 @@ const PHONEMES = [
 
 {ipa:'/ʃ/',cls:'consonant',voiced:false,pair:'/ʒ/',name:'清辅音 /ʃ/',
  spellings:[{s:'sh',star:1,note:'最高频 ship / shop / fish'},{s:'ti',note:'station / nation（-tion）'},{s:'ci',note:'special / delicious'},{s:'ssi',note:'mission / Russia'},{s:'ch',note:'chef / machine（法语借词）'}],
- words:[{w:'ship',ipa:'/ʃɪp/',sp:'sh',zh:'船'},{w:'shop',ipa:'/ʃɒp/',sp:'sh',zh:'商店'},{w:'station',ipa:'/ˈsteɪʃən/',sp:'ti',zh:'车站'},{w:'special',ipa:'/ˈspeʃəl/',sp:'ci',zh:'特别的'},{w:'chef',ipa:'/ʃef/',sp:'ch',zh:'厨师'}],
+ words:[{w:'ship',ipa:'/ʃɪp/',sp:'sh',zh:'船'},{w:'shop',ipa:'/ʃɒp/',sp:'sh',zh:'商店'},{w:'station',ipa:'/ˈsteɪʃən/',sp:'ti',zh:'车站'},{w:'special',ipa:'/ˈspeʃəl/',sp:'ci',zh:'特别的'},{w:'chef',ipa:'/ʃef/',sp:'ch',zh:'厨师'},{w:'mission',ipa:'/ˈmɪʃən/',sp:'ssi',zh:'任务'}],
  say:'舌面靠近上腭，双唇微突，气流摩擦',
  vs:'⚠️ -tion 读 /ʃən/ 是最高频的"字母组合→音"规则之一',
  posRule:null,exc:[]},
 
 {ipa:'/ʒ/',cls:'consonant',voiced:true,pair:'/ʃ/',name:'浊辅音 /ʒ/',
  spellings:[{s:'si',star:1,note:'最高频：vision / decision（-sion）'},{s:'s',note:'pleasure / usually / measure'},{s:'ge',note:'garage / rouge（法语借词）'},{s:'z',note:'azure'}],
- words:[{w:'vision',ipa:'/ˈvɪʒən/',sp:'si',zh:'视力'},{w:'pleasure',ipa:'/ˈpleʒə/',sp:'s',zh:'愉快'},{w:'television',ipa:'/ˈtelɪvɪʒən/',sp:'si',zh:'电视'},{w:'usually',ipa:'/ˈjuːʒuəli/',sp:'s',zh:'通常'}],
+ words:[{w:'vision',ipa:'/ˈvɪʒən/',sp:'si',zh:'视力'},{w:'pleasure',ipa:'/ˈpleʒə/',sp:'s',zh:'愉快'},{w:'television',ipa:'/ˈtelɪvɪʒən/',sp:'si',zh:'电视'},{w:'usually',ipa:'/ˈjuːʒuəli/',sp:'s',zh:'通常'},{w:'garage',ipa:'/ˈɡærɑːʒ/',sp:'ge',zh:'车库'},{w:'azure',ipa:'/ˈæʒə/',sp:'z',zh:'天蓝色'}],
  say:'/ʃ/ 的浊版，舌位相同但声带振动',
  vs:'⚠️ -sion 在元音后读 /ʒən/（vision），在辅音后读 /ʃən/（mission）',
  posRule:{title:'-sion 的两种读法',body:'元音 + sion → /ʒən/（vision, decision）；辅音 + sion → /ʃən/（mission, passion）。'},
@@ -1072,14 +1072,14 @@ const PHONEMES = [
 
 {ipa:'/tʃ/',cls:'consonant',voiced:false,pair:'/dʒ/',name:'清辅音 /tʃ/',
  spellings:[{s:'ch',star:1,note:'最高频 chair / lunch / teacher'},{s:'tch',note:'短元音后：watch / catch / kitchen'},{s:'t',note:'future / nature（-ture 读 /tʃə/）'},{s:'ti',note:'question / suggestion'}],
- words:[{w:'chair',ipa:'/tʃeə/',sp:'ch',zh:'椅子'},{w:'watch',ipa:'/wɒtʃ/',sp:'tch',zh:'手表'},{w:'teacher',ipa:'/ˈtiːtʃə/',sp:'ch',zh:'老师'},{w:'future',ipa:'/ˈfjuːtʃə/',sp:'t',zh:'未来'}],
+ words:[{w:'chair',ipa:'/tʃeə/',sp:'ch',zh:'椅子'},{w:'watch',ipa:'/wɒtʃ/',sp:'tch',zh:'手表'},{w:'teacher',ipa:'/ˈtiːtʃə/',sp:'ch',zh:'老师'},{w:'future',ipa:'/ˈfjuːtʃə/',sp:'t',zh:'未来'},{w:'question',ipa:'/ˈkwestʃən/',sp:'ti',zh:'问题'}],
  say:'/t/ 和 /ʃ/ 快速连发',
  vs:'⚠️ tch 只出现在短元音后（watch/catch），长元音后用 ch（teach）',
  posRule:null,exc:['school /skuːl/、chemistry 里 ch 读 /k/；chef 读 /ʃ/']},
 
 {ipa:'/dʒ/',cls:'consonant',voiced:true,pair:'/tʃ/',name:'浊辅音 /dʒ/',
  spellings:[{s:'j',star:1,note:'job / jump / June'},{s:'g',note:'e i y 前：giant / gym / age'},{s:'dge',note:'短元音后：bridge / judge / fridge'},{s:'ge',note:'age / large / village'}],
- words:[{w:'job',ipa:'/dʒɒb/',sp:'j',zh:'工作'},{w:'jump',ipa:'/dʒʌmp/',sp:'j',zh:'跳'},{w:'giant',ipa:'/ˈdʒaɪənt/',sp:'g',zh:'巨人'},{w:'bridge',ipa:'/brɪdʒ/',sp:'dge',zh:'桥'}],
+ words:[{w:'job',ipa:'/dʒɒb/',sp:'j',zh:'工作'},{w:'jump',ipa:'/dʒʌmp/',sp:'j',zh:'跳'},{w:'giant',ipa:'/ˈdʒaɪənt/',sp:'g',zh:'巨人'},{w:'bridge',ipa:'/brɪdʒ/',sp:'dge',zh:'桥'},{w:'age',ipa:'/eɪdʒ/',sp:'ge',zh:'年龄'}],
  say:'/d/ 和 /ʒ/ 快速连发',
  vs:'⚠️ dge 只出现在短元音后（bridge），长元音后用 ge（age/large）',
  posRule:{title:'g 在 e i y 前多读 /dʒ/',body:'giant gym gem age → /dʒ/。⚠️ get/give/gift 是硬 g。'},
@@ -1101,21 +1101,21 @@ const PHONEMES = [
 
 {ipa:'/ts/',cls:'consonant',voiced:false,name:'清辅音 /ts/',
  spellings:[{s:'ts',star:1,note:'名词复数 / 动词三单：cats / boats'},{s:'tes',note:'gates / kites（e 不发音）'}],
- words:[{w:'cats',ipa:'/kæts/',sp:'ts',zh:'猫（复数）'},{w:'boats',ipa:'/bəʊts/',sp:'ts',zh:'船（复数）'},{w:'gets',ipa:'/ɡets/',sp:'ts',zh:'得到（三单）'},{w:'students',ipa:'/ˈstjuːdənts/',sp:'ts',zh:'学生（复数）'}],
+ words:[{w:'cats',ipa:'/kæts/',sp:'ts',zh:'猫（复数）'},{w:'boats',ipa:'/bəʊts/',sp:'ts',zh:'船（复数）'},{w:'gets',ipa:'/ɡets/',sp:'ts',zh:'得到（三单）'},{w:'students',ipa:'/ˈstjuːdənts/',sp:'ts',zh:'学生（复数）'},{w:'gates',ipa:'/ɡeɪts/',sp:'tes',zh:'大门（复数）'}],
  say:'/t/ 与 /s/ 快速连发',
  vs:'⭐ 规则：-s 在清辅音后读 /s/，与前面 /t/ 合成 /ts/',
  posRule:null,exc:[]},
 
 {ipa:'/dz/',cls:'consonant',voiced:true,name:'浊辅音 /dz/',
  spellings:[{s:'ds',star:1,note:'浊辅音后：birds / hands'},{s:'des',note:'grades / rides（e 不发音）'}],
- words:[{w:'birds',ipa:'/bɜːdz/',sp:'ds',zh:'鸟（复数）'},{w:'hands',ipa:'/hændz/',sp:'ds',zh:'手（复数）'},{w:'words',ipa:'/wɜːdz/',sp:'ds',zh:'单词（复数）'},{w:'friends',ipa:'/frendz/',sp:'ds',zh:'朋友（复数）'}],
+ words:[{w:'birds',ipa:'/bɜːdz/',sp:'ds',zh:'鸟（复数）'},{w:'hands',ipa:'/hændz/',sp:'ds',zh:'手（复数）'},{w:'words',ipa:'/wɜːdz/',sp:'ds',zh:'单词（复数）'},{w:'friends',ipa:'/frendz/',sp:'ds',zh:'朋友（复数）'},{w:'grades',ipa:'/ɡreɪdz/',sp:'des',zh:'成绩（复数）'}],
  say:'/d/ 与 /z/ 快速连发',
  vs:'⭐ 规则：-s 在浊辅音后读 /z/，与前面 /d/ 合成 /dz/',
  posRule:null,exc:[]},
 
 {ipa:'/m/',cls:'consonant',voiced:true,name:'鼻音 /m/',
  spellings:[{s:'m',star:1,note:'map / come / mother'},{s:'mm',note:'summer / common'},{s:'mb',note:'climb / comb（b 不发音）'}],
- words:[{w:'map',ipa:'/mæp/',sp:'m',zh:'地图'},{w:'come',ipa:'/kʌm/',sp:'m',zh:'来'},{w:'mother',ipa:'/ˈmʌðə/',sp:'m',zh:'母亲'},{w:'climb',ipa:'/klaɪm/',sp:'mb',zh:'爬'}],
+ words:[{w:'map',ipa:'/mæp/',sp:'m',zh:'地图'},{w:'come',ipa:'/kʌm/',sp:'m',zh:'来'},{w:'mother',ipa:'/ˈmʌðə/',sp:'m',zh:'母亲'},{w:'climb',ipa:'/klaɪm/',sp:'mb',zh:'爬'},{w:'summer',ipa:'/ˈsʌmə/',sp:'mm',zh:'夏天'}],
  say:'双唇闭合，气流从鼻腔出来，声带振动',
  vs:'⚠️ mb 在词尾时 b 不发音（climb / comb / lamb）',
  posRule:null,exc:['climb / comb / lamb / bomb 里 b 不发音']},
@@ -1158,14 +1158,14 @@ const PHONEMES = [
 
 {ipa:'/w/',cls:'consonant',voiced:true,name:'半元音 /w/',
  spellings:[{s:'w',star:1,note:'we / window / week'},{s:'wh',note:'what / where / when'},{s:'u',note:'qu 中：queen / quick（qu → /kw/）'}],
- words:[{w:'we',ipa:'/wiː/',sp:'w',zh:'我们'},{w:'what',ipa:'/wɒt/',sp:'wh',zh:'什么'},{w:'window',ipa:'/ˈwɪndəʊ/',sp:'w',zh:'窗户'},{w:'week',ipa:'/wiːk/',sp:'w',zh:'星期'}],
+ words:[{w:'we',ipa:'/wiː/',sp:'w',zh:'我们'},{w:'what',ipa:'/wɒt/',sp:'wh',zh:'什么'},{w:'window',ipa:'/ˈwɪndəʊ/',sp:'w',zh:'窗户'},{w:'week',ipa:'/wiːk/',sp:'w',zh:'星期'},{w:'quick',ipa:'/kwɪk/',sp:'u',zh:'快的'}],
  say:'双唇收圆前突后迅速放开',
  vs:'⚠️ wh 在 o 前读 /h/：who /huː/、whose /huːz/',
  posRule:null,exc:['who / whose 读 /h/；answer / sword 里 w 不发音']},
 
 {ipa:'/j/',cls:'consonant',voiced:true,name:'半元音 /j/',
  spellings:[{s:'y',star:1,note:'yes / you / year（词首）'},{s:'u',note:'use / music / student（/juː/）'},{s:'i',note:'onion / million（少数）'}],
- words:[{w:'yes',ipa:'/jes/',sp:'y',zh:'是的'},{w:'you',ipa:'/juː/',sp:'y',zh:'你'},{w:'use',ipa:'/juːz/',sp:'u',zh:'使用'},{w:'music',ipa:'/ˈmjuːzɪk/',sp:'u',zh:'音乐'}],
+ words:[{w:'yes',ipa:'/jes/',sp:'y',zh:'是的'},{w:'you',ipa:'/juː/',sp:'y',zh:'你'},{w:'use',ipa:'/juːz/',sp:'u',zh:'使用'},{w:'music',ipa:'/ˈmjuːzɪk/',sp:'u',zh:'音乐'},{w:'onion',ipa:'/ˈʌnjən/',sp:'i',zh:'洋葱'}],
  say:'舌面抬高接近上腭后迅速滑向元音',
  vs:'⚠️ u 在开音节常读 /juː/（use / music / student），含 /j/ 音',
  posRule:null,exc:[]}
