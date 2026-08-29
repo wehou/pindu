@@ -527,7 +527,160 @@ ul.tips li{font-size:13px;color:var(--ink2);line-height:1.7;margin-bottom:4px}
   .rn{width:100%}
 }
 
+/* ================= 48 音标重构 · 新增样式 ================= */
+
+/* ---------- 音标符号：主重音 ˈ / 次重音 ˌ / 长音 ː ---------- */
+.ipa-sl{color:var(--ink2);opacity:.45;font-weight:400}
+.st1{color:#e11d48;font-weight:900;letter-spacing:-1px}
+.st2{color:#f59e0b;font-weight:800;letter-spacing:-1px}
+.lng{color:#0ea5e9;font-weight:900;letter-spacing:-1px;font-size:1.15em}
+
+/* ---------- 首页 hero ---------- */
+.hero{background:linear-gradient(135deg,#eef2ff,#faf5ff);border:1px solid #e0e7ff;border-radius:18px;padding:18px 16px;margin-bottom:14px}
+.hero h1{font-size:19px;margin:0 0 8px;line-height:1.35}
+.hero .lead{font-size:13px;color:var(--ink2);margin:0 0 12px;line-height:1.7}
+.bar.big{height:12px}
+.bar{height:6px;background:#eef0f9;border-radius:99px;overflow:hidden}
+.bar i{display:block;height:100%;background:linear-gradient(90deg,var(--brand),var(--brand2));border-radius:99px;transition:width .4s}
+.hero-foot{display:flex;justify-content:space-between;font-size:11px;color:var(--ink2);margin-top:5px}
+
+.btn-row2{display:flex;gap:8px;margin-top:12px}
+.btn-row2 .btn{flex:1}
+
+/* ---------- 大音标展示 ---------- */
+.ph-big{text-align:center;font-size:34px;font-weight:800;color:var(--brand);
+  background:#fff;border:1px solid var(--line);border-radius:16px;padding:18px 10px;margin:10px 0;line-height:1.4}
+.ph-big.sm{font-size:24px;padding:12px 10px}
+
+/* ---------- 拼写列表（反向：音 → 拼写）---------- */
+.splist{display:flex;flex-direction:column;gap:6px}
+.sp{display:flex;align-items:baseline;gap:10px;background:#fff;border:1px solid var(--line);
+  border-radius:12px;padding:9px 12px}
+.sp.star{border-color:var(--brand);background:linear-gradient(135deg,#eef2ff,#fff);box-shadow:var(--sh)}
+.sp-t{font-weight:900;font-size:16px;color:var(--brand);min-width:70px}
+.sp-n{font-size:12px;color:var(--ink2);line-height:1.5}
+
+.card.pos{border-color:#fcd34d;background:#fffbeb}
+
+/* ---------- 练习：顶部 4 步 ---------- */
+.steps{display:flex;align-items:center;justify-content:center;gap:4px;margin:10px 0}
+.steps i{width:14px;height:1px;background:var(--line);display:block}
+.step{width:22px;height:22px;border-radius:50%;background:#eef0f9;color:var(--ink2);
+  display:grid;place-items:center;font-size:11px;font-weight:800}
+.step.on{background:var(--brand);color:#fff}
+.step.done{background:#22c55e;color:#fff}
+
+.qcard{background:#fff;border:1px solid var(--line);border-radius:16px;padding:14px;box-shadow:var(--sh);margin-top:10px}
+.qhint{font-size:12px;color:var(--ink2);line-height:1.7;margin:10px 0 0;text-align:center}
+.listen-btn{display:block;margin:10px auto 0;background:#eef2ff;border:1px solid #d8dcff;
+  color:var(--brand);font-weight:800;border-radius:12px;padding:9px 18px}
+
+/* ---------- 拆音素 ---------- */
+.slots{display:flex;align-items:center;justify-content:center;gap:6px;flex-wrap:wrap;margin:12px 0}
+.slots i{font-style:normal;color:var(--ink2);font-size:12px}
+.slot{min-width:46px;height:40px;border-radius:12px;border:2px dashed var(--line);
+  display:grid;place-items:center;font-size:15px;font-weight:700;color:var(--ink2)}
+.slot.filled{border-style:solid;border-color:var(--brand);color:var(--brand);background:#eef2ff}
+.wchip.used{opacity:.35}
+.wchip .dead{text-decoration:line-through;text-decoration-color:#ef4444}
+
+/* ---------- 选拼写 ---------- */
+.built{display:flex;align-items:center;justify-content:center;gap:2px;margin:12px 0;font-size:20px;font-weight:900;color:var(--brand)}
+.built .bsp{background:#eef2ff;border-radius:6px;padding:2px 6px}
+.built .bcur{color:var(--ink2);opacity:.6}
+.optlist{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.opt{padding:16px 10px;border-radius:14px;background:#fff;border:1px solid var(--line);
+  font-weight:800;font-size:17px;box-shadow:var(--sh);text-align:center}
+.opt:active{transform:scale(.97)}
+.opt.ok{background:#ecfdf5;border-color:#a7f3d0;color:#047857}
+.opt.bad{background:#fef2f2;border-color:#fecaca;color:#b91c1c}
+
+/* ---------- 核对 ---------- */
+.reveal{text-align:center;background:linear-gradient(135deg,#eef2ff,#faf5ff);
+  border-radius:14px;padding:14px 10px;margin-top:10px}
+.reveal .rw{font-size:26px;font-weight:900;color:var(--brand);letter-spacing:.5px}
+.reveal .ri{font-size:16px;margin-top:4px}
+.reveal .rz{font-size:13px;color:var(--ink2);margin-top:4px}
+.crow{display:flex;align-items:center;gap:8px;flex-wrap:wrap;padding:7px 10px;border-radius:10px;
+  background:#fff;border:1px solid var(--line);margin-bottom:5px;font-size:13px}
+.crow.ok{border-color:#a7f3d0;background:#ecfdf5}
+.crow.bad{border-color:#fecaca;background:#fef2f2}
+.ci{min-width:60px;font-weight:800}
+.csp{min-width:52px;font-weight:900;color:var(--pink)}
+.cm{font-size:12px;color:var(--ink2);flex:1}
+.cn{font-size:11px;color:var(--ink2);width:100%}
+.rec-slot{min-height:4px}
+.tip.warn{background:#fef2f2;border-color:#fecaca}
+.tip.warn b{color:#b91c1c}
+
+@media(max-width:520px){
+  .optlist{grid-template-columns:1fr 1fr}
+  .ph-big{font-size:28px}
+  .sp-t,.rsp{min-width:56px}
+  .rrow{flex-wrap:wrap}
+  .rn{width:100%}
+}
+
+/* ================= 音标库全量展开 / 拼写反查 / 词汇闯关 ================= */
+
+/* ---------- 音标卡（全量展开，无需二次点击）---------- */
+.phcard{background:#fff;border:1px solid var(--line);border-radius:16px;padding:12px;margin-bottom:10px;box-shadow:var(--sh)}
+.phcard-h{display:flex;align-items:center;gap:8px;flex-wrap:wrap}
+.ph-ipa{font-size:20px;font-weight:900;color:var(--brand);min-width:64px}
+.ph-name{flex:1;min-width:100px;font-size:13px;display:flex;flex-direction:column;line-height:1.35}
+.ph-name i{font-style:normal;font-size:11px;color:var(--ink2)}
+.ph-none{font-size:11px;color:var(--ink2)}
+.phcard-sps{display:flex;flex-wrap:wrap;gap:5px;margin-top:9px}
+.sptag{background:#f6f7fd;border:1px solid var(--line);border-radius:8px;padding:3px 9px;
+  font-size:13px;font-weight:800;color:var(--ink2)}
+.sptag.star{background:linear-gradient(135deg,#eef2ff,#fff);border-color:var(--brand);color:var(--brand)}
+.phcard-w{display:flex;flex-wrap:wrap;gap:6px;margin-top:9px}
+.phcard-x{margin-top:8px;font-size:11.5px;color:var(--ink2);line-height:1.6;
+  background:#f8fafc;border-radius:9px;padding:7px 10px}
+.phcard-x b{color:var(--brand);display:block;margin-bottom:2px}
+.phcard-x.warn{background:#fffbeb}
+.phcard-x.warn b{color:#b45309}
+
+/* ---------- 年级分组 ---------- */
+.grade-block{margin-bottom:14px}
+.grade-h{display:flex;align-items:center;justify-content:space-between;
+  background:#eef2ff;border-radius:10px;padding:7px 12px;margin-bottom:8px}
+.grade-h b{font-size:14px;color:var(--brand)}
+.grade-h span{font-size:12px;color:var(--ink2)}
+
+/* ---------- 拼写反查 ---------- */
+.searchbar{display:flex;gap:8px;margin:12px 0 4px}
+.searchbar input{flex:1;min-width:0;padding:12px 14px;border-radius:14px;border:1px solid var(--line);
+  font-size:15px;font-weight:700;background:#fff;outline:none}
+.searchbar input:focus{border-color:var(--brand);box-shadow:0 0 0 3px rgba(91,91,214,.12)}
+.lk-count{font-size:12px;color:var(--ink2);margin:6px 2px 10px}
+.lk-row{background:#fff;border:1px solid var(--line);border-radius:14px;padding:12px;margin-bottom:9px;box-shadow:var(--sh)}
+.lk-row.fuzzy{opacity:.82;border-style:dashed}
+.lk-top{display:flex;align-items:center;gap:8px;flex-wrap:wrap}
+.lk-sp{font-size:19px;font-weight:900;color:var(--brand)}
+.lk-ipa{font-size:16px;font-weight:800}
+.lk-freq{font-size:11px;font-weight:800;border-radius:99px;padding:3px 9px;background:#eef2ff;color:var(--brand)}
+.lk-freq.f1{background:#fef3c7;color:#92400e}
+.lk-freq.f4,.lk-freq.f5{background:#f1f5f9;color:#64748b}
+.lk-pos{font-size:11px;color:var(--ink2);background:#f1f5f9;border-radius:99px;padding:3px 8px}
+.lk-note{font-size:12px;color:var(--ink2);line-height:1.6;margin-top:6px}
+.lk-words{display:flex;flex-wrap:wrap;gap:6px;margin-top:8px}
+.lk-go{margin-top:9px;background:none;border:none;color:var(--brand);font-size:12px;font-weight:800;padding:0}
+
+@media(max-width:520px){
+  .ph-ipa{min-width:56px;font-size:18px}
+  .lk-sp{font-size:17px}
+  .grade-h b{font-size:13px}
+}
+
+/* Safari 兼容：backdrop-filter 需要 -webkit- 前缀（旧版 Safari 才会生效） */
+.topbar{-webkit-backdrop-filter:blur(12px)}
+.mask{-webkit-backdrop-filter:blur(3px)}
+
 </style>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+IPA&display=swap" rel="stylesheet">
 </head>
 <body>
 
@@ -578,13 +731,16 @@ function toast(msg, ms) {
 function modal(title, sub, html) {
   const root = $('#modal-root');
   root.innerHTML = `
-    <div class="mask" data-act="closeModal">
-      <div class="modal" onclick="event.stopPropagation()">
+    <div class="mask">
+      <div class="modal" role="dialog" aria-modal="true">
         <div class="modal-h"><b>${title}</b>${sub ? `<small>${sub}</small>` : ''}
-          <button class="mini-btn ghost" data-act="closeModal">✕</button></div>
+          <button class="mini-btn ghost" data-act="closeModal" aria-label="关闭">✕</button></div>
         <div class="mdoc">${html}</div>
       </div>
     </div>`;
+  const mask = root.querySelector('.mask');
+  // 只有直接点到遮罩本身（而非弹窗内部）才关闭；弹窗内按钮交由 document 委托统一处理
+  mask.addEventListener('click', e => { if (e.target === mask) ACT.closeModal(); });
 }
 ACT.closeModal = () => { $('#modal-root').innerHTML = ''; };
 
@@ -1627,6 +1783,9 @@ document.addEventListener('click', e => {
   const a = el.dataset.act;
   if (ACT[a]) ACT[a](el.dataset, el);
 });
+document.addEventListener('keydown', e => {
+  if (e.key === 'Escape' && $('#modal-root').children.length) ACT.closeModal();
+});
 
 ACT.home = () => go('home');
 ACT.lib = d => { if (d.f) S.libFilter = d.f; go('lib'); };
@@ -1848,7 +2007,7 @@ VIEWS.lookup = () => {
   </div>
   <div class="searchbar">
     <input id="lk-input" type="search" placeholder="输入拼写，如 ough / ea / tion / igh"
-           value="${esc(q)}" autocomplete="off">
+           value="${esc(q)}" autocomplete="off" onkeydown="if(event.key==='Enter'){event.preventDefault();ACT.lkGo();}">
     <button class="mini-btn" data-act="lkGo">查询</button>
     ${q ? '<button class="mini-btn ghost" data-act="lkClear">清空</button>' : ''}
   </div>
