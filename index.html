@@ -803,7 +803,7 @@ function methodHTML() {
      exc        例外
    ========================================================================= */
 const PHONEMES = [
-/* ---------------- 12 单元音 ---------------- */
+/* ---------------- 12 单元音（前→后，长音/短音相邻配对） ---------------- */
 {ipa:'/iː/',cls:'vowel',vtype:'mono',len:'long',name:'长元音 /iː/',
  spellings:[{s:'ee',star:1,note:'最高频，多在词中/词尾'},{s:'ea',note:'tea / sea / meat'},{s:'e',note:'开音节 he / she / we / be'},{s:'ie',note:'field / believe（⚠️ friend 读 /e/）'},{s:'ei',note:'receive / ceiling'},{s:'i',note:'machine / police'}],
  words:[{w:'see',ipa:'/siː/',sp:'ee',zh:'看见'},{w:'tea',ipa:'/tiː/',sp:'ea',zh:'茶'},{w:'these',ipa:'/ðiːz/',sp:'e',zh:'这些'},{w:'field',ipa:'/fiːld/',sp:'ie',zh:'田野'},{w:'green',ipa:'/ɡriːn/',sp:'ee',zh:'绿色的'},{w:'ceiling',ipa:'/ˈsiːlɪŋ/',sp:'ei',zh:'天花板'},{w:'machine',ipa:'/məˈʃiːn/',sp:'i',zh:'机器'}],
@@ -844,6 +844,14 @@ const PHONEMES = [
  vs:'⚠️ ar 在 w 后读 /ɔː/：warm /wɔːm/、war /wɔː/',
  posRule:null,exc:['war /wɔː/、warm /wɔːm/（w 后 ar → /ɔː/）']},
 
+{ipa:'/ʌ/',cls:'vowel',vtype:'mono',len:'short',name:'短元音 /ʌ/',
+ spellings:[{s:'u',star:1,note:'闭音节 cup / sun / bus'},{s:'o',note:'love / come / money / mother'},{s:'ou',note:'young / touch / country'},{s:'oo',note:'blood / flood'}],
+ words:[{w:'cup',ipa:'/kʌp/',sp:'u',zh:'杯子'},{w:'love',ipa:'/lʌv/',sp:'o',zh:'爱'},{w:'come',ipa:'/kʌm/',sp:'o',zh:'来'},{w:'young',ipa:'/jʌŋ/',sp:'ou',zh:'年轻的'},{w:'blood',ipa:'/blʌd/',sp:'oo',zh:'血'}],
+ mouth:{open:.50,round:.10,spread:.35,place:'中'},
+ say:'嘴自然张开，短促有力，不圆唇',
+ vs:'⚠️ o 在这里读 /ʌ/ 是最大陷阱：come / love / money',
+ posRule:null,exc:['put /pʊt/ 里 u 读 /ʊ/，不读 /ʌ/']},
+
 {ipa:'/ɒ/',cls:'vowel',vtype:'mono',len:'short',name:'短元音 /ɒ/',
  spellings:[{s:'o',star:1,note:'闭音节 dog / box / hot'},{s:'a',note:'want / wash / what（w 后）'},{s:'au',note:'because / sausage'}],
  words:[{w:'dog',ipa:'/dɒɡ/',sp:'o',zh:'狗'},{w:'box',ipa:'/bɒks/',sp:'o',zh:'盒子'},{w:'want',ipa:'/wɒnt/',sp:'a',zh:'想要'},{w:'wash',ipa:'/wɒʃ/',sp:'a',zh:'洗'},{w:'because',ipa:'/bɪˈkɒz/',sp:'au',zh:'因为'}],
@@ -876,14 +884,6 @@ const PHONEMES = [
  vs:'⚠️ 短 /ʊ/ vs 长 /uː/：pull /pʊl/ vs pool /puːl/',
  posRule:null,exc:['foot /fʊt/、good /ɡʊd/ 里 oo 读短 /ʊ/']},
 
-{ipa:'/ʌ/',cls:'vowel',vtype:'mono',len:'short',name:'短元音 /ʌ/',
- spellings:[{s:'u',star:1,note:'闭音节 cup / sun / bus'},{s:'o',note:'love / come / money / mother'},{s:'ou',note:'young / touch / country'},{s:'oo',note:'blood / flood'}],
- words:[{w:'cup',ipa:'/kʌp/',sp:'u',zh:'杯子'},{w:'love',ipa:'/lʌv/',sp:'o',zh:'爱'},{w:'come',ipa:'/kʌm/',sp:'o',zh:'来'},{w:'young',ipa:'/jʌŋ/',sp:'ou',zh:'年轻的'},{w:'blood',ipa:'/blʌd/',sp:'oo',zh:'血'}],
- mouth:{open:.50,round:.10,spread:.35,place:'中'},
- say:'嘴自然张开，短促有力，不圆唇',
- vs:'⚠️ o 在这里读 /ʌ/ 是最大陷阱：come / love / money',
- posRule:null,exc:['put /pʊt/ 里 u 读 /ʊ/，不读 /ʌ/']},
-
 {ipa:'/ɜː/',cls:'vowel',vtype:'mono',len:'long',name:'长元音 /ɜː/',
  spellings:[{s:'er',star:1,note:'重读时 her / person'},{s:'ir',note:'bird / girl / first'},{s:'ur',note:'turn / nurse / Thursday'},{s:'ear',note:'learn / earth / early'},{s:'or',note:'work / world / word（w 后）'},{s:'our',note:'journey / courtesy'}],
  words:[{w:'her',ipa:'/hɜː/',sp:'er',zh:'她的'},{w:'bird',ipa:'/bɜːd/',sp:'ir',zh:'鸟'},{w:'turn',ipa:'/tɜːn/',sp:'ur',zh:'转'},{w:'work',ipa:'/wɜːk/',sp:'or',zh:'工作'},{w:'learn',ipa:'/lɜːn/',sp:'ear',zh:'学习'},{w:'journey',ipa:'/ˈdʒɜːni/',sp:'our',zh:'旅行'}],
@@ -900,7 +900,8 @@ const PHONEMES = [
  vs:'⭐ 英语出现频率最高的元音；任何元音字母弱读都可能变成它',
  posRule:null,exc:['/ə/ 从不重读，重读时会还原成对应长/短元音']},
 
-/* ---------------- 8 双元音 ---------------- */
+
+/* ---------------- 8 双元音（按收尾音聚类：收 /ɪ/、/ʊ/、/ə/） ---------------- */
 {ipa:'/eɪ/',cls:'vowel',vtype:'diph',name:'双元音 /eɪ/',
  spellings:[{s:'a_e',star:1,note:'魔法 e：name / cake / game'},{s:'ai',note:'rain / wait（多在词中）'},{s:'ay',note:'day / play（多在词尾）'},{s:'ei',note:'eight / weight'},{s:'ey',note:'they / grey'}],
  words:[{w:'name',ipa:'/neɪm/',sp:'a_e',zh:'名字'},{w:'rain',ipa:'/reɪn/',sp:'ai',zh:'雨'},{w:'day',ipa:'/deɪ/',sp:'ay',zh:'白天'},{w:'eight',ipa:'/eɪt/',sp:'ei',zh:'八'},{w:'they',ipa:'/ðeɪ/',sp:'ey',zh:'他们'}],
@@ -927,14 +928,6 @@ const PHONEMES = [
  posRule:{title:'oi 在词中 · oy 在词尾',body:'coin / noise / join 用 oi；boy / toy / joy 用 oy。基本无例外。'},
  exc:[]},
 
-{ipa:'/əʊ/',cls:'vowel',vtype:'diph',name:'双元音 /əʊ/',
- spellings:[{s:'o_e',star:1,note:'魔法 e：home / nose / those'},{s:'oa',note:'boat / coat / road'},{s:'ow',note:'snow / window / know'},{s:'o',note:'go / no / so（开音节）'},{s:'oe',note:'toe / foe'}],
- words:[{w:'home',ipa:'/həʊm/',sp:'o_e',zh:'家'},{w:'boat',ipa:'/bəʊt/',sp:'oa',zh:'船'},{w:'snow',ipa:'/snəʊ/',sp:'ow',zh:'雪'},{w:'go',ipa:'/ɡəʊ/',sp:'o',zh:'去'},{w:'nose',ipa:'/nəʊz/',sp:'o_e',zh:'鼻子'},{w:'toe',ipa:'/təʊ/',sp:'oe',zh:'脚趾'}],
- mouth:{open:.42,round:.55,spread:.15,place:'中'},
- say:'从 /ə/ 滑向 /ʊ/，唇渐收圆',
- vs:'⚠️ ow 有两个读音：snow /snəʊ/ vs cow /kaʊ/',
- posRule:null,exc:['cow /kaʊ/、now /naʊ/、down /daʊn/ 里 ow 读 /aʊ/']},
-
 {ipa:'/aʊ/',cls:'vowel',vtype:'diph',name:'双元音 /aʊ/',
  spellings:[{s:'ou',star:1,note:'最高频 house / out / mouse'},{s:'ow',note:'cow / down / town'}],
  words:[{w:'house',ipa:'/haʊs/',sp:'ou',zh:'房子'},{w:'cow',ipa:'/kaʊ/',sp:'ow',zh:'奶牛'},{w:'out',ipa:'/aʊt/',sp:'ou',zh:'外面'},{w:'town',ipa:'/taʊn/',sp:'ow',zh:'城镇'}],
@@ -942,6 +935,14 @@ const PHONEMES = [
  say:'从 /a/ 大开口滑向 /ʊ/',
  vs:'⚠️ ou 也可能读 /ʌ/（young）、/uː/（soup）、/əʊ/（though）',
  posRule:null,exc:['young /jʌŋ/、touch /tʌtʃ/、soup /suːp/、though /ðəʊ/']},
+
+{ipa:'/əʊ/',cls:'vowel',vtype:'diph',name:'双元音 /əʊ/',
+ spellings:[{s:'o_e',star:1,note:'魔法 e：home / nose / those'},{s:'oa',note:'boat / coat / road'},{s:'ow',note:'snow / window / know'},{s:'o',note:'go / no / so（开音节）'},{s:'oe',note:'toe / foe'}],
+ words:[{w:'home',ipa:'/həʊm/',sp:'o_e',zh:'家'},{w:'boat',ipa:'/bəʊt/',sp:'oa',zh:'船'},{w:'snow',ipa:'/snəʊ/',sp:'ow',zh:'雪'},{w:'go',ipa:'/ɡəʊ/',sp:'o',zh:'去'},{w:'nose',ipa:'/nəʊz/',sp:'o_e',zh:'鼻子'},{w:'toe',ipa:'/təʊ/',sp:'oe',zh:'脚趾'}],
+ mouth:{open:.42,round:.55,spread:.15,place:'中'},
+ say:'从 /ə/ 滑向 /ʊ/，唇渐收圆',
+ vs:'⚠️ ow 有两个读音：snow /snəʊ/ vs cow /kaʊ/',
+ posRule:null,exc:['cow /kaʊ/、now /naʊ/、down /daʊn/ 里 ow 读 /aʊ/']},
 
 {ipa:'/ɪə/',cls:'vowel',vtype:'diph',name:'双元音 /ɪə/',
  spellings:[{s:'ear',star:1,note:'ear / near / hear / dear'},{s:'ere',note:'here / mere'},{s:'eer',note:'deer / beer / cheer'},{s:'ier',note:'cashier'}],
@@ -967,7 +968,8 @@ const PHONEMES = [
  vs:'ℹ️ 现代英音中常简化为 /ɔː/（sure 也读 /ʃɔː/）',
  posRule:null,exc:['your /jɔː/、four /fɔː/ 里 our 读 /ɔː/']},
 
-/* ---------------- 28 辅音 ---------------- */
+
+/* ---------------- 28 辅音（按发音部位 + 清浊相邻聚类） ---------------- */
 {ipa:'/p/',cls:'consonant',voiced:false,pair:'/b/',name:'清辅音 /p/',
  spellings:[{s:'p',star:1,note:'唯一高频写法'},{s:'pp',note:'apple / happy（双写只表短元音，音不变）'}],
  words:[{w:'pen',ipa:'/pen/',sp:'p',zh:'钢笔'},{w:'apple',ipa:'/ˈæpl/',sp:'pp',zh:'苹果'},{w:'stop',ipa:'/stɒp/',sp:'p',zh:'停止'},{w:'map',ipa:'/mæp/',sp:'p',zh:'地图'}],
@@ -981,6 +983,41 @@ const PHONEMES = [
  say:'双唇紧闭后放开，声带振动',
  vs:'⚠️ 与 /p/ 成对；comb /kəʊm/ 里 b 不发音',
  posRule:null,exc:['comb / climb / debt 里的 b 不发音']},
+
+{ipa:'/m/',cls:'consonant',voiced:true,name:'鼻音 /m/',
+ spellings:[{s:'m',star:1,note:'map / come / mother'},{s:'mm',note:'summer / common'},{s:'mb',note:'climb / comb（b 不发音）'}],
+ words:[{w:'map',ipa:'/mæp/',sp:'m',zh:'地图'},{w:'come',ipa:'/kʌm/',sp:'m',zh:'来'},{w:'mother',ipa:'/ˈmʌðə/',sp:'m',zh:'母亲'},{w:'climb',ipa:'/klaɪm/',sp:'mb',zh:'爬'},{w:'summer',ipa:'/ˈsʌmə/',sp:'mm',zh:'夏天'}],
+ say:'双唇闭合，气流从鼻腔出来，声带振动',
+ vs:'⚠️ mb 在词尾时 b 不发音（climb / comb / lamb）',
+ posRule:null,exc:['climb / comb / lamb / bomb 里 b 不发音']},
+
+{ipa:'/f/',cls:'consonant',voiced:false,pair:'/v/',name:'清辅音 /f/',
+ spellings:[{s:'f',star:1,note:'fish / four / fine'},{s:'ph',note:'phone / photo / elephant'},{s:'gh',note:'laugh / cough / enough（词尾）'},{s:'ff',note:'coffee / off / different'}],
+ words:[{w:'fish',ipa:'/fɪʃ/',sp:'f',zh:'鱼'},{w:'phone',ipa:'/fəʊn/',sp:'ph',zh:'电话'},{w:'laugh',ipa:'/lɑːf/',sp:'gh',zh:'笑'},{w:'coffee',ipa:'/ˈkɒfi/',sp:'ff',zh:'咖啡'}],
+ say:'上齿轻咬下唇，气流从缝隙摩擦而出',
+ vs:'⚠️ ph 几乎都读 /f/；of /ɒv/ 里 f 反而读 /v/',
+ posRule:null,exc:['of /ɒv/ 读 /v/（唯一常见例外）']},
+
+{ipa:'/v/',cls:'consonant',voiced:true,pair:'/f/',name:'浊辅音 /v/',
+ spellings:[{s:'v',star:1,note:'van / very / love'},{s:'f',note:'of /ɒv/（唯一常见）'},{s:'ve',note:'love / have / give（词尾 e 不发音）'}],
+ words:[{w:'van',ipa:'/væn/',sp:'v',zh:'货车'},{w:'love',ipa:'/lʌv/',sp:'ve',zh:'爱'},{w:'very',ipa:'/ˈveri/',sp:'v',zh:'非常'},{w:'of',ipa:'/ɒv/',sp:'f',zh:'……的'}],
+ say:'上齿咬下唇，声带振动',
+ vs:'⚠️ 中文没有 /v/，别读成"w"；very 不是"歪瑞"',
+ posRule:null,exc:[]},
+
+{ipa:'/θ/',cls:'consonant',voiced:false,pair:'/ð/',name:'清辅音 /θ/',
+ spellings:[{s:'th',star:1,note:'几乎唯一写法'}],
+ words:[{w:'think',ipa:'/θɪŋk/',sp:'th',zh:'思考'},{w:'three',ipa:'/θriː/',sp:'th',zh:'三'},{w:'bath',ipa:'/bɑːθ/',sp:'th',zh:'洗澡'},{w:'mouth',ipa:'/maʊθ/',sp:'th',zh:'嘴'}],
+ say:'舌尖伸出轻放上下齿之间，气流摩擦而出（不振动）',
+ vs:'⭐ 一音一形：th 基本只读 /θ/ 或 /ð/，靠"清浊"区分',
+ posRule:null,exc:['this /ðɪs/、that /ðæt/、the /ðə/ 读浊音 /ð/']},
+
+{ipa:'/ð/',cls:'consonant',voiced:true,pair:'/θ/',name:'浊辅音 /ð/',
+ spellings:[{s:'th',star:1,note:'几乎唯一写法'}],
+ words:[{w:'this',ipa:'/ðɪs/',sp:'th',zh:'这个'},{w:'that',ipa:'/ðæt/',sp:'th',zh:'那个'},{w:'mother',ipa:'/ˈmʌðə/',sp:'th',zh:'母亲'},{w:'the',ipa:'/ðə/',sp:'th',zh:'这/那'}],
+ say:'舌尖伸出轻放上下齿之间，声带振动',
+ vs:'⭐ 功能词（the/this/that/they/them/there）多为浊音 /ð/',
+ posRule:null,exc:['thing /θɪŋ/、think /θɪŋk/ 读清音 /θ/']},
 
 {ipa:'/t/',cls:'consonant',voiced:false,pair:'/d/',name:'清辅音 /t/',
  spellings:[{s:'t',star:1,note:'唯一高频写法'},{s:'tt',note:'letter / butter'},{s:'ed',note:'worked / helped（清辅音后读 /t/）'}],
@@ -996,35 +1033,12 @@ const PHONEMES = [
  vs:'⚠️ -ed 三种读音：/t/ /d/ /ɪd/',
  posRule:null,exc:['Wednesday /ˈwenzdeɪ/ 里 d 不发音']},
 
-{ipa:'/k/',cls:'consonant',voiced:false,pair:'/g/',name:'清辅音 /k/',
- spellings:[{s:'c',star:1,note:'a o u 前读 /k/：cat / cold / cup'},{s:'k',note:'key / kite / week'},{s:'ck',note:'词尾短元音后：back / black / duck'},{s:'ch',note:'school / chemistry（少数）'},{s:'q',note:'queen / quick（qu → /kw/）'}],
- words:[{w:'cat',ipa:'/kæt/',sp:'c',zh:'猫'},{w:'key',ipa:'/kiː/',sp:'k',zh:'钥匙'},{w:'back',ipa:'/bæk/',sp:'ck',zh:'后面'},{w:'school',ipa:'/skuːl/',sp:'ch',zh:'学校'},{w:'queen',ipa:'/kwiːn/',sp:'q',zh:'女王'}],
- say:'舌后部抵软腭后放开，送气强',
- vs:'⚠️ c 在 e i y 前读 /s/：city /ˈsɪti/、nice /naɪs/',
- posRule:{title:'c 在 a o u 前读 /k/ · 在 e i y 前读 /s/',body:'cat cold cup → /k/（硬 c）；city nice cycle → /s/（软 c）。口诀：a o u 用硬，e i y 用软。'},
- exc:['school /skuːl/ 里 ch 读 /k/（不是 /tʃ/）']},
-
-{ipa:'/g/',cls:'consonant',voiced:true,pair:'/k/',name:'浊辅音 /g/',
- spellings:[{s:'g',star:1,note:'a o u 前读 /g/：go / girl / big'},{s:'gg',note:'egg / bigger'},{s:'gu',note:'guess / guest / guitar'},{s:'gh',note:'ghost / ghastly'}],
- words:[{w:'go',ipa:'/ɡəʊ/',sp:'g',zh:'去'},{w:'girl',ipa:'/ɡɜːl/',sp:'g',zh:'女孩'},{w:'egg',ipa:'/eɡ/',sp:'gg',zh:'鸡蛋'},{w:'guess',ipa:'/ɡes/',sp:'gu',zh:'猜'},{w:'ghost',ipa:'/ɡəʊst/',sp:'gh',zh:'幽灵'}],
- say:'舌后部抵软腭后放开，声带振动',
- vs:'⚠️ g 在 e i y 前常读 /dʒ/（软 g）：giant /ˈdʒaɪənt/、gym /dʒɪm/',
- posRule:{title:'g 在 a o u 前读 /g/ · 在 e i y 前多读 /dʒ/',body:'go girl gun → /g/（硬 g）；gem giant gym → /dʒ/（软 g）。⚠️ 例外多：get /ɡet/、give /ɡɪv/ 仍是硬 g。'},
- exc:['get /ɡet/、give /ɡɪv/、gift /ɡɪft/ 是硬 g（不是 /dʒ/）']},
-
-{ipa:'/f/',cls:'consonant',voiced:false,pair:'/v/',name:'清辅音 /f/',
- spellings:[{s:'f',star:1,note:'fish / four / fine'},{s:'ph',note:'phone / photo / elephant'},{s:'gh',note:'laugh / cough / enough（词尾）'},{s:'ff',note:'coffee / off / different'}],
- words:[{w:'fish',ipa:'/fɪʃ/',sp:'f',zh:'鱼'},{w:'phone',ipa:'/fəʊn/',sp:'ph',zh:'电话'},{w:'laugh',ipa:'/lɑːf/',sp:'gh',zh:'笑'},{w:'coffee',ipa:'/ˈkɒfi/',sp:'ff',zh:'咖啡'}],
- say:'上齿轻咬下唇，气流从缝隙摩擦而出',
- vs:'⚠️ ph 几乎都读 /f/；of /ɒv/ 里 f 反而读 /v/',
- posRule:null,exc:['of /ɒv/ 读 /v/（唯一常见例外）']},
-
-{ipa:'/v/',cls:'consonant',voiced:true,pair:'/f/',name:'浊辅音 /v/',
- spellings:[{s:'v',star:1,note:'van / very / love'},{s:'f',note:'of /ɒv/（唯一常见）'},{s:'ve',note:'love / have / give（词尾 e 不发音）'}],
- words:[{w:'van',ipa:'/væn/',sp:'v',zh:'货车'},{w:'love',ipa:'/lʌv/',sp:'ve',zh:'爱'},{w:'very',ipa:'/ˈveri/',sp:'v',zh:'非常'},{w:'of',ipa:'/ɒv/',sp:'f',zh:'……的'}],
- say:'上齿咬下唇，声带振动',
- vs:'⚠️ 中文没有 /v/，别读成"w"；very 不是"歪瑞"',
- posRule:null,exc:[]},
+{ipa:'/n/',cls:'consonant',voiced:true,name:'鼻音 /n/',
+ spellings:[{s:'n',star:1,note:'nose / name / nine'},{s:'nn',note:'dinner / sunny'},{s:'kn',note:'know / knife（k 不发音）'}],
+ words:[{w:'nose',ipa:'/nəʊz/',sp:'n',zh:'鼻子'},{w:'name',ipa:'/neɪm/',sp:'n',zh:'名字'},{w:'dinner',ipa:'/ˈdɪnə/',sp:'nn',zh:'晚餐'},{w:'know',ipa:'/nəʊ/',sp:'kn',zh:'知道'}],
+ say:'舌尖抵上齿龈，气流从鼻腔出来',
+ vs:'⚠️ kn 在词首时 k 不发音（know / knife / knee）',
+ posRule:null,exc:['know / knife / knee / knock 里 k 不发音']},
 
 {ipa:'/s/',cls:'consonant',voiced:false,pair:'/z/',name:'清辅音 /s/',
  spellings:[{s:'s',star:1,note:'sun / bus / see'},{s:'c',note:'e i y 前：city / nice / face'},{s:'ss',note:'class / glass / miss'},{s:'ce',note:'face / nice / ice'},{s:'sc',note:'science / scene'}],
@@ -1041,19 +1055,19 @@ const PHONEMES = [
  vs:'⚠️ 词尾 -s 在浊音后读 /z/：dogs /dɒɡz/、cats /kæts/ 读 /s/',
  posRule:null,exc:[]},
 
-{ipa:'/θ/',cls:'consonant',voiced:false,pair:'/ð/',name:'清辅音 /θ/',
- spellings:[{s:'th',star:1,note:'几乎唯一写法'}],
- words:[{w:'think',ipa:'/θɪŋk/',sp:'th',zh:'思考'},{w:'three',ipa:'/θriː/',sp:'th',zh:'三'},{w:'bath',ipa:'/bɑːθ/',sp:'th',zh:'洗澡'},{w:'mouth',ipa:'/maʊθ/',sp:'th',zh:'嘴'}],
- say:'舌尖伸出轻放上下齿之间，气流摩擦而出（不振动）',
- vs:'⭐ 一音一形：th 基本只读 /θ/ 或 /ð/，靠"清浊"区分',
- posRule:null,exc:['this /ðɪs/、that /ðæt/、the /ðə/ 读浊音 /ð/']},
+{ipa:'/l/',cls:'consonant',voiced:true,name:'舌侧音 /l/',
+ spellings:[{s:'l',star:1,note:'leg / look / ball'},{s:'ll',note:'ball / small / tell'}],
+ words:[{w:'leg',ipa:'/leɡ/',sp:'l',zh:'腿'},{w:'look',ipa:'/lʊk/',sp:'l',zh:'看'},{w:'girl',ipa:'/ɡɜːl/',sp:'l',zh:'女孩'},{w:'ball',ipa:'/bɔːl/',sp:'ll',zh:'球'}],
+ say:'舌尖抵上齿龈，气流从舌两侧出来',
+ vs:'⚠️ 清晰 l（元音前 like）与模糊 l（词尾 ball）发音不同',
+ posRule:null,exc:['calm / half / talk 里 l 不发音']},
 
-{ipa:'/ð/',cls:'consonant',voiced:true,pair:'/θ/',name:'浊辅音 /ð/',
- spellings:[{s:'th',star:1,note:'几乎唯一写法'}],
- words:[{w:'this',ipa:'/ðɪs/',sp:'th',zh:'这个'},{w:'that',ipa:'/ðæt/',sp:'th',zh:'那个'},{w:'mother',ipa:'/ˈmʌðə/',sp:'th',zh:'母亲'},{w:'the',ipa:'/ðə/',sp:'th',zh:'这/那'}],
- say:'舌尖伸出轻放上下齿之间，声带振动',
- vs:'⭐ 功能词（the/this/that/they/them/there）多为浊音 /ð/',
- posRule:null,exc:['thing /θɪŋ/、think /θɪŋk/ 读清音 /θ/']},
+{ipa:'/r/',cls:'consonant',voiced:true,name:'浊辅音 /r/',
+ spellings:[{s:'r',star:1,note:'red / run / sorry'},{s:'rr',note:'sorry / carry'},{s:'wr',note:'write / wrong（w 不发音）'}],
+ words:[{w:'red',ipa:'/red/',sp:'r',zh:'红色的'},{w:'run',ipa:'/rʌn/',sp:'r',zh:'跑'},{w:'sorry',ipa:'/ˈsɒri/',sp:'rr',zh:'抱歉'},{w:'write',ipa:'/raɪt/',sp:'wr',zh:'写'}],
+ say:'舌尖上卷但不碰上腭，英音不卷舌过度',
+ vs:'⚠️ wr 在词首 w 不发音（write / wrong / wrap）',
+ posRule:null,exc:['write / wrong / wrap / wrist 里 w 不发音']},
 
 {ipa:'/ʃ/',cls:'consonant',voiced:false,pair:'/ʒ/',name:'清辅音 /ʃ/',
  spellings:[{s:'sh',star:1,note:'最高频 ship / shop / fish'},{s:'ti',note:'station / nation（-tion）'},{s:'ci',note:'special / delicious'},{s:'ssi',note:'mission / Russia'},{s:'ch',note:'chef / machine（法语借词）'}],
@@ -1113,19 +1127,21 @@ const PHONEMES = [
  vs:'⭐ 规则：-s 在浊辅音后读 /z/，与前面 /d/ 合成 /dz/',
  posRule:null,exc:[]},
 
-{ipa:'/m/',cls:'consonant',voiced:true,name:'鼻音 /m/',
- spellings:[{s:'m',star:1,note:'map / come / mother'},{s:'mm',note:'summer / common'},{s:'mb',note:'climb / comb（b 不发音）'}],
- words:[{w:'map',ipa:'/mæp/',sp:'m',zh:'地图'},{w:'come',ipa:'/kʌm/',sp:'m',zh:'来'},{w:'mother',ipa:'/ˈmʌðə/',sp:'m',zh:'母亲'},{w:'climb',ipa:'/klaɪm/',sp:'mb',zh:'爬'},{w:'summer',ipa:'/ˈsʌmə/',sp:'mm',zh:'夏天'}],
- say:'双唇闭合，气流从鼻腔出来，声带振动',
- vs:'⚠️ mb 在词尾时 b 不发音（climb / comb / lamb）',
- posRule:null,exc:['climb / comb / lamb / bomb 里 b 不发音']},
+{ipa:'/k/',cls:'consonant',voiced:false,pair:'/g/',name:'清辅音 /k/',
+ spellings:[{s:'c',star:1,note:'a o u 前读 /k/：cat / cold / cup'},{s:'k',note:'key / kite / week'},{s:'ck',note:'词尾短元音后：back / black / duck'},{s:'ch',note:'school / chemistry（少数）'},{s:'q',note:'queen / quick（qu → /kw/）'}],
+ words:[{w:'cat',ipa:'/kæt/',sp:'c',zh:'猫'},{w:'key',ipa:'/kiː/',sp:'k',zh:'钥匙'},{w:'back',ipa:'/bæk/',sp:'ck',zh:'后面'},{w:'school',ipa:'/skuːl/',sp:'ch',zh:'学校'},{w:'queen',ipa:'/kwiːn/',sp:'q',zh:'女王'}],
+ say:'舌后部抵软腭后放开，送气强',
+ vs:'⚠️ c 在 e i y 前读 /s/：city /ˈsɪti/、nice /naɪs/',
+ posRule:{title:'c 在 a o u 前读 /k/ · 在 e i y 前读 /s/',body:'cat cold cup → /k/（硬 c）；city nice cycle → /s/（软 c）。口诀：a o u 用硬，e i y 用软。'},
+ exc:['school /skuːl/ 里 ch 读 /k/（不是 /tʃ/）']},
 
-{ipa:'/n/',cls:'consonant',voiced:true,name:'鼻音 /n/',
- spellings:[{s:'n',star:1,note:'nose / name / nine'},{s:'nn',note:'dinner / sunny'},{s:'kn',note:'know / knife（k 不发音）'}],
- words:[{w:'nose',ipa:'/nəʊz/',sp:'n',zh:'鼻子'},{w:'name',ipa:'/neɪm/',sp:'n',zh:'名字'},{w:'dinner',ipa:'/ˈdɪnə/',sp:'nn',zh:'晚餐'},{w:'know',ipa:'/nəʊ/',sp:'kn',zh:'知道'}],
- say:'舌尖抵上齿龈，气流从鼻腔出来',
- vs:'⚠️ kn 在词首时 k 不发音（know / knife / knee）',
- posRule:null,exc:['know / knife / knee / knock 里 k 不发音']},
+{ipa:'/g/',cls:'consonant',voiced:true,pair:'/k/',name:'浊辅音 /g/',
+ spellings:[{s:'g',star:1,note:'a o u 前读 /g/：go / girl / big'},{s:'gg',note:'egg / bigger'},{s:'gu',note:'guess / guest / guitar'},{s:'gh',note:'ghost / ghastly'}],
+ words:[{w:'go',ipa:'/ɡəʊ/',sp:'g',zh:'去'},{w:'girl',ipa:'/ɡɜːl/',sp:'g',zh:'女孩'},{w:'egg',ipa:'/eɡ/',sp:'gg',zh:'鸡蛋'},{w:'guess',ipa:'/ɡes/',sp:'gu',zh:'猜'},{w:'ghost',ipa:'/ɡəʊst/',sp:'gh',zh:'幽灵'}],
+ say:'舌后部抵软腭后放开，声带振动',
+ vs:'⚠️ g 在 e i y 前常读 /dʒ/（软 g）：giant /ˈdʒaɪənt/、gym /dʒɪm/',
+ posRule:{title:'g 在 a o u 前读 /g/ · 在 e i y 前多读 /dʒ/',body:'go girl gun → /g/（硬 g）；gem giant gym → /dʒ/（软 g）。⚠️ 例外多：get /ɡet/、give /ɡɪv/ 仍是硬 g。'},
+ exc:['get /ɡet/、give /ɡɪv/、gift /ɡɪft/ 是硬 g（不是 /dʒ/）']},
 
 {ipa:'/ŋ/',cls:'consonant',voiced:true,name:'鼻音 /ŋ/',
  spellings:[{s:'ng',star:1,note:'sing / long / English'},{s:'n',note:'k/g 前读 /ŋ/：bank / thank / finger'}],
@@ -1142,20 +1158,6 @@ const PHONEMES = [
  vs:'⚠️ hour / honest / honour 里 h 不发音',
  posRule:null,exc:['hour /ˈaʊə/、honest /ˈɒnɪst/、honour 里 h 不发音']},
 
-{ipa:'/l/',cls:'consonant',voiced:true,name:'舌侧音 /l/',
- spellings:[{s:'l',star:1,note:'leg / look / ball'},{s:'ll',note:'ball / small / tell'}],
- words:[{w:'leg',ipa:'/leɡ/',sp:'l',zh:'腿'},{w:'look',ipa:'/lʊk/',sp:'l',zh:'看'},{w:'girl',ipa:'/ɡɜːl/',sp:'l',zh:'女孩'},{w:'ball',ipa:'/bɔːl/',sp:'ll',zh:'球'}],
- say:'舌尖抵上齿龈，气流从舌两侧出来',
- vs:'⚠️ 清晰 l（元音前 like）与模糊 l（词尾 ball）发音不同',
- posRule:null,exc:['calm / half / talk 里 l 不发音']},
-
-{ipa:'/r/',cls:'consonant',voiced:true,name:'浊辅音 /r/',
- spellings:[{s:'r',star:1,note:'red / run / sorry'},{s:'rr',note:'sorry / carry'},{s:'wr',note:'write / wrong（w 不发音）'}],
- words:[{w:'red',ipa:'/red/',sp:'r',zh:'红色的'},{w:'run',ipa:'/rʌn/',sp:'r',zh:'跑'},{w:'sorry',ipa:'/ˈsɒri/',sp:'rr',zh:'抱歉'},{w:'write',ipa:'/raɪt/',sp:'wr',zh:'写'}],
- say:'舌尖上卷但不碰上腭，英音不卷舌过度',
- vs:'⚠️ wr 在词首 w 不发音（write / wrong / wrap）',
- posRule:null,exc:['write / wrong / wrap / wrist 里 w 不发音']},
-
 {ipa:'/w/',cls:'consonant',voiced:true,name:'半元音 /w/',
  spellings:[{s:'w',star:1,note:'we / window / week'},{s:'wh',note:'what / where / when'},{s:'u',note:'qu 中：queen / quick（qu → /kw/）'}],
  words:[{w:'we',ipa:'/wiː/',sp:'w',zh:'我们'},{w:'what',ipa:'/wɒt/',sp:'wh',zh:'什么'},{w:'window',ipa:'/ˈwɪndəʊ/',sp:'w',zh:'窗户'},{w:'week',ipa:'/wiːk/',sp:'w',zh:'星期'},{w:'quick',ipa:'/kwɪk/',sp:'u',zh:'快的'}],
@@ -1168,9 +1170,9 @@ const PHONEMES = [
  words:[{w:'yes',ipa:'/jes/',sp:'y',zh:'是的'},{w:'you',ipa:'/juː/',sp:'y',zh:'你'},{w:'use',ipa:'/juːz/',sp:'u',zh:'使用'},{w:'music',ipa:'/ˈmjuːzɪk/',sp:'u',zh:'音乐'},{w:'onion',ipa:'/ˈʌnjən/',sp:'i',zh:'洋葱'}],
  say:'舌面抬高接近上腭后迅速滑向元音',
  vs:'⚠️ u 在开音节常读 /juː/（use / music / student），含 /j/ 音',
- posRule:null,exc:[]}
-];
+ posRule:null,exc:[]},
 
+];
 /* =========================================================================
    配置层 2：LEVELS —— 音标闯关路径（音标维度，5 组难度递进；id 用 P1..P5，
    与词汇闯关 VOCAB_LEVELS 的年级 G1..G6 区分）
